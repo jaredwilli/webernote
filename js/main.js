@@ -7,27 +7,46 @@ if (typeof note !== 'object') {
 note = {
 	common: {
 		init: function() {
+			//$.support.cors = true;
 			note.init();
 		}
 	},
 	init: function() {
-				$(function() {
-			var onSampleResized = function(e) {
-				var columns = $(e.currentTarget).find('th, td');
-			};
+		var onSampleResized = function(e) {
+			var columns = $(e.currentTarget).find('th, td');
+		};
 
-			$('#resizable').colResizable({
-				minWidth: 100,
-				liveDrag: true,
-				draggingClass: 'dragging',
-				onResize: onSampleResized
-			});
+		$('#resizable').colResizable({
+			minWidth: 100,
+			liveDrag: true,
+			draggingClass: 'dragging',
+			onResize: onSampleResized
 		});
 
+
+		// var data = $.ajax({
+		// 	url: 'js/data.json',
+		// 	dataType: 'json'
+		// }).done(function(r) {
+		// 	console.log(r);
+		// }).fail(function(e) {
+		// 	console.log(e);
+		// });
+		// console.log(data);
+
 		var td = document.getElementsByTagName('td');
+		var noteNav = document.getElementById('note-nav');
+
 
 		console.log($('td:first').width());
 		console.log($('#note-nav').width());
+
+		var noteA = $('#note-nav li').find('a');
+		for (var i = 0; i < noteA.length; i++) {
+			if ($(noteA[i]).siblings('ul').length === 0) {
+				$(noteA[i]).css({ background: 'none', padding: 0 });
+			}
+		}
 
 		$('#note-nav').find('a').on('click', function(e) {
 			e.preventDefault();

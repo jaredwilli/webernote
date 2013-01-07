@@ -84,7 +84,7 @@ label {
 
 
 #note-nav {
-    padding: 5px;
+    padding: 5px 0 0 5px;
 }
 #note-list,
 #show-note {
@@ -247,14 +247,20 @@ nav a {
 	white-space: pre;*/
 	width: 100%;
 }
-#note-nav > ul li > a {
+#note-nav li > a {
 	background: url(../img/arrow.png) no-repeat 0 3px;
 	padding: 0 0 0 18px;
 	text-decoration: none;
 }
-#note-nav > ul li.expanded > a {
+#note-nav li.expanded > a {
 	background-position: 0 -10px;
 }
+#note-nav li .count {
+	margin-left: 5px;
+	color: #999;
+}
+
+
 #notes {
     float: left;
 }
