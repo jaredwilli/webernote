@@ -1,0 +1,485 @@
+/* ==========================================================================
+   HTML5 Boilerplate styles - modified by Jared Williams
+   ========================================================================== */
+
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font: 14px/22px Helvetica, Helvetica Neue, Arial;
+    padding: 0;
+    margin: 20px auto;
+    width: 80%;
+}
+a {
+    color: #669;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+h1 {
+    font: bold 36px/100% Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 5px 0;
+}
+h2 {
+    font: bold 16px/100% Arial, Helvetica, sans-serif;
+    margin: 0 0 .5em;
+    padding: 0;
+}
+p {
+    margin: 0 0 1em;
+    padding: 0;
+}
+
+
+
+/************************************************************************************
+STRUCTURE
+*************************************************************************************/
+#pagewrap {
+    display: inline-block;
+    width: 100%;
+    padding: 5px;
+}
+#header {
+    height: auto;
+    padding: 5px 0;
+}
+#note-nav {
+    padding: 5px 15px;
+    width: 25%;
+    float: left;
+}
+#note-list {
+    float: left;
+    width: 28%;
+    padding: 5px 15px;
+    margin: 0 5px 5px 5px;
+}
+#show-note {
+    width: 36%;
+    padding: 5px 15px;
+    float: left;
+}
+#footer {
+    clear: both;
+    padding: 0 15px;
+}
+
+
+#note-nav {
+    background: #f0efef;
+}
+#note-list,
+#show-note {
+    background: #f8f8f8;
+}
+#header,
+#note-nav,
+#note-list,
+#show-note {
+    margin-bottom: 5px;
+}
+
+#pagewrap,
+#note-nav,
+#note-list,
+#show-note {
+    border: solid 1px #ccc;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+}
+
+.header-container {
+    border-bottom: 1px solid #999;
+}
+
+.footer-container,
+.main aside {
+    border-top: 1px solid #999;
+}
+
+.header-container,
+.footer-container,
+.main aside {
+
+}
+
+.title {
+    color: #000;
+    display: inline-block;
+    margin: 1.000em 0;
+}
+
+/* ==============
+    MOBILE: Menu
+   ============== */
+
+.menu, ol, ul {
+    padding: 0 0 0 10px;
+}
+nav {
+    display: inline-block;
+
+}
+nav ul, ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+nav li {
+    display: inline-block;
+    width: auto;
+}
+nav a {
+    color: #000;
+    text-shadow: 0 1px 0 rgba(255,255,255,.75);
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 4px 0;
+}
+nav a:hover,
+nav a:visited {
+
+}
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* TOOLBAR NAV */
+
+#toolbar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#toolbar li {
+    display: inline-block;
+    width: auto;
+}
+#toolbar a {
+    color: #000;
+    text-shadow: 0 1px 0 rgba(255,255,255,.75);
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 4px 0;
+}
+#toolbar a:hover,
+#toolbar a:visited {
+
+}
+#toolbar a:hover {
+    text-decoration: underline;
+}
+
+/* TOOLS NAV */
+
+#tools ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#tools li {
+    display: inline-block;
+    width: auto;
+}
+#tools a {
+    color: #000;
+    text-shadow: 0 1px 0 rgba(255,255,255,.75);
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 4px 0;
+}
+#tools a:hover,
+#tools a:visited {
+
+}
+#tools a:hover {
+    text-decoration: underline;
+}
+
+#note-types
+
+#notes {
+    float: left;
+}
+
+/* ==============
+    MOBILE: Main
+   ============== */
+
+#notes {
+    width: 28%;
+}
+
+#notes ul {
+    list-style: none;
+    margin: 5px 0 0 5px;
+}
+#notes ul ul {
+    margin: 5px 0 0 5px;
+}
+#notes ul li {
+    margin: 5px 0 0 5px;
+    display: block;
+}
+
+#note-types {
+
+}
+#note-types ul {
+    list-style: none;
+
+}
+#note-types li {
+    display: inline-block;
+}
+
+.main {
+    padding: 30px 0;
+}
+
+.main article h1 {
+    font-size: 2em;
+}
+
+.main aside {
+    color: #000;
+    padding: 0 5% 10px;
+}
+
+.footer-container footer {
+    color: #000;
+    padding: 20px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+/************************************************************************************
+MEDIA QUERIES
+*************************************************************************************/
+/* for 980px or less */
+@media screen and (max-width: 980px) {
+    #pagewrap {
+        width: 94%;
+    }
+    #note-nav {
+        width: 41%;
+        padding: 1% 4%;
+    }
+    #note-list {
+        width: 41%;
+        padding: 1% 4%;
+        margin: 0 0x 5px 5px;
+        float: right;
+    }
+    #show-note {
+        clear: both;
+        padding: 1% 4%;
+        width: auto;
+        float: none;
+    }
+    #header, #footer {
+        padding: 1% 4%;
+    }
+}
+
+/* for 800px or less
+@media screen and (max-width: 800px) {
+    #pagewrap {
+        width: 94%;
+    }
+    #note-nav {
+        width: 49%;
+    }
+    #note-list {
+        width: 49%;
+        margin: 0 0 5px 0px;
+        float: right;
+    }
+    #show-note {
+        clear: both;
+        width: auto;
+        float: none;
+    }
+}
+*/
+
+/* for 700px or less */
+@media screen and (max-width: 600px) {
+    #note-nav {
+        width: auto;
+        float: none;
+    }
+    #note-list {
+        width: auto;
+        float: none;
+        margin-left: 0px;
+    }
+    #show-note {
+        width: auto;
+        float: none;
+    }
+}
+
+/* for 480px or less */
+@media screen and (max-width: 480px) {
+    #header {
+        height: auto;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    #note-nav {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 100%;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   Print styles
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a, a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre, blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr, img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2, h3 {
+        page-break-after: avoid;
+    }
+}

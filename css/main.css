@@ -1,0 +1,373 @@
+/* ==========================================================================
+
+   ========================================================================== */
+
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font: 14px/22px Helvetica, Helvetica Neue, Arial;
+    padding: 0;
+    margin: 20px auto;
+    width: 90%;
+}
+a {
+    color: #669;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+h1 {
+    font: bold 36px/100% Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 5px 0;
+}
+h2 {
+    font: bold 16px/100% Arial, Helvetica, sans-serif;
+    margin: 0 0 .5em;
+    padding: 0;
+}
+p {
+    margin: 0 0 1em;
+    padding: 0;
+}
+
+
+
+/************************************************************************************
+STRUCTURE
+*************************************************************************************/
+
+#pagewrap {
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+}
+#header {
+    height: auto;
+    padding: 5px 0;
+    margin: 0;
+}
+#header h1 {
+	margin: 5px;
+}
+
+#table {
+	background: #5f9e2b;
+	width: 100%;
+}
+th {
+	border: 1px hidden #5f9e2b;
+	color: #fff;
+	text-shadow: 1px 1px 1px #5f9e2b;
+	height: 30px;
+
+	background-color: #85d642;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#85d642), to(#6ab130));
+	background-image: -webkit-linear-gradient(top, #85d642, #6ab130);
+	background-image:    -moz-linear-gradient(top, #85d642, #6ab130);
+	background-image:      -o-linear-gradient(top, #85d642, #6ab130);
+	background-image:         linear-gradient(to bottom, #85d642, #6ab130);
+}
+td {
+	background: rgb(223, 223, 223);
+	color: #000;
+	min-width: 100px;
+}
+
+label {
+	color: #0361ae;
+}
+
+
+#note-nav {
+    padding: 5px;
+}
+#note-list,
+#show-note {
+	padding: 5px;
+	margin: 3px;
+	border: 1px solid #ccc;
+}
+
+#note-list,
+#show-note {
+    background: #f8f8f8;
+}
+#header,
+#note-nav,
+#note-list,
+#show-note {
+    margin-bottom: 5px;
+}
+
+#pagewrap {
+    border: solid 1px #ccc;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+}
+
+.header-container {
+    border-bottom: 1px solid #999;
+}
+
+.footer-container,
+.main aside {
+    border-top: 1px solid #999;
+}
+
+.title {
+    color: #000;
+    display: inline-block;
+    margin: 1.000em 5px;
+}
+
+
+.menu, ol, ul {
+    padding: 0 0 0 10px;
+}
+
+
+ul ul {
+	margin-left: 20px;
+}
+ul ul li {
+/*	display: block;
+	white-space: pre;*/
+}
+
+nav {
+    display: inline-block;
+}
+nav ul, ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+nav li {
+    display: inline-block;
+    width: auto;
+}
+nav a {
+    color: #000;
+    text-shadow: 0 1px 0 rgba(255,255,255,.75);
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 4px 0;
+}
+
+/* TOOLBAR NAV */
+
+#toolbar {
+	width: 50%;
+}
+
+#toolbar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#toolbar li {
+    display: inline-block;
+    width: 13%;
+}
+#toolbar a {
+    color: #000;
+    text-shadow: 0 1px 0 rgba(255,255,255,.75);
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 4px 10px;
+}
+#toolbar a:hover {
+    text-decoration: underline;
+}
+
+/* ACTIONS */
+
+#actions {
+	width: 49.6%;
+}
+#actions ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#actions li {
+    display: inline-block;
+    width: auto;
+}
+#actions a {
+    color: #000;
+    text-shadow: 0 1px 0 rgba(255,255,255,.75);
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 4px 10px;
+}
+#actions a:hover {
+    text-decoration: underline;
+}
+
+/* TOOLS NAV */
+
+#tools ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#tools li {
+    display: inline-block;
+    width: auto;
+}
+#tools a {
+    color: #000;
+    text-shadow: 0 1px 0 rgba(255,255,255,.75);
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 4px 10px;
+}
+
+
+/* NOTE NAV */
+
+#note-nav > li {
+	/*display: block;
+	white-space: pre;*/
+	width: 100%;
+}
+#note-nav > ul li > a {
+	background: url(../img/arrow.png) no-repeat 0 3px;
+	padding: 0 0 0 18px;
+	text-decoration: none;
+}
+#note-nav > ul li.expanded > a {
+	background-position: 0 -10px;
+}
+#notes {
+    float: left;
+}
+
+/* ==============
+    MOBILE: Main
+   ============== */
+
+#notes {
+    width: 28%;
+}
+
+#notes ul {
+    list-style: none;
+    margin: 5px 0 0 5px;
+}
+#notes ul ul {
+    margin: 5px 0 0 5px;
+}
+#notes ul li {
+    margin: 5px 0 0 5px;
+    display: block;
+}
+
+#note-types {
+
+}
+#note-types ul {
+    list-style: none;
+
+}
+#note-types li {
+    display: inline-block;
+}
+
+.main {
+    padding: 30px 0;
+}
+
+.main article h1 {
+    font-size: 2em;
+}
+
+.main aside {
+    color: #000;
+    padding: 0 5% 10px;
+}
+
+.footer-container footer {
+    color: #000;
+    padding: 20px 0;
+}
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 100%;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
