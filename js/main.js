@@ -93,9 +93,11 @@ webernote = {
 	}, // init
 
 	// Set
-	setNote: function(note) {
-		var	noteData = webernote.notes[note];
-		console.log(noteData);
+	setNote: function(noteh) {
+		if (note === null) return;
+
+		var	noteData = webernote.getNote(note) || webernote.notes[note];
+
 		// Set it and get it
 		webernote.store.setItem(note, JSON.stringify(noteData));
 		webernote.getNote(note);
@@ -103,7 +105,7 @@ webernote = {
 	// Get
 	getNote: function(note) {
 		if (note === null) return;
-		console.log(note);
+
 		var storedObj = webernote.store.getItem(note);
 		//storedObj = JSON.parse(storedObj);
 
@@ -116,11 +118,11 @@ webernote = {
 		var noteForm = $('form', '#show-note'),
 			noteList = $('ul', '#notes');
 
+		var note = noteForm.attr('data-note');
+		console.log(webernote.getNote(note));
+
 		// Title
 		noteForm.find('.title').on('keyup', function(e) {
-			var note = noteForm.attr('data-note');
-			console.log(webernote.notes[note]);
-
 			webernote.setNote(note);
 			noteList.find('li[data-note='+ note +']').find('.title').text(title);
 		});
@@ -138,13 +140,37 @@ webernote = {
 			$(this).next().html(desc).removeClass('hidden');
 		});
 		noteForm.find('textarea.description').on('keyup', function(e) {
-			$(this).html()
+			//$(this).val()
 		});
 		noteForm.find('textarea.description').on('blur', function(e) {
 			var desc = $(this).val() || '<p>Note...</p>';
 			$(this).addClass('hidden');
 			$(this).prev().html(desc).removeClass('hidden');
 		});
+	},
+	// Show note
+	showNote: function(noteId) {
+		if (noteId === null) return;
+
+		var data = webernote.getNote(noteId),
+			showNote = $('#show-note'),
+			noteShowStr = $('._noted').clone();
+
+		// Column 3
+		noteShowStr.attr('data-note', noteId).removeAttr('class');
+		showNote.html(noteShowStr).find('textarea').focus();
+	},
+	// Show list
+	showNoteList: function(noteId) {
+		if (noteId === null) return;
+
+		var data = webernote.getNote('note'+ noteId),
+			noteList = $('ul', '#notes'),
+			noteListStr = $('._note').clone();
+
+		// Column 2
+		noteListStr.attr('data-note', noteId).removeAttr('class').find('.title').text();
+		noteList.append(noteListStr);
 	},
 
 	// New note
@@ -158,32 +184,6 @@ webernote = {
 		webernote.showNote('note' + num);
 	},
 
-	// Show list
-	showNoteList: function(noteId) {
-		if (noteId === null) return;
-
-		var data = webernote.getNote('note'+ noteId),
-			noteList = $('ul', '#notes'),
-			noteListStr = $('._note').clone();
-
-		// Column 2
-		noteListStr.attr('data-note', 'note' + noteId).removeAttr('class').find('.title').text();
-		noteList.append(noteListStr);
-
-	},
-
-	// Show note
-	showNote: function(noteId) {
-		if (noteId === null) return;
-
-		var data = webernote.getNote('note'+ noteId),
-			showNote = $('#show-note'),
-			noteShowStr = $('._noted').clone();
-
-		// Column 3
-		noteShowStr.attr('data-note', noteId).removeAttr('class');
-		showNote.html(noteShowStr).find('textarea').focus();
-	},
 
 	noteObj: function(num) {
 		if (num === 'undefined') return;
@@ -278,5 +278,5 @@ UTIL = {
 		UTIL.fire('common', 'finalize');
 	}
 };
-//kick it all off here
-$(document).ready(UTIL.loadEvents);
+//kick it all off hereH
+$(document).ready(UTIL.loadEvents);HM
