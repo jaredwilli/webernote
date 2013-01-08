@@ -294,23 +294,27 @@ nav a {
 #notes ul ul {
     /*margin: 5px 0 0 5px;*/
 }
-#notes ul li {
+#notes li {
 	border: 1px solid #ddd;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
-
     display: block;
     width: 98%;
+    min-height: 50px;
     margin: 0 0 1px;
     padding: 5px;
     float: left;
+
+    -webkit-border-radius: 6px;
+			border-radius: 6px;
 }
 #notes li:hover,
 #notes .selected {
-	background: rgba(20,20,20,.5);
+	background-color: rgb(105, 211, 79);
+	background: rgba(105, 211, 79, 0.5);
 }
 #notes h2 {
 	max-height: 17px;
+	margin: 2px;
+	padding: 0;
 	overflow: hidden;
 }
 #notes p {
@@ -353,9 +357,11 @@ nav a {
 }
 #show-note div.description,
 #show-note div.description:active {
+	background: #fff;
 	border: 1px solid #ddd;
 	display: inline-block;
-	width: 100%;
+	width: 98%;
+	padding: 5px;
 	min-height: 200px;
 }
 #show-note textarea,

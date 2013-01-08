@@ -153,7 +153,9 @@ webernote = {
 
 		webernote.notes['note' + num] = webernote.noteObj(num);
 
-		webernote.setNote('note' + num);
+		var note = webernote.setNote('note' + num);
+console.log(note);
+
 		webernote.showNoteList('note' + num);
 		webernote.showNote('note' + num);
 	},
@@ -162,14 +164,25 @@ webernote = {
 	showNoteList: function(noteId) {
 		if (noteId === null) return;
 
-		var data = webernote.getNote('note'+ noteId),
+		var note = webernote.getNote('note'+ noteId),
+			note = JSON.parse(note),
 			noteList = $('ul', '#notes'),
 			noteListStr = $('._note').clone();
 
-		// Column 2
-		noteListStr.attr('data-note', 'note' + noteId).removeAttr('class').find('.title').text();
-		noteList.append(noteListStr);
 
+		// Column 2
+		noteList.find('li').removeClass('selected');
+		noteListStr.attr('data-note', 'note' + note.id).removeAttr('class').addClass('selected');
+		
+		noteListStr.find('.title').text('Untitled note...'); // note.title
+
+		// TODO: Parse this timestamp as readable date
+		//noteListStr.find('.date').text(note.created);
+		// TODO: Show tags if any were added only
+		//noteListStr.find('.tags').text(note.tags);
+		//noteListStr.find('.description').text(note.description);
+		
+		noteList.append(noteListStr);
 	},
 
 	// Show note
