@@ -178,7 +178,7 @@ nav a {
 /* ACTIONS */
 
 #actions {
-	width: 49.6%;
+	float: right;
 }
 #actions ul {
     margin: 0;
