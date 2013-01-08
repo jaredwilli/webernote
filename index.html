@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html manifest="cache.manifest">
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -20,7 +20,7 @@
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]-->
 
-<!-- <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script> -->
+<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
 </head>
 <body>
@@ -47,7 +47,7 @@
                 <li><a href="#">Free</a></li>
                 <li><a href="#">Activity</a></li>
                 <li><a href="#">Trunk</a></li>
-                <li><a href="#">New Note</a></li>
+                <li><a href="#" id="new">New Note</a></li>
                 <li><a href="#">Share</a></li>
             </ul>
         </nav>
@@ -172,79 +172,8 @@
                     </div>
 
                     <div id="notes">
-                        <ul class="notes">
-                            <li class="note">
-                                <h2>Lorem ipsum dolor sit amet</h2>
-                                <p>
-                                    <span class="date">12/16/2010</span>
-                                    <span class="tags">javascript</span>
-                                    <span class="description">Consectetur adipiscing elit. Duis non mattis nisi. Nullam vehicula congue tortor vel scelerisque. Suspendisse elit dui, facilisis nec varius eget, pulvinar quis erat. Suspendisse id dui at diam consequat viverra sed non elit. Fusce molestie ante sollicitudin nulla egestas bibendum. Fusce eget metus et urna blandit cursus eu eget nulla. Phasellus pharetra, lorem at blandit dictum, neque sapien tincidunt odio, id cursus turpis purus quis ante.</span>
-                                </p>
-                            </li>
-                            <li class="note">
-                                <h2>Cum sociis natoque penatibus et magnis dis parturient montes</h2>
-                                <p>
-                                    <span class="date">12/16/2010</span>
-                                    <span class="tags">javascript</span>
-                                    <span class="description elipsis">Nascetur ridiculus mus. Quisque fermentum tristique dui, ut fermentum nibh auctor ac. Nullam iaculis sem sed quam congue at pharetra lacus laoreet. Fusce sagittis bibendum leo sit amet adipiscing. Donec sit amet tempor sem. Duis nec nulla eros. Quisque venenatis enim at felis accumsan eu dignissim ante feugiat.</span>
-                                </p>
-                            </li>
-                            <li class="note">
-                                <h2>Morbi sagittis convallis massa et imperdiet</h2>
-                                <p>
-                                    <span class="date">12/16/2010</span>
-                                    <span class="tags">javascript</span>
-                                    <span class="description elipsis">Sed luctus placerat est nec aliquet. Nullam non facilisis velit. Suspendisse sollicitudin faucibus posuere. Morbi luctus, velit sit amet pulvinar luctus. Metus lorem consectetur nisi, eget cursus ipsum nisl in est. Nullam varius volutpat ligula, at facilisis risus faucibus a. Vivamus ipsum felis, condimentum vitae dapibus vel, pretium a nulla. Aenean nec vehicula mi. Curabitur placerat, quam vitae placerat ultricies, odio odio egestas erat, id tristique nisi erat at lorem.</span>
-                                </p>
-                            </li>
-                            <li class="note">
-                                <h2>Lorem ipsum dolor sit amet</h2>
-                                <p>
-                                    <span class="date">12/16/2010</span>
-                                    <span class="tags">javascript</span>
-                                    <span class="description">Consectetur adipiscing elit. Duis non mattis nisi. Nullam vehicula congue tortor vel scelerisque. Suspendisse elit dui, facilisis nec varius eget, pulvinar quis erat. Suspendisse id dui at diam consequat viverra sed non elit. Fusce molestie ante sollicitudin nulla egestas bibendum. Fusce eget metus et urna blandit cursus eu eget nulla. Phasellus pharetra, lorem at blandit dictum, neque sapien tincidunt odio, id cursus turpis purus quis ante.</span>
-                                </p>
-                            </li>
-                            <li class="note">
-                                <h2>Cum sociis natoque penatibus et magnis dis parturient montes</h2>
-                                <p>
-                                    <span class="date">12/16/2010</span>
-                                    <span class="tags">javascript</span>
-                                    <span class="description elipsis">Nascetur ridiculus mus. Quisque fermentum tristique dui, ut fermentum nibh auctor ac. Nullam iaculis sem sed quam congue at pharetra lacus laoreet. Fusce sagittis bibendum leo sit amet adipiscing. Donec sit amet tempor sem. Duis nec nulla eros. Quisque venenatis enim at felis accumsan eu dignissim ante feugiat.</span>
-                                </p>
-                            </li>
-                            <li class="note">
-                                <h2>Morbi sagittis convallis massa et imperdiet</h2>
-                                <p>
-                                    <span class="date">12/16/2010</span>
-                                    <span class="tags">javascript</span>
-                                    <span class="description elipsis">Sed luctus placerat est nec aliquet. Nullam non facilisis velit. Suspendisse sollicitudin faucibus posuere. Morbi luctus, velit sit amet pulvinar luctus. Metus lorem consectetur nisi, eget cursus ipsum nisl in est. Nullam varius volutpat ligula, at facilisis risus faucibus a. Vivamus ipsum felis, condimentum vitae dapibus vel, pretium a nulla. Aenean nec vehicula mi. Curabitur placerat, quam vitae placerat ultricies, odio odio egestas erat, id tristique nisi erat at lorem.</span>
-                                </p>
-                            </li>
-                            <li class="note">
-                                <h2>Lorem ipsum dolor sit amet</h2>
-                                <p>
-                                    <span class="date">12/16/2010</span>
-                                    <span class="tags">javascript</span>
-                                    <span class="description">Consectetur adipiscing elit. Duis non mattis nisi. Nullam vehicula congue tortor vel scelerisque. Suspendisse elit dui, facilisis nec varius eget, pulvinar quis erat. Suspendisse id dui at diam consequat viverra sed non elit. Fusce molestie ante sollicitudin nulla egestas bibendum. Fusce eget metus et urna blandit cursus eu eget nulla. Phasellus pharetra, lorem at blandit dictum, neque sapien tincidunt odio, id cursus turpis purus quis ante.</span>
-                                </p>
-                            </li>
-                            <li class="note">
-                                <h2>Cum sociis natoque penatibus et magnis dis parturient montes</h2>
-                                <p>
-                                    <span class="date">12/16/2010</span>
-                                    <span class="tags">javascript</span>
-                                    <span class="description elipsis">Nascetur ridiculus mus. Quisque fermentum tristique dui, ut fermentum nibh auctor ac. Nullam iaculis sem sed quam congue at pharetra lacus laoreet. Fusce sagittis bibendum leo sit amet adipiscing. Donec sit amet tempor sem. Duis nec nulla eros. Quisque venenatis enim at felis accumsan eu dignissim ante feugiat.</span>
-                                </p>
-                            </li>
-                            <li class="note">
-                                <h2>Morbi sagittis convallis massa et imperdiet</h2>
-                                <p>
-                                    <span class="date">12/16/2010</span>
-                                    <span class="tags">javascript</span>
-                                    <span class="description elipsis">Sed luctus placerat est nec aliquet. Nullam non facilisis velit. Suspendisse sollicitudin faucibus posuere. Morbi luctus, velit sit amet pulvinar luctus. Metus lorem consectetur nisi, eget cursus ipsum nisl in est. Nullam varius volutpat ligula, at facilisis risus faucibus a. Vivamus ipsum felis, condimentum vitae dapibus vel, pretium a nulla. Aenean nec vehicula mi. Curabitur placerat, quam vitae placerat ultricies, odio odio egestas erat, id tristique nisi erat at lorem.</span>
-                                </p>
-                            </li>
+                        <ul>
+
                         </ul>
                     </div>
                 </div>
@@ -252,17 +181,42 @@
 
             <td valign="top">
                 <div id="show-note">
-                    <h2 class="title" contenteditable="true">Lorem ipsum dolor sit amet</h2>
-                    <div class="description" contenteditable="true">
-                        <p>Consectetur adipiscing elit. Duis non mattis nisi. Nullam vehicula congue tortor vel scelerisque. Suspendisse elit dui, facilisis nec varius eget, pulvinar quis erat. Suspendisse id dui at diam consequat viverra sed non elit.</p>
 
-                        <p>Fusce molestie ante sollicitudin nulla egestas bibendum. Fusce eget metus et urna blandit cursus eu eget nulla. Phasellus pharetra, lorem at blandit dictum, neque sapien tincidunt odio, id cursus turpis purus quis ante.</p>
-                    </div>
                 </div>
             </td>
         </tr>
     </table>
 </div>
+
+
+<li class="_note hidden">
+    <h2 class="title"></h2>
+    <p>
+        <span class="date"></span>
+        <span class="tags"></span>
+        <span class="description"></span>
+    </p>
+</li>
+<form class="_noted hidden">
+    <div class="top">
+        <!-- <h2 class="title" contenteditable="true">Click to set title...</h2> -->
+        <input type="text" class="title" val="" placeholder="Click to set title..." />
+
+        <select name="notebook">
+            <option value="My Notebook">My NoteBook</option>
+        </select>
+    </div>
+    <div class="mid">
+        <input type="url" class="url" name="url" value="http://" />
+
+        <!-- <span class="tag">Click to add tag...</span> -->
+        <input type="text" class="tag" name="tag" val="" placeholder="Click to add tag..." />
+    </div>
+
+    <div class="description hidden"><p></p></div>
+    <textarea class="description"></textarea>
+</form>
+
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\/script>')</script>

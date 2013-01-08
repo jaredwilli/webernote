@@ -77,6 +77,10 @@ td {
 	background: rgb(223, 223, 223);
 	color: #000;
 	min-width: 100px;
+	width: 45%;
+}
+td:first-child {
+	width: 15%;
 }
 
 label {
@@ -105,7 +109,7 @@ img {
 .title {
     color: #000;
     display: inline-block;
-    margin: 1.000em 5px;
+    margin: 10px 5px 0;
 }
 
 
@@ -257,7 +261,7 @@ nav a {
 	width: 100%;
 }
 #note-nav li > a {
-	background: url(../img/arrow.png) no-repeat 0 3px;
+	background: url(../img/arrow.png) no-repeat 0 4px;
 	padding: 0 0 0 18px;
 	text-decoration: none;
 }
@@ -291,9 +295,15 @@ nav a {
     /*margin: 5px 0 0 5px;*/
 }
 #notes ul li {
+	border: 1px solid #ddd;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+
     display: block;
+    width: 98%;
     margin: 0 0 1px;
     padding: 5px;
+    float: left;
 }
 #notes li:hover,
 #notes .selected {
@@ -308,18 +318,63 @@ nav a {
 	overflow: hidden;
 }
 
+/* SHOW NOTE */
+
 #show-note {
 
 }
 
+#show-note .top,
+#show-note .mid {
+	display: block;
+	width: 100%;
+	height: 40px;
+	float: left;
+}
+#show-note h2 {
+	display: inline-block;
+	padding: 0 5px;
+	min-width: 100px;
+	max-width: 200px;
+	float: left;
+	padding: 0 5px;
+}
+#show-note input.title,
+#show-note input.url,
+#show-note input.tag {
+	border: none;
+	padding: 5px;
+}
+#show-note select {
+	border: 1px solid #eee;
+	margin: 5px;
+	height: 30px;
+	width: 150px;
+}
+#show-note div.description,
+#show-note div.description:active {
+	border: 1px solid #ddd;
+	display: inline-block;
+	width: 100%;
+	min-height: 200px;
+}
+#show-note textarea,
+#show-note textarea:active {
+	border: 1px solid #ddd;
+	width: 100%;
+	height: 200px;
+	min-height: 200px;
+}
+
+/* NOTE TYPES */
 
 #note-types ul {
     list-style: none;
-
 }
 #note-types li {
     display: inline-block;
 }
+
 
 
 /* ==========================================================================
