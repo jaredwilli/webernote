@@ -12,17 +12,19 @@ note = {
 		}
 	},
 	init: function() {
-		var onSampleResized = function(e) {
-			var columns = $(e.currentTarget).find('th, td');
-		};
 
 		$('#resizable').colResizable({
-			minWidth: 100,
+			minWidth: 60,
 			liveDrag: true,
 			draggingClass: 'dragging',
-			onResize: onSampleResized
+			onResize: function(e) {
+				var columns = $(e.currentTarget).find('th, td');
+			}
 		});
 
+		var tdH = window.innerHeight- $('td').position().top - 20;
+		$('td').height(tdH);
+		$('#note-nav, #note-list, #show-note').height(tdH - 10);
 
 		// var data = $.ajax({
 		// 	url: 'js/data.json',
@@ -48,6 +50,7 @@ note = {
 			}
 		}
 
+		// expand / contract note nav
 		$('#note-nav').find('a').on('click', function(e) {
 			e.preventDefault();
 			console.log($(this).parent());
@@ -55,14 +58,32 @@ note = {
 			if ($(this).parent().hasClass('expanded')) {
 				$(this).parent().removeClass('expanded');
 
-				$(this).next().addClass('hidden');
+				$(this).siblings('ul').addClass('hidden');
 			}
 			else {
 				$(this).parent().addClass('expanded');
-				$(this).next().removeClass('hidden');
+				$(this).siblings('ul').removeClass('hidden');
 			}
 		});
 
+		// on note click
+		$('#notes').find('li').on('click', function(e) {
+			e.preventDefault();
+			$('#notes').find('li').removeClass('selected');
+			$(this).addClass('selected');
+		});
+
+		note.trim();
+
+	},
+
+	trim: function() {
+		var desc = $('#notes').find('.description');
+
+		for (var i = 0; i < desc.length; i++) {
+			$(desc[i]).addClass('ellipses').addClass('multiline');
+		}
+		$('.ellipsis').ellipsis();
 	},
 
 	utils: {

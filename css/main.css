@@ -5,6 +5,7 @@
 html {
     padding: 0;
     margin: 0;
+    overflow: hidden;
 }
 
 body {
@@ -31,7 +32,7 @@ h2 {
     padding: 0;
 }
 p {
-    margin: 0 0 1em;
+    margin: 0;
     padding: 0;
 }
 
@@ -80,28 +81,6 @@ td {
 
 label {
 	color: #0361ae;
-}
-
-
-#note-nav {
-    padding: 5px 0 0 5px;
-}
-#note-list,
-#show-note {
-	padding: 5px;
-	margin: 3px;
-	border: 1px solid #ccc;
-}
-
-#note-list,
-#show-note {
-    background: #f8f8f8;
-}
-#header,
-#note-nav,
-#note-list,
-#show-note {
-    margin-bottom: 5px;
 }
 
 #pagewrap {
@@ -240,8 +219,38 @@ nav a {
 }
 
 
+#note-nav,
+#note-list,
+#show-note {
+	overflow-y: scroll;
+}
+#note-nav {
+    padding: 5px 0 0 5px;
+}
+#note-list,
+#show-note {
+	padding: 5px;
+	margin: 3px;
+	border: 1px solid #ccc;
+}
+
+#note-list,
+#show-note {
+    background: #f8f8f8;
+}
+#header,
+#note-nav,
+#note-list,
+#show-note {
+    margin-bottom: 5px;
+}
+
 /* NOTE NAV */
 
+#note-nav {
+	min-width: 70px;
+	overflow: hidden;
+}
 #note-nav > li {
 	/*display: block;
 	white-space: pre;*/
@@ -261,33 +270,49 @@ nav a {
 }
 
 
-#notes {
-    float: left;
-}
 
 /* ==============
-    MOBILE: Main
    ============== */
 
 #notes {
-    width: 28%;
+    min-width: 150px;
 }
 
+#notes .date {
+	color: rgb(130, 130, 130);
+}
+#notes .tags {
+	color: rgb(157, 183, 252);
+}
 #notes ul {
     list-style: none;
-    margin: 5px 0 0 5px;
 }
 #notes ul ul {
-    margin: 5px 0 0 5px;
+    /*margin: 5px 0 0 5px;*/
 }
 #notes ul li {
-    margin: 5px 0 0 5px;
     display: block;
+    margin: 0 0 1px;
+    padding: 5px;
+}
+#notes li:hover,
+#notes .selected {
+	background: rgba(20,20,20,.5);
+}
+#notes h2 {
+	max-height: 17px;
+	overflow: hidden;
+}
+#notes p {
+	max-height: 50px;
+	overflow: hidden;
 }
 
-#note-types {
+#show-note {
 
 }
+
+
 #note-types ul {
     list-style: none;
 
@@ -295,25 +320,6 @@ nav a {
 #note-types li {
     display: inline-block;
 }
-
-.main {
-    padding: 30px 0;
-}
-
-.main article h1 {
-    font-size: 2em;
-}
-
-.main aside {
-    color: #000;
-    padding: 0 5% 10px;
-}
-
-.footer-container footer {
-    color: #000;
-    padding: 20px 0;
-}
-
 
 
 /* ==========================================================================
