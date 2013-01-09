@@ -100,7 +100,7 @@ webernote = {
 	// New note
 	newNote: function(num) {
 		// TODO: Make this just add a new default note obj to the global webernote.notes obj
-		var noteObj = webernote.noteObj(num),
+		var noteObj = webernote.dataObj.newNoteObj(num),
 			noteId = 'note' + num;
 
 		webernote.notes[noteId] = noteObj;
@@ -110,7 +110,7 @@ webernote = {
 		webernote.showNote(noteId); // Show note form
 
 		$('li', '#notes').removeClass('selected');
-		$('#notes li[data-note='+ noteId +']').addClass('selected');
+		$('#notes li').attr('data-note', noteId).addClass('selected');
 	},
 
 	// Set note
@@ -136,13 +136,16 @@ webernote = {
 
 		// Title
 		noteForm.find('.title').on('keyup', function(e) {
-			var note = noteForm.attr('data-note');
-			console.log(webernote.notes[note]);
+			var noteId = $(this).parents('form').attr('data-note'),
+				noteObj = webernote.getNote(noteId);
 
-			webernote.setNote(note);
-			noteList.find('li[data-note='+ note +']').find('.title').text(title);
+			noteObj.title = $(this).val();
+			webernote.setNote(noteId, JSON.stringify(noteObj));
+
+			noteList.find('li[data-note='+ noteId +']').find('.title').text($(this).val());
 		});
 
+		// Tag
 		noteForm.find('input.tag').blur(function(e) {
 			var tag = $(this).val();
 
@@ -169,24 +172,25 @@ webernote = {
 	showNote: function(noteId) {
 		if (noteId === null) return;
 
-		var note = webernote.getNote(noteId);
 		var showNote = $('#show-note'),
 			noteStr = $('._noted').clone();
 
 		// Column 3
-		noteStr.attr('data-note', note.selector).removeAttr('class');
+		var note = webernote.getNote(noteId),
+			noteObj = webernote.dataObj.noteObj(note);
+		console.log(noteObj);
 
-		noteStr.find('.title').text('Untitled note...'); // note.title
+		noteStr.attr('data-note', noteObj.selector).removeAttr('class');
+		noteStr.find('.title').val(noteObj.title);
 
-		// TODO: Parse this timestamp as readable date
-		//noteStr.find('.date').text(note.created);
-		noteStr.find('.url').text(note.url);
-		// TODO: Show tags if any were added only
-		noteStr.find('.tags').text(note.tags);
-		noteStr.find('.description').html(note.description);
+		noteStr.find('.url').val(noteObj.url);
+
+		noteStr.find('.tags').val(noteObj.tags); // TODO: Show tags if any were added only
+		noteStr.find('.description').html(noteObj.description);
 
 		showNote.html(noteStr).find('textarea').focus();
 
+		// Run updater for note form
 		webernote.updateNote(noteId);
 	},
 
@@ -194,39 +198,62 @@ webernote = {
 	showNoteList: function(noteId) {
 		if (noteId === null) return;
 
-		var note = webernote.getNote(noteId);
 		var noteList = $('ul', '#notes'),
 			noteStr = $('._note').clone();
 
 		// Column 2
-		noteStr.attr('data-note', note.selector).removeAttr('class');
+		var note = webernote.getNote(noteId),
+			noteObj = webernote.dataObj.noteObj(note);
+		console.log(noteObj);
 
-		noteStr.find('.title').text('Untitled note...'); // note.title
+		noteStr.attr('data-note', noteObj.selector).removeAttr('class');
 
-		// TODO: Parse this timestamp as readable date
-		//noteStr.find('.date').text(note.created);
-		// TODO: Show tags if any were added only
-		//noteStr.find('.tags').text(note.tags);
-		noteStr.find('.description').text(note.description);
+		if (noteObj.title === '') {
+			noteObj.title = 'Untitled note...';
+		}
+		noteStr.find('.title').text(noteObj.title);
+
+		noteStr.find('.date').text(noteObj.created); // TODO: Parse this timestamp as readable date
+		noteStr.find('.tags').text(noteObj.tags); // TODO: Show tags if any were added only
+		noteStr.find('.description').text(noteObj.description);
 
 		noteList.prepend(noteStr);
 	},
 
-	noteObj: function(num) {
-		if (num === 'undefined') return;
-		var date = new Date();
+	dataObj: {
+		newNoteObj: function(num) {
+			if (typeof num === 'undefined') return;
+			var date = new Date();
 
-		return {
-			id: num,
-			selector: 'note' + num,
-			title: 'Click to set title...',
-			notebook: 'My Notebook',
-			url: 'http://',
-			tags: 'Click to set tags',
-			created: date.getTime(),
-			modified: date.getTime(),
-			description: ''
-		};
+			return {
+				id: num,
+				selector: 'note' + num,
+				notebook: 'My Notebook',
+				title: '',
+				url: '',
+				tags: '',
+				description: '',
+				created: date.getTime(),
+				modified: date.getTime()
+			};
+		},
+		noteObj: function(note) {
+			if (typeof note === 'undefined') return;
+			var date = new Date();
+
+			// Make fallback values if there are none
+			return {
+				id: note.id,
+				selector: note.selector || 'note' + note.id,
+				notebook: note.notebook || 'My Notebook',
+				title: note.title || '',
+				url: note.url || '',
+				tags: note.tags || '',
+				description: note.description || '',
+				created: note.created || date.getTime(),
+				modified: note.modified || date.getTime()
+			};
+		}
 	},
 	trim: function() {
 		var desc = $('#notes').find('.description');
