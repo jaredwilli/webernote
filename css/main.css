@@ -18,7 +18,7 @@ a {
     text-decoration: none;
 }
 h1 {
-    font: bold 36px/100% Arial, Helvetica, sans-serif;
+    font: bold 18px Helvetica, Myriad Pro;
     padding: 0;
     margin: 0;
 }
@@ -65,7 +65,6 @@ nav a {
     display: inline-block;
     padding: 4px 0;
 }
-
 
 header {
     height: auto;
@@ -232,7 +231,6 @@ STRUCTURE
 	-webkit-box-shadow: 0 0 2px 0 rgba(100, 100, 100, 0.4);
 			box-shadow: 0 0 2px 0 rgba(100, 100, 100, 0.4);
 }
-
 
 /* NOTE NAV */
 
