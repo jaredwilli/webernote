@@ -109,27 +109,24 @@ img {
 .title {
     color: #000;
     display: inline-block;
-    margin: 10px 5px 0;
+	margin: 5px 5px 0 0;
+	font-size: 18px;
+	font-weight: bold;
 }
-
 
 .menu, ol, ul {
     padding: 0 0 0 10px;
 }
 
 
-ul ul {
-	margin-left: 20px;
-}
-ul ul li {
-/*	display: block;
-	white-space: pre;*/
-}
-
 nav {
     display: inline-block;
 }
-nav ul, ul {
+ul ul {
+	margin-left: 20px;
+}
+nav ul,
+ul {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -233,9 +230,12 @@ nav a {
 }
 #note-list,
 #show-note {
-	padding: 5px;
-	margin: 3px;
 	border: 1px solid #ccc;
+	padding: 0;
+	margin: 3px;
+
+	-webkit-box-shadow: -0.5px 0 2px 0 rgba(100, 100, 100, 0.4);
+			box-shadow: -0.5px 0 2px 0 rgba(100, 100, 100, 0.4);
 }
 
 #note-list,
@@ -294,23 +294,27 @@ nav a {
 #notes ul ul {
     /*margin: 5px 0 0 5px;*/
 }
-#notes ul li {
+#notes li {
 	border: 1px solid #ddd;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
-
     display: block;
     width: 98%;
+    min-height: 50px;
     margin: 0 0 1px;
     padding: 5px;
     float: left;
+
+    -webkit-border-radius: 6px;
+			border-radius: 6px;
 }
 #notes li:hover,
 #notes .selected {
-	background: rgba(20,20,20,.5);
+	background-color: rgb(105, 211, 79);
+	background: rgba(105, 211, 79, 0.5);
 }
 #notes h2 {
 	max-height: 17px;
+	margin: 2px;
+	padding: 0;
 	overflow: hidden;
 }
 #notes p {
@@ -324,13 +328,31 @@ nav a {
 
 }
 
+#note-list .filter,
+#note-list .viewing,
 #show-note .top,
 #show-note .mid {
 	display: block;
 	width: 100%;
-	height: 40px;
+	padding: 5px;
 	float: left;
 }
+#show-note .top {
+	background: #fff;
+}
+#note-list .filter,
+#show-note .mid {
+	border: solid rgb(216, 227, 228);
+	border-width: 2px 0;
+
+	background-color: rgb(216, 227, 228);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(216, 227, 228, 0.9)), to(rgba(216, 227, 228, 0.3)));
+	background-image: -webkit-linear-gradient(top, rgba(216, 227, 228, 0.9), rgba(216, 227, 228, 0.3));
+	background-image:    -moz-linear-gradient(top, rgba(216, 227, 228, 0.9), rgba(216, 227, 228, 0.3));
+	background-image:      -o-linear-gradient(top, rgba(216, 227, 228, 0.9), rgba(216, 227, 228, 0.3));
+	background-image:         linear-gradient(to bottom, rgba(216, 227, 228, 0.9), rgba(216, 227, 228, 0.3));
+}
+
 #show-note h2 {
 	display: inline-block;
 	padding: 0 5px;
@@ -343,7 +365,7 @@ nav a {
 #show-note input.url,
 #show-note input.tag {
 	border: none;
-	padding: 5px;
+	padding: 3px 5px;
 }
 #show-note select {
 	border: 1px solid #eee;
@@ -353,9 +375,11 @@ nav a {
 }
 #show-note div.description,
 #show-note div.description:active {
+	background: #fff;
 	border: 1px solid #ddd;
 	display: inline-block;
-	width: 100%;
+	width: 98%;
+	padding: 5px;
 	min-height: 200px;
 }
 #show-note textarea,

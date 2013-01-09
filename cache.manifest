@@ -1,44 +1,32 @@
 CACHE MANIFEST
-# 4-20-2012:v1
+# 1-9-2013:v1
 
 # Explicitly cached 'master entries'.
 CACHE:
 
 favicon.ico
-img/en.png
-img/es.png
-img/box_model.png
-img/browsers1.jpg
-css/img/icon-curly_50.png
-css/img/isobar.png
-css/img/fork-me.png
-css/img/sprite-social.png
-css/img/bg-body.gif
 
-css/style.css
+css/main.css
 js/plugins.js
-js/script.js
+js/main.js
 
 
 # All URLs that start with the following lines
 # are whitelisted.
 NETWORK:
 
-http://isobar.com/
-http://na.isobar.com/
-http://na.isobar.com/standards/
+http://anit-code.com/
+http://anit-code.com/examples/evernote/
+http://anti-code.com/webernote/
 
 # Additional items to cache.
 CACHE:
 
-js/libs/modernizr-2.0.6.min.js
-js/libs/jquery-1.7.2.min.js
-js/libs/request-animation-frame.js
-js/libs/syntax.js
-js/libs/dd_belatedpng.js
+#js/libs/modernizr-2.0.6.min.js
+js/libs/jquery-1.8.3.min.js
 
-http://code.jquery.com/jquery-1.7.2.min.js
+http://code.jquery.com/jquery-1.8.3.min.js
 
 FALLBACK:
 
-/ offline.html
+#/ offline.html

@@ -64,8 +64,9 @@ webernote = {
 		webernote.store = window.localStorage;
 		var num = webernote.store.length;
 		if (num > 0) {
-			for (var i = 0; i < num; i++) {
-				webernote.showNoteList(i);
+			for (var j = 0; j < num; j++) {
+				webernote.showNoteList('note' + j);
+				$('#note-list').find('.count').text(j + 1);
 			}
 		}
 		//console.log(notes, webernote.store);
@@ -92,37 +93,48 @@ webernote = {
 
 	}, // init
 
-	// Set
-	setNote: function(noteh) {
-		if (note === null) return;
+	// New note
+	newNote: function(num) {
+		// TODO: Make this just add a new default note obj to the global webernote.notes obj
+		var noteObj = webernote.noteObj(num),
+			noteId = 'note' + num;
 
-		var	noteData = webernote.getNote(note) || webernote.notes[note];
+		webernote.notes[noteId] = noteObj;
 
-		// Set it and get it
-		webernote.store.setItem(note, JSON.stringify(noteData));
-		webernote.getNote(note);
+		webernote.setNote(noteId);
+		webernote.showNoteList(noteId); // Show list item
+		webernote.showNote(noteId); // Show note form
+
+		$('li', '#notes').removeClass('selected');
+		$('#notes li[data-note='+ noteId +']').addClass('selected');
 	},
-	// Get
-	getNote: function(note) {
-		if (note === null) return;
 
-		var storedObj = webernote.store.getItem(note);
-		//storedObj = JSON.parse(storedObj);
+	// Set note
+	setNote: function(noteId) {
+		if (noteId === null) return;
+		var	noteData = webernote.notes[noteId];
 
-		webernote.notes[note] = storedObj;
-
-		return storedObj;
+		webernote.store.setItem(noteId, JSON.stringify(noteData));
+		webernote.getNote(noteId);
 	},
-	// Update
-	updateNote: function() {
+	// Get note
+	getNote: function(noteId) {
+		var noteObj = webernote.store.getItem(noteId);
+		noteObj = JSON.parse(noteObj);
+
+		webernote.notes[noteId] = noteObj;
+		return noteObj;
+	},
+	// Update note
+	updateNote: function(noteId) {
 		var noteForm = $('form', '#show-note'),
 			noteList = $('ul', '#notes');
 
-		var note = noteForm.attr('data-note');
-		console.log(webernote.getNote(note));
-
 		// Title
 		noteForm.find('.title').on('keyup', function(e) {
+			var note = noteForm.attr('data-note');
+			console.log(webernote.notes[note]);
+
 			webernote.setNote(note);
 			noteList.find('li[data-note='+ note +']').find('.title').text(title);
 		});
@@ -140,7 +152,7 @@ webernote = {
 			$(this).next().html(desc).removeClass('hidden');
 		});
 		noteForm.find('textarea.description').on('keyup', function(e) {
-			//$(this).val()
+			$(this).html()
 		});
 		noteForm.find('textarea.description').on('blur', function(e) {
 			var desc = $(this).val() || '<p>Note...</p>';
@@ -148,42 +160,53 @@ webernote = {
 			$(this).prev().html(desc).removeClass('hidden');
 		});
 	},
+
 	// Show note
 	showNote: function(noteId) {
 		if (noteId === null) return;
 
-		var data = webernote.getNote(noteId),
-			showNote = $('#show-note'),
-			noteShowStr = $('._noted').clone();
+		var note = webernote.getNote(noteId);
+		var showNote = $('#show-note'),
+			noteStr = $('._noted').clone();
 
 		// Column 3
-		noteShowStr.attr('data-note', noteId).removeAttr('class');
-		showNote.html(noteShowStr).find('textarea').focus();
+		noteStr.attr('data-note', note.selector).removeAttr('class');
+
+		noteStr.find('.title').text('Untitled note...'); // note.title
+
+		// TODO: Parse this timestamp as readable date
+		//noteStr.find('.date').text(note.created);
+		noteStr.find('.url').text(note.url);
+		// TODO: Show tags if any were added only
+		noteStr.find('.tags').text(note.tags);
+		noteStr.find('.description').html(note.description);
+
+		showNote.html(noteStr).find('textarea').focus();
+
+		webernote.updateNote(noteId);
 	},
+
 	// Show list
 	showNoteList: function(noteId) {
 		if (noteId === null) return;
 
-		var data = webernote.getNote('note'+ noteId),
-			noteList = $('ul', '#notes'),
-			noteListStr = $('._note').clone();
+		var note = webernote.getNote(noteId);
+		var noteList = $('ul', '#notes'),
+			noteStr = $('._note').clone();
 
 		// Column 2
-		noteListStr.attr('data-note', noteId).removeAttr('class').find('.title').text();
-		noteList.append(noteListStr);
+		noteStr.attr('data-note', note.selector).removeAttr('class');
+
+		noteStr.find('.title').text('Untitled note...'); // note.title
+
+		// TODO: Parse this timestamp as readable date
+		//noteStr.find('.date').text(note.created);
+		// TODO: Show tags if any were added only
+		//noteStr.find('.tags').text(note.tags);
+		noteStr.find('.description').text(note.description);
+
+		noteList.prepend(noteStr);
 	},
-
-	// New note
-	newNote: function(num) {
-		// TODO: Make this just add a new default note obj to the global webernote.notes obj
-
-		webernote.notes['note' + num] = webernote.noteObj(num);
-
-		webernote.setNote('note' + num);
-		webernote.showNoteList('note' + num);
-		webernote.showNote('note' + num);
-	},
-
 
 	noteObj: function(num) {
 		if (num === 'undefined') return;
@@ -191,6 +214,7 @@ webernote = {
 
 		return {
 			id: num,
+			selector: 'note' + num,
 			title: 'Click to set title...',
 			notebook: 'My Notebook',
 			url: 'http://',
@@ -278,5 +302,5 @@ UTIL = {
 		UTIL.fire('common', 'finalize');
 	}
 };
-//kick it all off hereH
-$(document).ready(UTIL.loadEvents);HM
+//kick it all off here
+$(document).ready(UTIL.loadEvents);
