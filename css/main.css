@@ -9,22 +9,25 @@ html {
 }
 
 body {
-    font: 14px/22px Helvetica, Helvetica Neue, Arial;
+    font: 14px/22px Helvetica Neue, Helvetica, Arial;
     padding: 0;
     margin: 20px auto;
     width: 90%;
 }
 a {
-    color: #669;
+    color: rgb(20, 9, 151);
     text-decoration: none;
 }
 a:hover {
-    text-decoration: underline;
+
 }
 h1 {
     font: bold 36px/100% Arial, Helvetica, sans-serif;
     padding: 0;
     margin: 5px 0;
+}
+h1 a {
+
 }
 h2 {
     font: bold 16px/100% Arial, Helvetica, sans-serif;
@@ -36,6 +39,9 @@ p {
     padding: 0;
 }
 
+:focus {
+	outline: none;
+}
 
 
 /************************************************************************************
@@ -43,16 +49,26 @@ STRUCTURE
 *************************************************************************************/
 
 #pagewrap {
+    border: 1px solid #B8CDE0;
     display: inline-block;
     width: 100%;
     padding: 0;
+
+    background: rgb(238,238,238);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(238,238,238,1)), color-stop(100%, rgba(238,238,238,1)));
+	background: -webkit-linear-gradient(top, rgba(238,238,238,1) 0%, rgba(238,238,238,1) 100%);
+	background:    -moz-linear-gradient(top, rgba(238,238,238,1) 0%, rgba(238,238,238,1) 100%);
+	background:     -ms-linear-gradient(top, rgba(238,238,238,1) 0%, rgba(238,238,238,1) 100%);
+	background:      -o-linear-gradient(top, rgba(238,238,238,1) 0%, rgba(238,238,238,1) 100%);
+	background:         linear-gradient(to bottom, rgba(238,238,238,1) 0%, rgba(238,238,238,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#eeeeee', GradientType=0);
 }
-#header {
+header {
     height: auto;
     padding: 5px 0;
     margin: 0;
 }
-#header h1 {
+header h1 {
 	margin: 5px;
 }
 
@@ -87,23 +103,10 @@ label {
 	color: #0361ae;
 }
 
-#pagewrap {
-    border: solid 1px #ccc;
-}
-
 img {
     max-width: 100%;
     height: auto;
     width: auto\9; /* ie8 */
-}
-
-.header-container {
-    border-bottom: 1px solid #999;
-}
-
-.footer-container,
-.main aside {
-    border-top: 1px solid #999;
 }
 
 .title {
@@ -117,7 +120,6 @@ img {
 .menu, ol, ul {
     padding: 0 0 0 10px;
 }
-
 
 nav {
     display: inline-block;
@@ -136,8 +138,6 @@ nav li {
     width: auto;
 }
 nav a {
-    color: #000;
-    text-shadow: 0 1px 0 rgba(255,255,255,.75);
     font-weight: bold;
     text-align: center;
     text-decoration: none;
@@ -147,8 +147,19 @@ nav a {
 
 /* TOOLBAR NAV */
 
-#toolbar {
+#toolbar,
+#actions {
 	width: 50%;
+	float: left;
+
+	background: rgb(135,224,253);
+	background: -moz-linear-gradient(top, rgba(135,224,253,1) 0%, rgba(83,203,241,1) 40%, rgba(5,171,224,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(135,224,253,1)), color-stop(40%,rgba(83,203,241,1)), color-stop(100%,rgba(5,171,224,1)));
+	background: -webkit-linear-gradient(top, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+	background: -o-linear-gradient(top, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+	background: -ms-linear-gradient(top, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+	background: linear-gradient(to bottom, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=0 );
 }
 
 #toolbar ul {
@@ -160,22 +171,28 @@ nav a {
     display: inline-block;
     width: 13%;
 }
-#toolbar a {
-    color: #000;
-    text-shadow: 0 1px 0 rgba(255,255,255,.75);
+#toolbar a,
+#actions a {
+    color: hsl(85, 88%, 96%);
+    text-shadow: -1px -1px 0 rgba(33, 170, 213, 0.9),
+    			  1px 1px 0 rgba(168, 224, 255, 0.75);
     text-align: center;
     text-decoration: none;
     display: inline-block;
     padding: 4px 10px;
 }
-#toolbar a:hover {
-    text-decoration: underline;
+#toolbar a:hover,
+#actions a:hover {
+	background: rgba(14, 188, 255, 0.74);
+	/*color: rgb(255, 255, 98);
+	text-shadow: -1px -1px 0 rgba(33, 170, 213, 0.9),
+				  1px 1px 0 rgba(168, 224, 255, 0.75);*/
 }
 
 /* ACTIONS */
 
 #actions {
-	float: right;
+
 }
 #actions ul {
     margin: 0;
@@ -183,19 +200,7 @@ nav a {
     list-style: none;
 }
 #actions li {
-    display: inline-block;
-    width: auto;
-}
-#actions a {
-    color: #000;
-    text-shadow: 0 1px 0 rgba(255,255,255,.75);
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    padding: 4px 10px;
-}
-#actions a:hover {
-    text-decoration: underline;
+    float: right;
 }
 
 /* TOOLS NAV */
@@ -219,7 +224,6 @@ nav a {
     padding: 4px 10px;
 }
 
-
 #note-nav,
 #note-list,
 #show-note {
@@ -230,17 +234,18 @@ nav a {
 }
 #note-list,
 #show-note {
-	border: 1px solid #ccc;
+	border: 1px solid #B8CDE0;
 	padding: 0;
 	margin: 3px;
 
-	-webkit-box-shadow: -0.5px 0 2px 0 rgba(100, 100, 100, 0.4);
-			box-shadow: -0.5px 0 2px 0 rgba(100, 100, 100, 0.4);
+	-webkit-box-shadow: 0 0 2px 0 rgba(100, 100, 100, 0.4);
+			box-shadow: 0 0 2px 0 rgba(100, 100, 100, 0.4);
 }
 
 #note-list,
 #show-note {
     background: #f8f8f8;
+    overflow-x: hidden;
 }
 #header,
 #note-nav,
@@ -295,25 +300,31 @@ nav a {
     /*margin: 5px 0 0 5px;*/
 }
 #notes li {
-	border: 1px solid #ddd;
-    display: block;
-    width: 98%;
-    min-height: 50px;
-    margin: 0 0 1px;
-    padding: 5px;
-    float: left;
+	border: 1px solid #fff;
+	display: block;
+	width: 96%;
+	min-height: 50px;
+	margin: 2px 4px;
+	padding: 5px;
 
     -webkit-border-radius: 6px;
 			border-radius: 6px;
 }
 #notes li:hover,
 #notes .selected {
-	background-color: rgb(105, 211, 79);
-	background: rgba(105, 211, 79, 0.5);
+	border: 1px solid rgba(143, 196, 0, 0.5);
+
+	background: rgb(205,235,139);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(205,235,139,1)), color-stop(100%,rgba(205,235,139,1)));
+	background: -webkit-linear-gradient(top, rgba(205,235,139,1) 0%,rgba(205,235,139,1) 100%);
+	background:    -moz-linear-gradient(top, rgba(205,235,139,1) 0%, rgba(205,235,139,1) 100%);
+	background:     -ms-linear-gradient(top, rgba(205,235,139,1) 0%,rgba(205,235,139,1) 100%);
+	background:      -o-linear-gradient(top, rgba(205,235,139,1) 0%,rgba(205,235,139,1) 100%);
+	background:         linear-gradient(to bottom, rgba(205,235,139,1) 0%,rgba(205,235,139,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8b', endColorstr='#cdeb8b',GradientType=0 );
 }
 #notes h2 {
-	max-height: 17px;
-	margin: 2px;
+	margin: 0;
 	padding: 0;
 	overflow: hidden;
 }
@@ -335,7 +346,6 @@ nav a {
 	display: block;
 	width: 100%;
 	padding: 5px;
-	float: left;
 }
 #show-note .top {
 	background: #fff;
@@ -388,10 +398,26 @@ nav a {
 	width: 100%;
 	height: 200px;
 	min-height: 200px;
+	padding: 5px;
 }
+
 
 /* NOTE TYPES */
 
+#note-types {
+	border: solid #B8CDE0;
+	border-width: 1px 0;
+	padding: 10px;
+
+	background: rgb(232,238,242);
+	background: -moz-linear-gradient(top, rgba(232,238,242,1) 0%, rgba(242,245,246,1) 47%, rgba(227,234,237,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(232,238,242,1)), color-stop(47%,rgba(242,245,246,1)), color-stop(100%,rgba(227,234,237,1)));
+	background: -webkit-linear-gradient(top, rgba(232,238,242,1) 0%,rgba(242,245,246,1) 47%,rgba(227,234,237,1) 100%);
+	background: -o-linear-gradient(top, rgba(232,238,242,1) 0%,rgba(242,245,246,1) 47%,rgba(227,234,237,1) 100%);
+	background: -ms-linear-gradient(top, rgba(232,238,242,1) 0%,rgba(242,245,246,1) 47%,rgba(227,234,237,1) 100%);
+	background: linear-gradient(to bottom, rgba(232,238,242,1) 0%,rgba(242,245,246,1) 47%,rgba(227,234,237,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8eef2', endColorstr='#e3eaed',GradientType=0 );
+}
 #note-types ul {
     list-style: none;
 }
@@ -427,22 +453,22 @@ nav a {
 .visuallyhidden {
     border: 0;
     clip: rect(0 0 0 0);
+    width: 1px;
     height: 1px;
     margin: -1px;
-    overflow: hidden;
     padding: 0;
+    overflow: hidden;
     position: absolute;
-    width: 1px;
 }
 
 .visuallyhidden.focusable:active,
 .visuallyhidden.focusable:focus {
     clip: auto;
+    width: auto;
     height: auto;
     margin: 0;
     overflow: visible;
     position: static;
-    width: auto;
 }
 
 .invisible {

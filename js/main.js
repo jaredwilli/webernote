@@ -40,6 +40,10 @@ webernote = {
 			}
 		}
 
+		$('#toolbar').find('a').on('click', function(e) {
+			e.preventDefault();
+		});
+
 		// expand / contract note nav
 		$('#note-nav').find('a').on('click', function(e) {
 			e.preventDefault();
@@ -140,12 +144,12 @@ webernote = {
 		});
 
 		noteForm.find('input.tag').blur(function(e) {
-			var tag = $(this).val() || 'Click to add tags';
-			$(this).addClass('hidden');
-			$(this).prev().html(tag).removeClass('hidden');
+			var tag = $(this).val();
+
 		});
 
 		// Description
+		// TODO: replace this with a wyswyg editor
 		noteForm.find('div.description').on('click', function(e) {
 			var desc = $(this).html();
 			$(this).addClass('hidden');
@@ -155,7 +159,7 @@ webernote = {
 			$(this).html()
 		});
 		noteForm.find('textarea.description').on('blur', function(e) {
-			var desc = $(this).val() || '<p>Note...</p>';
+			var desc = $(this).val();
 			$(this).addClass('hidden');
 			$(this).prev().html(desc).removeClass('hidden');
 		});

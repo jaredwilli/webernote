@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width">
 
-<title>Evernote Example</title>
+<title>Webernote</title>
 
 <link rel="stylesheet" href="css/normalize.min.css">
 <link rel="stylesheet" href="css/main.css">
@@ -25,28 +25,28 @@
 </head>
 <body>
 
+<header>
+    <h1><a href="/">Webernote</a></h1>
+</header>
+
 <div id="pagewrap">
-    <div id="header">
-        <h1>Evernote Example</h1>
+    <nav id="toolbar">
+        <ul>
+            <li><a href="#">File</a></li>
+            <li><a href="#">Edit</a></li>
+            <li><a href="#">View</a></li>
+            <li><a href="#">Note</a></li>
+            <li><a href="#">Format</a></li>
+            <li><a href="#">Tools</a></li>
+            <li><a href="#">Help</a></li>
+        </ul>
+    </nav>
 
-        <nav id="toolbar">
-            <ul>
-                <li><a href="#">File</a></li>
-                <li><a href="#">Edit</a></li>
-                <li><a href="#">View</a></li>
-                <li><a href="#">Note</a></li>
-                <li><a href="#">Format</a></li>
-                <li><a href="#">Tools</a></li>
-                <li><a href="#">Help</a></li>
-            </ul>
-        </nav>
-
-        <nav id="actions">
-            <ul>
-                <li><a href="#" id="new">New Note</a></li>
-            </ul>
-        </nav>
-    </div>
+    <nav id="actions">
+        <ul>
+            <li><a href="#" id="new">New Note</a></li>
+        </ul>
+    </nav>
 
     <div id="note-types">
         <ul>
@@ -188,7 +188,7 @@
 </div>
 
 
-<li class="_note hidden">
+<li class="_note visuallyhidden">
     <h2 class="title"></h2>
     <p>
         <span class="date"></span>
@@ -196,7 +196,7 @@
         <span class="description"></span>
     </p>
 </li>
-<form class="_noted hidden">
+<form class="_noted visuallyhidden">
     <div class="top">
         <!-- <h2 class="title" contenteditable="true">Click to set title...</h2> -->
         <input type="text" class="title" val="" placeholder="Click to set title..." />
