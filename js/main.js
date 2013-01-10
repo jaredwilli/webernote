@@ -17,12 +17,16 @@ webernote = {
 		}
 	},
 	init: function() {
-		// Fix heights
+		/**
+		 * Fix heights first
+		 */
 		var tdH = window.innerHeight- $('td').position().top - 20;
 		$('td').height(tdH);
 		$('#note-nav, #note-list, #show-note').height(tdH - 10);
 
-		// Make columns resizable
+		/**
+		 * Make columns resizable
+		 */
 		$('#resizable').colResizable({
 			minWidth: 60,
 			liveDrag: true,
@@ -32,7 +36,16 @@ webernote = {
 			}
 		});
 
-		// Fix nav arrows
+		/**
+		 * Unused toolbar nav idk what to do with yet
+		 */
+		$('#toolbar').find('a').on('click', function(e) {
+			e.preventDefault();
+		});
+
+		/**
+		 * Fix left nav arrows so they work right
+		 */
 		var noteA = $('#note-nav li').find('a');
 		for (var i = 0; i < noteA.length; i++) {
 			if ($(noteA[i]).siblings('ul').length === 0) {
@@ -40,20 +53,16 @@ webernote = {
 			}
 		}
 
-		$('#toolbar').find('a').on('click', function(e) {
-			e.preventDefault();
-		});
-
-		// expand / contract note nav
+		/**
+		 * Expand / contract note nav
+		 */
 		$('#note-nav').find('a').on('click', function(e) {
 			e.preventDefault();
 
 			if ($(this).parent().hasClass('expanded')) {
 				$(this).parent().removeClass('expanded');
-
 				$(this).siblings('ul').addClass('hidden');
-			}
-			else {
+			} else {
 				$(this).parent().addClass('expanded');
 				$(this).siblings('ul').removeClass('hidden');
 			}
@@ -61,10 +70,12 @@ webernote = {
 			// TODO: generate these nav sections from the given data of each note
 		});
 
-
 		// Trim fat
 		webernote.trim();
 
+		/**
+		 * Setup the storage, forest!
+		 */
 		webernote.store = window.localStorage;
 		var num = webernote.store.length;
 		if (num > 0) {
@@ -75,7 +86,9 @@ webernote = {
 		}
 		//console.log(notes, webernote.store);
 
-		// Create a new note
+		/**
+		 * Create a new note
+		 */
 		$('#new').on('click', function(e) {
 			e.preventDefault();
 
@@ -83,7 +96,9 @@ webernote = {
 			webernote.updateNote(num);
 		});
 
-		// On note click
+		/**
+		 * On note click
+		 */
 		$('li', '#notes').on('click', function(e) {
 			e.preventDefault();
 
@@ -103,22 +118,19 @@ webernote = {
 		var noteObj = webernote.dataObj.newNoteObj(num),
 			noteId = 'note' + num;
 
-		webernote.notes[noteId] = noteObj;
-
-		webernote.setNote(noteId);
+		webernote.setNote(noteId, noteObj);
 		webernote.showNoteList(noteId); // Show list item
 		webernote.showNote(noteId); // Show note form
 
-		$('li', '#notes').removeClass('selected');
-		$('#notes li').attr('data-note', noteId).addClass('selected');
+		$('#notes').find('li').removeClass('selected');
+		$('#notes').find('li[data-note='+ noteId +']').addClass('selected');
 	},
 
 	// Set note
-	setNote: function(noteId) {
+	setNote: function(noteId, noteObj) {
 		if (noteId === null) return;
-		var	noteData = webernote.notes[noteId];
 
-		webernote.store.setItem(noteId, JSON.stringify(noteData));
+		webernote.store.setItem(noteId, JSON.stringify(noteObj));
 		webernote.getNote(noteId);
 	},
 	// Get note
@@ -131,24 +143,31 @@ webernote = {
 	},
 	// Update note
 	updateNote: function(noteId) {
-		var noteForm = $('form', '#show-note'),
-			noteList = $('ul', '#notes');
+		var noteForm = $('#show-note').find('form'),
+			noteList = $('#notes').find('ul');
+		var noteObj = webernote.getNote(noteId);
 
 		// Title
 		noteForm.find('.title').on('keyup', function(e) {
-			var noteId = $(this).parents('form').attr('data-note'),
-				noteObj = webernote.getNote(noteId);
-
 			noteObj.title = $(this).val();
-			webernote.setNote(noteId, JSON.stringify(noteObj));
-
-			noteList.find('li[data-note='+ noteId +']').find('.title').text($(this).val());
+			webernote.setNote(noteId, noteObj);
+			noteList.find('li[data-note='+ noteId +'] .title').text($(this).val());
 		});
 
-		// Tag
-		noteForm.find('input.tag').blur(function(e) {
-			var tag = $(this).val();
+		// URL
+		noteForm.find('input.url').on('keyup', function(e) {
+			var url = /http(s?):\/\//.test($(this).val());
+			noteObj.url = (url) ? $(this).val() : 'http://' + $(this).val();
+			webernote.setNote(noteId, noteObj);
+			noteList.find('li[data-note='+ noteId +'] .url').text($(this).val());
+		});
 
+		// Tags
+		noteForm.find('input.tag').on('keyup', function(e) {
+			var tagsObj = ($(this).val() || '').split(', ');
+			noteObj.tags = $(this).val();
+			webernote.setNote(noteId, noteObj);
+			noteList.find('li[data-note='+ noteId +'] .tags').text($(this).val());
 		});
 
 		// Description
@@ -159,9 +178,11 @@ webernote = {
 			$(this).next().html(desc).removeClass('hidden');
 		});
 		noteForm.find('textarea.description').on('keyup', function(e) {
-			$(this).html()
+			noteObj.description = $(this).val();
+			webernote.setNote(noteId, noteObj);
+			noteList.find('li[data-note='+ noteId +'] .description').html($(this).val());
 		});
-		noteForm.find('textarea.description').on('blur', function(e) {
+		noteForm.find('textarea.description').blur(function(e) {
 			var desc = $(this).val();
 			$(this).addClass('hidden');
 			$(this).prev().html(desc).removeClass('hidden');
@@ -178,17 +199,17 @@ webernote = {
 		// Column 3
 		var note = webernote.getNote(noteId),
 			noteObj = webernote.dataObj.noteObj(note);
-		console.log(noteObj);
+		//console.log(noteObj);
 
 		noteStr.attr('data-note', noteObj.selector).removeAttr('class');
+
 		noteStr.find('.title').val(noteObj.title);
-
 		noteStr.find('.url').val(noteObj.url);
-
-		noteStr.find('.tags').val(noteObj.tags); // TODO: Show tags if any were added only
+		noteStr.find('.tag').val(noteObj.tags);
 		noteStr.find('.description').html(noteObj.description);
 
-		showNote.html(noteStr).find('textarea').focus();
+		showNote.html(noteStr);
+		//.find('textarea').focus();
 
 		// Run updater for note form
 		webernote.updateNote(noteId);
@@ -212,8 +233,8 @@ webernote = {
 			noteObj.title = 'Untitled note...';
 		}
 		noteStr.find('.title').text(noteObj.title);
-
-		noteStr.find('.date').text(noteObj.created); // TODO: Parse this timestamp as readable date
+		var noteDate = webernote.utils.formatDate(noteObj.created);
+		noteStr.find('.date').text(noteDate); // TODO: Parse this timestamp as readable date
 		noteStr.find('.tags').text(noteObj.tags); // TODO: Show tags if any were added only
 		noteStr.find('.description').text(noteObj.description);
 
@@ -265,6 +286,11 @@ webernote = {
 	},
 
 	utils: {
+		formatDate: function(timeStamp) {
+            var date = new Date(timeStamp);
+            formattedDate = date.getMonth()+ 1 + "/" + date.getDate() + "/" + date.getFullYear();
+            return formattedDate;
+        },
 		extend: function(d, e, c) {
 			var b = function() {}, a;
 			b.prototype = e.prototype;
