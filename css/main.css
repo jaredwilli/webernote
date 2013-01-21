@@ -139,11 +139,11 @@ STRUCTURE
 	width: 100%;
 
 	background: rgb(135,224,253);
-	background: -moz-linear-gradient(top, rgba(135,224,253,1) 0%, rgba(83,203,241,1) 40%, rgba(5,171,224,1) 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(135,224,253,1)), color-stop(40%,rgba(83,203,241,1)), color-stop(100%,rgba(5,171,224,1)));
 	background: -webkit-linear-gradient(top, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
-	background: -o-linear-gradient(top, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+	background: -moz-linear-gradient(top, rgba(135,224,253,1) 0%, rgba(83,203,241,1) 40%, rgba(5,171,224,1) 100%);
 	background: -ms-linear-gradient(top, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+	background: -o-linear-gradient(top, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
 	background: linear-gradient(to bottom, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=0 );
 }
@@ -160,19 +160,37 @@ STRUCTURE
     width: auto;
 }
 #toolbar .new-note {
-	background: hsla(0, 100%, 53%, 0.74);
+	background: rgba(255, 15, 15, 0.74);
 	position: absolute;
 	right: 0;
 	top: 0;
+	padding: 4px 6px 4px 0;
+}
+#toolbar .new-note:hover {
+	background: hsla(22, 100%, 53%, 0.9);
 }
 #toolbar .new-note a {
 	text-shadow: -1px -1px 0 hsla(0, 92%, 25%, 0.9),
 				  1px 1px 0 hsla(12, 81%, 54%, 0.75);
+	padding: 0;
 }
-#toolbar .new-note a:hover,
-#actions .new-note a:hover {
-	background: hsla(22, 100%, 53%, 0.74);
+#toolbar .new-note a .plus {
+	border-right: 1px solid rgba(119, 0, 0, 0.5);
+	font-size: 20px;
+	line-height: 19px;
+	vertical-align: middle;
+	padding: 2px 10px;
+	position: relative;
+	top: -1px;
+	margin: 0 5px 0 0;
+
+	-webkit-box-shadow: 1px 0px 0 0 rgba(255, 255, 255, 0.25);
+			box-shadow: 1px 0px 0 0 rgba(255, 255, 255, 0.25);
 }
+#toolbar .new-note:hover a .plus {
+	border-right: 1px solid rgb(185, 74, 0, 0.5);
+}
+
 #toolbar a,
 #actions a {
     color: hsl(85, 88%, 96%);
@@ -190,6 +208,10 @@ STRUCTURE
 	text-shadow: -1px -1px 0 rgba(33, 170, 213, 0.9),
 				  1px 1px 0 rgba(168, 224, 255, 0.75);*/
 }
+#toolbar .new-note a:hover {
+	background: transparent;
+}
+
 
 /* ACTIONS
 	removed for now
@@ -213,11 +235,11 @@ STRUCTURE
 	display: block;
 
 	background: rgb(232,238,242);
-	background: -moz-linear-gradient(top, rgba(232,238,242,1) 0%, rgba(242,245,246,1) 47%, rgba(227,234,237,1) 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(232,238,242,1)), color-stop(47%,rgba(242,245,246,1)), color-stop(100%,rgba(227,234,237,1)));
 	background: -webkit-linear-gradient(top, rgba(232,238,242,1) 0%,rgba(242,245,246,1) 47%,rgba(227,234,237,1) 100%);
-	background: -o-linear-gradient(top, rgba(232,238,242,1) 0%,rgba(242,245,246,1) 47%,rgba(227,234,237,1) 100%);
+	background: -moz-linear-gradient(top, rgba(232,238,242,1) 0%, rgba(242,245,246,1) 47%, rgba(227,234,237,1) 100%);
 	background: -ms-linear-gradient(top, rgba(232,238,242,1) 0%,rgba(242,245,246,1) 47%,rgba(227,234,237,1) 100%);
+	background: -o-linear-gradient(top, rgba(232,238,242,1) 0%,rgba(242,245,246,1) 47%,rgba(227,234,237,1) 100%);
 	background: linear-gradient(to bottom, rgba(232,238,242,1) 0%,rgba(242,245,246,1) 47%,rgba(227,234,237,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8eef2', endColorstr='#e3eaed',GradientType=0 );
 }
@@ -225,13 +247,21 @@ STRUCTURE
     list-style: none;
 }
 #note-types li {
-    padding: 0 5px;
 }
 #note-types li a {
-
+    padding: 0 5px;
+    margin: 1px;
 }
-#note-types li a:hover {
+#note-types li a:hover,
+#note-types li a.active {
+	background: rgba(85, 187, 255, 0.85);
+	border: 1px solid rgb(118, 158, 218);
+	color: #fff;
+	text-shadow: 0 -1px 1px rgb(106, 144, 158), 1px 1px 0 rgb(126, 170, 187);
+	margin: 0;
 
+	-webkit-border-radius: 4px;
+			border-radius: 4px;
 }
 
 /* COMBINED STYLES for the COLUMNS */
@@ -288,7 +318,6 @@ STRUCTURE
 
 
 
-
 /* ==============
 	NOTES- List ?
    ============== */
@@ -331,11 +360,11 @@ STRUCTURE
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8b', endColorstr='#cdeb8b',GradientType=0 );*/
 
 	background: rgb(235,241,246);
-	background: -moz-linear-gradient(top, rgba(235,241,246,1) 0%, rgba(213,235,251,1) 36%, rgba(182,213,234,1) 98%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235,241,246,1)), color-stop(36%,rgba(213,235,251,1)), color-stop(98%,rgba(182,213,234,1)));
 	background: -webkit-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(213,235,251,1) 36%,rgba(182,213,234,1) 98%);
-	background: -o-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(213,235,251,1) 36%,rgba(182,213,234,1) 98%);
+	background: -moz-linear-gradient(top, rgba(235,241,246,1) 0%, rgba(213,235,251,1) 36%, rgba(182,213,234,1) 98%);
 	background: -ms-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(213,235,251,1) 36%,rgba(182,213,234,1) 98%);
+	background: -o-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(213,235,251,1) 36%,rgba(182,213,234,1) 98%);
 	background: linear-gradient(to bottom, rgba(235,241,246,1) 0%,rgba(213,235,251,1) 36%,rgba(182,213,234,1) 98%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#b6d5ea',GradientType=0 );
 }
@@ -345,7 +374,7 @@ STRUCTURE
 	overflow: hidden;
 }
 #notes p {
-	max-height: 50px;
+	max-height: 60px;
 	overflow: hidden;
 }
 
@@ -407,8 +436,20 @@ STRUCTURE
 #show-note input.title,
 #show-note input.url,
 #show-note input.tag {
-	border: none;
-	padding: 3px 5px;
+	border: 1px solid rgb(238, 238, 238);
+	padding: 6px;
+}
+#show-note input.title {
+	width: 60%;
+}
+#show-note input.url,
+#show-note input.tag {
+	width: 48%;
+	margin: 0 10px 0 0;
+	border: 1px solid rgb(190, 202, 213);
+}
+#show-note input.tag {
+	margin: 0;
 }
 #show-note select {
 	border: 1px solid #eee;
@@ -423,6 +464,7 @@ STRUCTURE
 	padding: 5px;
 	width: 98%;
 	min-height: 88%;
+	white-space: pre-line;
 }
 #show-note textarea,
 #show-note textarea:active {
