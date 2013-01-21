@@ -79,10 +79,13 @@ webernote = {
 		webernote.store = window.localStorage;
 		var num = webernote.store.length;
 		if (num > 0) {
+			var total;
 			for (var j = 0; j < num; j++) {
 				webernote.showNoteList('note' + j);
-				$('#note-list').find('.count').text(j + 1);
+				total = j + 1;
 			}
+			$('#note-list').find('.count').text(total);
+			$('#all').find('.count').text('('+ total +')');
 		}
 		//console.log(notes, webernote.store);
 

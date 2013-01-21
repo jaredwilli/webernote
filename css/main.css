@@ -308,11 +308,14 @@ STRUCTURE
 	padding: 0 0 0 14px;
 	text-decoration: none;
 }
+#note-nav li > a:hover {
+	text-decoration: underline;
+}
 #note-nav li.expanded > a {
 	background-position: 1px -10px;
 }
+
 #note-nav li .count {
-	margin-left: 5px;
 	color: #999;
 }
 
@@ -449,6 +452,7 @@ STRUCTURE
 	border: 1px solid rgb(190, 202, 213);
 }
 #show-note input.tag {
+	width: 46%;
 	margin: 0;
 }
 #show-note select {
