@@ -192,6 +192,66 @@ webernote = {
 		});
 	},
 
+/*
+		$('#notes li').on('click', function(e) {
+			e.preventDefault();
+			webernote.noteClick(e);
+		});
+
+
+	}, // end init
+
+	// Set tag
+	setTag: function(noteId, tagName) {
+		webernote.tag.setItem(noteId, JSON.stringify(tagName));
+		webernote.getTag(tagName);
+	},
+	// Get tag
+	getTag: function(tagName) {
+		var tagObj = webernote.tag.getItem(tagName);
+		tagObj = JSON.parse(tagObj);
+
+		webernote.tags[tagName] = tagObj;
+		return tagObj;
+	},
+
+
+
+	// Delete note
+	deleteNote: function(noteId) {
+		if (noteId === null) return;
+
+		return webernote.store.removeItem(noteId);
+	},
+	noteClick: function(e) {
+		if ($(e.target).hasClass('delete')) {
+			$(e.target).parent().remove();
+			webernote.deleteNote($(e.target).parent().data('note'));
+			return false;
+		}
+
+		var noteId = $(this).data('note');
+		$('#notes').find('li').removeClass('selected');
+		$(this).addClass('selected');
+
+		webernote.showNote(noteId);
+		webernote.updateNote(noteId);
+	},
+
+
+
+
+		tagObj: function(noteId, tag) {
+			if (typeof tag === 'undefined') return;
+
+			// Make fallback values if there are none
+			return {
+				id: tag.id,
+				name: tag.name || '',
+				notes: [ noteId ] || []
+			};
+		}
+*/
 	// Show note
 	showNote: function(noteId) {
 		if (noteId === null) return;
