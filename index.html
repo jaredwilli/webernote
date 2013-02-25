@@ -6,11 +6,10 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title></title>
-<meta name="description" content="">
 <meta name="viewport" content="width=device-width">
 
-<title>Webernote</title>
+<title>Webernote App</title>
+<meta name="description" content="">
 
 <link rel="stylesheet" href="css/normalize.min.css">
 <link rel="stylesheet" href="css/main.css">
@@ -20,14 +19,30 @@
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]-->
 
+<script src="//cdn.firebase.com/v0/firebase.js"></script>
+<script src="//cdn.firebase.com/v0/firebase-auth-client.js"></script>
+
 <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
 </head>
 <body>
 
 <header>
-    <h1><a href="/">Webernote</a></h1>
 </header>
+<script id="tmpl-header-loggedOut" type="text/html">
+    <div id="loginout">
+        <a id="login" href="#">Login</a>
+    </div>
+
+    <h1><a href="#">Webernote</a></h1>
+</script>
+<script id="tmpl-header-loggedIn" type="text/html">
+    <div id="loginout">
+        <a id="logout" href="#">Log Out</a>
+    </div>
+
+    <h1><a href="#">Webernote</a></h1>
+</script>
 
 <div id="pagewrap">
     <nav id="toolbar">
@@ -40,7 +55,12 @@
             <li><a href="#">Tools</a></li>
             <li><a href="#">Help</a></li>
 
-            <li class="new-note"><a href="#" id="new"><span class="plus">+</span> New Note</a></li>
+            <li class="new-note hidden">
+                <a id="newNote" href="#">
+                    <span class="plus">+</span>
+                    New Note
+                </a>
+            </li>
         </ul>
     </nav>
 
@@ -62,90 +82,122 @@
         </ul>
     </nav>
 
-
      <table id="resizable">
-
         <tr>
             <td valign="top">
                 <div id="note-nav">
-                    <ul id="notebooks">
-                        <li class="expanded">
-                            <a href="#">Notebooks</a>
 
+                    <ul id="notebooks">
+                        <li><a href="#">Notebooks</a>
                             <ul class="notebooks">
-                                <li id="all" class="active"><a href="#all"><span class="name">All&nbsp;Notes</span></a> <span class="count">(3)</span></li>
-                                <li id="my-notebook"><a href="#my-notebook"><span class="name">My&nbsp;notebook</span></a> <span class="count">(3)</span></li>
                             </ul>
+                            <script id="tmpl-notebook-navItem" type="text/html">
+                                <li id="notebook-{{notebookId}}">
+                                    <a href="?notebook={{notebookId}}">
+                                        <span class="name">{{notebookName}}</span>
+                                    </a>
+                                    <span class="count">({{notebookCount}})</span>
+                                </li>
+                            </script>
                         </li>
                     </ul>
 
                     <ul id="tags">
-                        <li>
-                            <a href="#">Tags</a>
-
+                        <li><a href="#">Tags</a>
                             <ul class="tags hidden">
-                                <li><a href="#"><span class="name">javascript</span></a> <span class="count">(1)</span></li>
-                                <li><a href="#"><span class="name">css</span></a> <span class="count">(2)</span></li>
-                                <li><a href="#"><span class="name">html</span></a> <span class="count">(2)</span></li>
                             </ul>
+                            <script id="tmpl-tag-navItem" type="text/html">
+                                <li id="tag-{{tagId}}" class="tag">
+                                    <a href="?tag={{tagId}}">
+                                        <span class="name">{{tagId}}</span>
+                                    </a>
+                                    <span class="count">({{noteCount}})</span>
+                                </li>
+                            </script>
                         </li>
                     </ul>
 
                     <ul id="attributes">
-                        <li>
-                            <a href="#">Attributes</a>
+                        <li><a href="#">Attributes</a>
 
                             <ul id="created" class="attributes hidden">
+                            </ul>
+                            <script id="tmpl-created-navItem" type="text/html">
                                 <li><a href="#">Created</a>
                                     <ul class="created hidden">
-                                        <li><a href="#">Since</a></li>
-                                        <li><a href="#">Before</a></li>
+                                        <li id="create-{{createdId}}">
+                                            <a href="#since">Since</a>
+                                        </li>
+                                        <li>
+                                            <a href="#before">Before</a>
+                                        </li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </script>
 
                             <ul id="modified" class="attributes hidden">
+                            </ul>
+                            <script id="tmpl-modified-navItem" type="text/html">
                                 <li><a href="#">Last Modified</a>
                                     <ul class="modified hidden">
-                                        <li><a href="#">Since</a></li>
-                                        <li><a href="#">Before</a></li>
+                                        <li id="modified-{{modifiedId}}">
+                                            <a href="#since">Since</a>
+                                        </li>
+                                        <li>
+                                            <a href="#before">Before</a>
+                                        </li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </script>
 
                             <ul id="contains" class="attributes hidden">
+                            </ul>
+                             <script id="tmpl-contains-navItem" type="text/html">
                                 <li><a href="#">Contains</a>
                                     <ul class="contains hidden">
-                                        <li><a href="#">Since</a></li>
-                                        <li><a href="#">Before</a></li>
+                                        <li id="contains-{{containsId}}">
+                                            <a href="#since">Since</a>
+                                        </li>
+                                        <li>
+                                            <a href="#before">Before</a>
+                                        </li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </script>
 
                             <ul id="source" class="attributes hidden">
+                            </ul>
+                            <script id="tmpl-source-navItem" type="text/html">
                                 <li><a href="#">Source</a>
                                     <ul class="source hidden">
-                                        <li><a href="#">Since</a></li>
-                                        <li><a href="#">Before</a></li>
+                                        <li id="source-{{sourceId}}">
+                                            <a href="#since">Since</a>
+                                        </li>
+                                        <li>
+                                            <a href="#before">Before</a>
+                                        </li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </script>
+
                         </li>
                     </ul>
 
                     <ul id="searches">
-                        <li>
-                            <a href="#">Saved&nbsp;Searches</a>
-
+                        <li><a href="#">Saved&nbsp;Searches</a>
                             <ul class="searches hidden">
-                                <li><em>No Saved Searches</em></li>
                             </ul>
                         </li>
                     </ul>
 
                     <ul class="trash">
-                        <li><a href="#">Trash</a></li>
                     </ul>
+                    <script id="tmpl-trash-navItem" type="text/html">
+                        <li
+                            <a href="#trash">Trash</a>
+                        </li>
+                    </script>
+
                 </div> <!-- // note-nav -->
             </td>
 
@@ -161,6 +213,7 @@
                         <span class="viewtext">
                         	Viewing <span class="count">0</span> notes from
                         </span>
+
                         <select name="notebook" class="notebook">
                         	<option selected="selected">My Notebook</option>
                         </select>
@@ -168,54 +221,74 @@
 
                     <div id="notes">
                         <ul>
-
                         </ul>
+
+                        <script id="tmpl-noteList-item" type="text/html">
+                            <li id="note{{noteId}}" class="note">
+                                <a class="delete" href="?delete=note{{noteId}}">X</a>
+                                <h2 class="title">{{title}}</h2>
+                                <p>
+                                    <span class="date">{{modified}}</span>
+                                    <span class="tags">{{tags}}</span>
+                                    <span class="description">{{description}}</span>
+                                </p>
+                            </li>
+                        </script>
                     </div>
                 </div>
             </td>
 
             <td valign="top">
                 <div id="show-note">
-
                 </div>
+                <script id="tmpl-noteForm" type="text/html">
+                    <form data-id="note{{noteId}}">
+                        <div class="top">
+                            <input type="hidden" name="modified" id="modified" />
+                            <input type="text" class="title" name="title" value="{{title}}" placeholder="Click to set title..." />
+                            <!-- TODO: Make this into a template -->
+                            <select name="notebook" class="notebook">
+                                <option value="{{notebook}}" selected="selected">{{notebook}}</option>
+                                <option value="New Notebook">New Notebook</option>
+                            </select>
+                            <input type="text" name="new-notebook" class="new-notebook visuallyhidden" placeholder="Notebook name..." />
+                        </div>
+                        <div class="mid">
+                            <input type="url" class="url" name="url" value="{{url}}" placeholder="http://" />
+                            <input type="text" class="tag" name="tag" value="{{tags}}" placeholder="Click to add tag..." />
+                        </div>
+                        <div class="description hidden">{{description}}</div>
+                        <textarea class="description">{{description}}</textarea>
+                    </form>
+                </script>
             </td>
         </tr>
     </table>
 </div>
 
-<li class="_note visuallyhidden">
-    <a class="delete" href="#">X</a>
-    <h2 class="title"></h2>
-    <p>
-        <span class="date"></span>
-        <span class="tags"></span>
-        <span class="description"></span>
-    </p>
-</li>
-<form class="_noted visuallyhidden">
-    <div class="top">
-        <input type="text" class="title" placeholder="Click to set title..." />
+<div id="fb-root"></div>
 
-        <select name="notebook">
-            <option value="My Notebook">My NoteBook</option>
-        </select>
-    </div>
-    <div class="mid">
-        <input type="url" class="url" name="url" placeholder="http://" />
-        <input type="text" class="tag" name="tag" placeholder="Click to add tag..." />
-    </div>
-
-    <div class="description hidden"><p></p></div>
-    <textarea class="description"></textarea>
-</form>
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
 
+<script src="js/vendor/history.js"></script>
 <script src="js/colResizable-1.3.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min.js"></script>
+
 <script src="js/plugins.js"></script>
 <script src="js/main.js"></script>
+
+
+<script type="text/javascript">
+var _gaq = [['_setAccount','UA-22924724-1'],['_trackPageview']];
+(function(d, t) {
+    var g = d.createElement(t),
+    s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.p rotocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)
+}(document,'script'));
+</script>
 
 </body>
 </html>

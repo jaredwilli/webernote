@@ -1,426 +1,951 @@
-bmi_SafeAddOnload = null;
+/**
+ * The Webernote object is the primary conduit to the data feed. It provides
+ * functions to login a user, log them out, and to register callbacks for
+ * events.
+ *
+ * This object knows nothing about the UI (see WebernoteUI() for
+ * how this object is used to make sure the UI is updated as events come in).
+ *
+ * @param    {string}    baseURL     The Firebase URL.
+ *
+ * @param    {boolean}   newContext  Whether a new Firebase context is used.
+ *                                   (Useful for testing only)
+ * @return   {Webernote}
+ */
 
-if (typeof webernote !== 'object') {
-	webernote = {};
+function Webernote(baseUrl, newContext) {
+	this.name = null;
+	this.userId = null;
+	this.firebase = null;
+	this.mainUser = null;
+	this.fullName = null;
+
+	// Every time we call firebaseRef.on, we need to remember to call .off,
+	// when requested by the caller via unload(). Store our handlers
+	// here so we can clear them later.
+	this.handlers = [];
+
+	if (!baseUrl || typeof baseUrl !== 'string') {
+		throw new Error('Invalid baseUrl');
+	}
+	this.firebase = new Firebase(baseUrl, newContext || false ? new Firebase.Context() : null);
+}
+Webernote.prototype = {
+	validateCallback: function(cb, notInit) {
+		if (!cb || typeof cb !== 'function') {
+			throw new Error('Invalid onComplete() callback');
+		}
+		if (!notInit) {
+			if (!this.userId || !this.firebase) {
+				throw new Error('Method called without calling login()');
+			}
+		}
+	},
+	validateObject: function(obj, name) {
+		if (!obj || obj.constructor !== Object)	{
+			throw new Error('Invalid '+ name +' Object');
+		}
+	},
+	validateString: function(str, name) {
+		if (!str || typeof str !== 'string') {
+			throw new Error('Invalid '+ name);
+		}
+	},
+	getParameterByName: function(name) {
+		var expr = '[?&]'+ name +'=([^&]*)',
+			match = RegExp().exec(window.location.search);
+
+		return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+	}
+	};
+
+/**
+ * Login a given user. The provided callback will be called with (err, info)
+ * where "err" will be false if the login succeeded, and "info" is set to
+ * an object containing the following fields:
+ *
+ *    id: userId
+ *    name: A string suitable for greeting the user (usually first name)
+ *    avatar: URL to a avatar of the user
+ *
+ * Some methods on this object may not be called until login() has succeeded,
+ * and are noted as such.
+ *
+ * The login is performed using Github or Twitter as the identity provider.
+ * A call to login() is done maybe twice in the app:
+ * once to check if the user is logged in by passing the silent parameter as
+ * true. If they are not, onComplete() will be invoked with an error, you may
+ * display a login link and associate the click action for it with another
+ * call to login(), this time setting silent to false.
+ *
+ * @param    {boolean}   silent      Whether or not a silent (no popup)
+ *                                   login() should be performed.
+ *
+ * @param    {Function}  onComplete  The callback to call when login() is done.
+ */
+
+Webernote.prototype.login = function(silent, onComplete) {
+	var self = this;
+	self.validateCallback(onComplete, true);
+
+	var token = localStorage.getItem('authToken');
+
+	if (!token && silent) {
+		onComplete(new Error('User is not logged in'), false);
+		return;
+	}
+	else if (token) {
+		//console.log(token);
+		// reuse the token and auth the Firebase
+		self.firebase.auth(token, function(err, dummy) {
+			if (!err) {
+				//console.log(err);
+				finish();
+			} else {
+				//console.log('clear');
+				// clear token and manually login
+				localStorage.clear();
+				self.login(silent, onComplete);
+			}
+		});
+		return;
+	}
+
+	// No token found and silent was false so use github to login
+	var authClient = new FirebaseAuthClient(self.firebase, function(err, info) {
+		if (err) {
+			onComplete(new Error(err), false);
+			return;
+		}
+		else if (info) {
+			// Store the token in localStorage
+			localStorage.setItem('authToken', info.firebaseAuthToken);
+			localStorage.setItem('userId', info.id);
+			localStorage.setItem('name', info.name);
+
+			finish();
+		}
+	});
+
+	// Login with social sites
+	authClient.login('Twitter');
+	//authClient.login('github');
+
+	function finish() {
+		self.userId = localStorage.getItem('userId');
+		self.mainUser = self.firebase.child('users').child(self.userId);
+		self.name = localStorage.getItem('name');
+
+		var userRef = self.firebase.child('users').child(self.userId);
+		//console.log(self, userRef);
+
+		userRef.once('value', function(userSnap) {
+			var info = {},
+				val = userSnap.val();
+
+			if (!val) {
+				// First login set user details
+				info = {
+					userId: self.userId,
+					name: self.name,
+					notes: self.userId,
+					tags: self.userId,
+					notebooks: self.userId
+				};
+				userRef.set(info);
+			} else {
+				info = val;
+			}
+
+			userRef.child('status').set('online');
+			onComplete(false, info);
+		});
+	}
+};
+
+
+/**
+ * Logout the current user. The object may be reused after a logout(), but only
+ * after a successful login() has been performed.
+ */
+
+Webernote.prototype.logout = function() {
+	//console.log(this);
+	// reset all keys and user info
+	localStorage.clear();
+
+	var userRef = this.firebase.child('users').child(this.userId);
+	userRef.child('status').set('offline')
+	this.firebase.unauth();
+	// reset instance vars
+	this.mainUser = null;
+	this.userId = null;
+	this.name = null;
+
+	$('#loginout').find('a').attr('href', '#login').text('Log In');
+	$('.new-note').addClass('hidden');
+};
+
+/**
+ * Get information on a particular user, given a userId. The onComplete()
+ * callback will be provided an object as a single argument, containing
+ * the same fields as the object returned by login()
+ *
+ * You do not need to be authenticated to make this call.
+ *
+ * onComplete() may be called multiple times if user information changes. Make
+ * sure to update the DOM accordingly.
+ *
+ * @param    {string}    userId      The userId to get information for.
+ *
+ * @param    {Function}  onComplete  The callback to call with the user info.
+ */
+
+Webernote.prototype.getUserInfo = function(userId, onComplete) {
+	var self = this;
+	self.validateString(userId, 'userId');
+	self.validateCallback(onComplete, true);
+
+	var userRef = self.firebase.child('users').child(userId),
+		handler = userRef.on('value', function(userSnap) {
+			var val = userSnap.val();
+			onComplete(val);
+		});
+
+	self.handlers.push({
+		ref: userRef,
+		handler: handler,
+		eventType: 'value'
+	});
+};
+
+
+/**
+ * Get information for a specific note, given a userId and noteId. The
+ * onComplete() callback will be provided an object as a single argument,
+ * containing the properties in the object returned by onNewNote() with
+ * the addition of a created date property.
+ *
+ * You need to be authenticated through login() to use this function.
+ *
+ * @param    {string}    userId          The userId for the current user.
+ *
+ * @param 	 {string} 	 noteId 		 The noteId of the note to be fetched.
+ *
+ * @param    {Function}  onComplete  	 The callback to call with the note.
+ */
+
+Webernote.prototype.getNote = function(userId, noteId, onComplete) {
+	var self = this;
+	self.validateString(userId, 'userId');
+	self.validateString(noteId, 'noteId');
+	self.validateCallback(onComplete, true);
+
+	self.firebase.child('users').child(userId).child('notes').child(noteId).once('value', function(snap) {
+		onComplete(snap.val());
+	});
+};
+
+/**
+ * Get the notes within a specific notebook, given a userId and notebookId.
+ * The onComplete() callback will be provided an Array as a single argument,
+ * containing the ID's of the notes within a notebook.
+ *
+ * You need to be authenticated through login() to use this function.
+ *
+ * @param    {string}    userId          The userId for the current user.
+ *
+ * @param 	 {string} 	 notebookId		 The ID of the notebook to look in.
+ *
+ * @param    {Function}  onComplete  	 The callback to call with the note ID's.
+ */
+
+Webernote.prototype.getNotebook = function(userId, notebookId, onComplete) {
+	var self = this;
+	self.validateString(userId, 'userId');
+	self.validateCallback(notebookId, 'notebookId');
+	self.validateCallback(onComplete, true);
+
+	self.firebase.child('users').child(userId).child('notebooks').child(notebookId).once('value', function(snap) {
+		onComplete(snap.val());
+	});
+};
+
+/**
+ * Get the notes with a specific tag, given a userId and tagId. The
+ * onComplete() callback will be provided an Array as a single argument,
+ * containing the ID's of the notes with that have the tag.
+ *
+ * You need to be authenticated through login() to use this function.
+ *
+ * @param    {string}    userId          The userId for the current user.
+ *
+ * @param 	 {string} 	 tagId			 The ID of the tag to get notes for.
+ *
+ * @param    {Function}  onComplete  	 The callback to call with the note ID's.
+ */
+
+Webernote.prototype.getTag = function(userId, tagId, onComplete) {
+	var self = this;
+	self.validateString(userId, 'userId');
+	self.validateString(tagId, 'tagId');
+	self.validateCallback(onComplete, true);
+
+	self.firebase.child('users').child(userId).child('tags').child(tagId).once('value', function(snap) {
+		onComplete(snap.val());
+	});
+};
+
+/**
+ * Save a note as the current user. The provided callback will be called with
+ * (err, done) where "err" will be false if the save succeeded, and done will
+ * be set to the ID of the note just saved.
+ *
+ * You need to be authenticated through login() to use this function.
+ *
+ * @param    {string}    userId     		The userId for the current user.
+ *
+ * @param    {Object}    noteData   		A data object for each form field value.
+ *
+ * @param    {Function}  onComplete  		The callback to call when the save is done.
+ */
+
+Webernote.prototype.save = function(userId, noteData, onComplete) {
+	var self = this;
+	self.validateString(userId, 'userId');
+	self.validateObject(noteData, 'noteData');
+	self.validateCallback(onComplete, true);
+
+	// Add to the users notes using push() to ensure a unique ID
+	var notesRef = self.firebase.child('users').child(userId).child('notes').push(),
+		noteRefId = notesRef.name();
+
+	// Set the note
+	notesRef.set(noteData, function(err) {
+		if (err) {
+			onComplete(new Error('Could not save'), false);
+			return;
+		}
+
+		// Add reference to note just pushed by adding it to notes list of current user
+		var listNoteRef = self.mainUser.child('notes').child(noteRefId);
+		listNoteRef.set(true, function(err) {
+			if (err) {
+				onComplete(new Error('Could not save note'), false);
+				return;
+			}
+
+			// Check the user notebooks if noteData.notebook exists and add it if not. Once the
+			// notebook exists add the noteId to the noteData.notebook in notebooks for the user.
+			//self.mainUser.child('notebooks').child(noteData.notebook).set(true);
+
+			// Check the user tags for noteData.tags once the string is split(', ') up and add if
+			// any tags don't exist. Add the noteId to each tag in the user's tags as a new record.
+			//self.mainUser.child('tags').child(noteData.tags).set(true);
+		});
+
+		// Done!
+		onComplete(false, noteRefId);
+	});
+};
+
+/**
+ * Register a callback to be notified whenever a new note appears on the
+ * current user's note list. This is usually triggered by another user saving a
+ * note (see Webernote.save()), which will appear in real-time on the current
+ * user's notes!
+ *
+ * You need to be authenticated through login() to use this function.
+ *
+ * @param    {Function}  onComplete  The callback to call whenever a new note
+ *                                   appears on the current user's note list. The
+ *                                   function will be invoked with two arguments:
+ *                                   noteId, and an object containing the
+ *                                   "author", "by", "pic" and "content"
+ *                                   properties.
+ */
+
+Webernote.prototype.onNote = function(onComplete) {
+	var self = this;
+
+	self.validateCallback(onComplete);
+
+	self.notesRef = self.mainUser.child('notes');
+	self.tagsRef = self.mainUser.child('tags');
+	self.notebooksRef = self.mainUser.child('notebooks');
+
+	self.notesRef.on('child_added', function(noteSnap) {
+		onComplete(noteSnap.name(), noteSnap.val(), noteSnap);
+	});
+};
+Webernote.prototype.onTag = function(tags, noteId, onComplete) {
+	var self = this;
+
+	self.validateCallback(onComplete);
+
+	console.log(self.tagsRef);
+	for (var i = 0; i < tags.length; i++) {
+		var tag = tags[i];
+
+		if (self.keyExists(tag, self.tagsRef)) {
+			return;
+		}
+		console.log(tag, self.tagsRef);
+
+		self.tagsRef.child(tag).child(noteId).set(noteId);
+	}
+
+	self.tagsRef.on('child_added', function(tagsSnap) {
+		//console.log(tagsSnap.name(), tagsSnap.val());
+
+		onComplete(tagsSnap.name(), tagsSnap);
+	});
+};
+
+Webernote.prototype.onNotebook = function(onComplete) {
+	var self = this;
+
+	self.validateCallback(onComplete);
+
+	self.notebooksRef = self.mainUser.child('notebooks');
+	self.notebooksRef.on('child_added', function(notebookSnap) {
+		onComplete(notebookSnap.name(), notebookSnap.val())
+	});
+};
+
+Webernote.prototype.keyExists = function(key, search) {
+    if (!search || (search.constructor !== Array && search.constructor !== Object)) {
+        return false;
+    }
+    for (var i = 0; i < search.length; i++) {
+        if (search[i] === key) {
+            return true;
+        }
+    }
+    return key in search;
+};
+
+/**
+ * Unload all event handlers currently registered. You must call this function
+ * when you no longer want to receive updates. This is especially important
+ * for single page apps, when transistioning between views. It is safe to
+ * reuse the Webernote object after calling this and registering new handlers.
+ */
+
+Webernote.prototype.unload = function() {
+	for (var i = 0; i < this.handlers.length; i++) {
+		var ref = this.handlers[i].ref,
+			handler = this.handlers[i].handler,
+			eventType = this.handlers[i].eventType;
+
+		ref.off(eventType, handler);
+	}
+	this.handlers = [];
+};
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+function WebernoteUI() {
+	this.limit = 150;
+	this.loggedIn = false;
+	this.webernote = new Webernote('https://webernote.firebaseio.com/');
+	this.unload = null;
+
+	// Setup page navigation
+	//this.setupHandlers();
+
+	// Setup History listener
+	var self = this;
+	window.History.Adapter.bind(window, 'statechange', function() {
+		self.pageController(window.History.getState().hash, false);
+	});
+
+	// Check if user logged in or not with silent login
+	self.login(function(info) {
+		//console.log(info);
+
+		self.loggedIn = info;
+		self.pageController(window.History.getState().hash);
+	});
 }
 
-webernote = {
-	notes: {},
-	store: null,
+WebernoteUI.prototype.setupHandlers = function() {
+	var self = this;
 
-	common: {
-		init: function() {
-			//$.support.cors = true;
-			if ('localStorage' in window && window['localStorage'] !== null) {
-				webernote.init();
-			}
-		}
-	},
-	init: function() {
-		/**
-		 * Fix heights first
-		 */
-		var tdH = window.innerHeight- $('td').position().top - 20;
-		$('td').height(tdH);
-		$('#note-nav, #note-list, #show-note').height(tdH - 10);
+	/* Profile */
+	$('.profile a').on('click', function(e) {
+		e.preventDefault();
+		self.goProfile($(this).attr('href'));
+	});
 
-		/**
-		 * Make columns resizable
-		 */
-		$('#resizable').colResizable({
-			minWidth: 60,
-			liveDrag: true,
-			draggingClass: 'dragging',
-			onResize: function(e) {
-				var columns = $(e.currentTarget).find('th, td');
-			}
-		});
+	/* Left Navigation links */
+	/*$('.notebooks a').on('click', function(e) {
+		e.preventDefault();
+		self.goShowNotebooks($(this).attr('href'));
+	});*/
+	/*$('.tags a').on('click', function(e) {
+		e.preventDefault();
+		self.goShowTags($(this).attr('href'));
+	});*/
+	/*$('.attributes a').on('click', function(e) {
+		e.preventDefault();
+		self.goShowAttributes($(this).attr('href'));
+	});*/
+};
 
-		/**
-		 * Unused toolbar nav idk what to do with yet
-		 */
-		$('#toolbar').find('a').on('click', function(e) {
-			e.preventDefault();
-		});
+WebernoteUI.prototype.pageController = function(url) {
+	// Extract any sub page from url
+	var idx = url.indexOf('?'),
+		hash = (idx > 0) ? url.slice(idx + 1) : '',
+		value = hash.split('=');
 
-		/**
-		 * Fix left nav arrows so they work right
-		 */
-		var noteA = $('#note-nav li').find('a');
-		for (var i = 0; i < noteA.length; i++) {
-			if ($(noteA[i]).siblings('ul').length === 0) {
-				$(noteA[i]).css({ background: 'none', padding: 0 });
-			}
-		}
+	this.unload && this.unload();
 
-		/**
-		 * Expand / contract note nav
-		 */
-		$('#note-nav').find('a').on('click', function(e) {
-			e.preventDefault();
-
-			if ($(this).parent().hasClass('expanded')) {
-				$(this).parent().removeClass('expanded');
-				$(this).siblings('ul').addClass('hidden');
+	switch (value[0]) {
+		case 'profile':
+			if (!value[0]) {
+				this.unload = this.notFound();
 			} else {
-				$(this).parent().addClass('expanded');
-				$(this).siblings('ul').removeClass('hidden');
+				this.unload = this.renderProfile(value[1]);
 			}
-
-			// TODO: generate these nav sections from the given data of each note
-		});
-
-		// Trim fat
-		webernote.trim();
-
-		/**
-		 * Setup the storage, forest!
-		 */
-		webernote.store = window.localStorage;
-		var num = webernote.store.length;
-		if (num > 0) {
-			var total;
-			for (var j = 0; j < num; j++) {
-				webernote.showNoteList('note' + j);
-				total = j + 1;
+		break;
+		case 'user':
+			if (!value[0]) {
+				this.unload = this.notFound();
+			} else {
+				this.unload = this.renderUserNotes(this.loggedIn);
 			}
-			$('#note-list').find('.count').text(total);
-			$('#all').find('.count').text('('+ total +')');
+		break;
+		case 'note':
+		default:
+			if (this.loggedIn) {
+				this.unload = this.renderUserNotes(this.loggedIn);
+			} else {
+				this.unload = this.renderHome();
+			}
+		break;
+	}
+};
+
+WebernoteUI.prototype.formatDate = function(timeStamp) {
+	var date = new Date(timeStamp);
+	return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+};
+
+WebernoteUI.prototype.layout = function() {
+	var tdHeight = window.innerHeight - $('td').position().top - 20,
+		noteNavLinks = $('#note-nav li').find('a'),
+		desc = $('#notes').find('.description');
+
+	// Fix column heights
+	$('td').height(tdHeight);
+	$('#note-nav, #note-list, #show-note').height(tdHeight - 10);
+	$('form').height(tdHeight - 23);
+
+	// Make columns resizable
+	$('#resizable').colResizable({
+		minWidth: 60,
+		liveDrag: true,
+		draggingClass: 'dragging',
+		onResize: function(e) {
+			var columns = $(e.currentTarget).find('th, td');
 		}
-		//console.log(notes, webernote.store);
+	});
 
-		/**
-		 * Create a new note
-		 */
-		$('#new').on('click', function(e) {
-			e.preventDefault();
+	// Unused toolbar nav idk what to do with yet
+	 $('#toolbar').find('a').on('click', function(e) {
+		e.preventDefault();
+	});
 
-			webernote.newNote(num);
-			webernote.updateNote(num);
+	// Fix left nav arrows so they work right when empty
+	for (var i = 0; i < noteNavLinks.length; i++) {
+		var noteNavLink = noteNavLinks[i];
+		if ($(noteNavLink).siblings('ul').length === 0) {
+			$(noteNavLink).css({
+				background: 'none',
+				padding: 0
+			});
+		}
+	}
+
+	// Expand / contract note nav
+	$('#note-nav').find('a').on('click', function(e) {
+		e.preventDefault();
+
+		if ($(this).parent().hasClass('expanded')) {
+			$(this).parent().removeClass('expanded');
+			$(this).siblings('ul').addClass('hidden');
+		} else {
+			$(this).parent().addClass('expanded');
+			$(this).siblings('ul').removeClass('hidden');
+		}
+
+		// TODO: generate these nav sections from the given data of each note
+	});
+
+	// Ellipsis for notelist description
+	for (var i = 0; i < desc.length; i++) {
+		var desc = desc[i];
+		$(desc).addClass('ellipses').addClass('multiline');
+	}
+	$('.ellipsis').ellipsis();
+};
+
+WebernoteUI.prototype.size = function(obj) {
+	var size = 0;
+
+	for (var key in obj) {
+		if (obj.hasOwnProperty(key)) {
+			size++;
+		}
+		return size;
+	}
+};
+
+WebernoteUI.prototype.login = function(callback) {
+	// try silent login in case already loggedIn
+	var self = this;
+
+	self.webernote.login(true, function(err, info) {
+		if (!err && info) {
+			callback(info);
+		} else {
+			callback(false);
+		}
+	});
+};
+
+WebernoteUI.prototype.logout = function(e) {
+	if (e) {
+		e.preventDefault();
+	}
+	this.webernote.logout();
+	this.loggedIn = false;
+	this.renderHome();
+};
+
+WebernoteUI.prototype.go = function(url) {
+	window.History.pushstate(null, null, url);
+};
+
+WebernoteUI.prototype.goHome = function(e) {
+	if (e) {
+		e.preventDefault();
+	}
+	//this.go('/');
+};
+
+WebernoteUI.prototype.goProfile = function(userId) {
+	this.go(userId);
+};
+
+WebernoteUI.prototype.goNewNote = function(newNoteId) {
+	this.go(newNoteId);
+};
+
+WebernoteUI.prototype.notFound = function() {
+	//this.notFound();
+	this.renderHome();
+}
+
+/**
+ * Render the homepage for users loggedIn or not
+ */
+WebernoteUI.prototype.renderHome = function(e) {
+	if (e) {
+		e.preventDefault();
+	}
+
+	if (this.loggedIn) {
+		return this.renderUserNotes(this.loggedIn);
+	}
+
+	$('header').html($('#tmpl-header-loggedOut').html());
+	this.layout();
+
+	/*var body = Mustache.to_html($('#tmpl-content').html(), {
+		classes: 'home',
+		content: $('#tmpl-index-content').html()
+	});*/
+
+	var self = this,
+		login = $('#login');
+
+	// Login link handler
+	login.on('click', function(e) {
+		e.preventDefault();
+
+		self.webernote.login(false, function(err, info) {
+			if (!err) {
+				$('.new-note').removeClass('hidden');
+				login.attr('href', '#logout').text('Logout');
+
+				//console.log('Logged In');
+				self.renderUserNotes(info);
+			} else {
+				console.log('Login failed');
+			}
 		});
+	});
 
-		/**
-		 * On note click
-		 */
-		$('li', '#notes').on('click', function(e) {
-			e.preventDefault();
+	// attach handler to show last 5 notes
+	//self.handleNewNote('notes ul', 5, self.webernote.onLatestNote.bind(self.webernote));
 
-			var noteId = $(this).data('note');
-			$('#notes').find('li').removeClass('selected');
-			$(this).addClass('selected');
+	return function() {
+		self.webernote.unload();
+	};
+};
 
-			webernote.showNote(noteId);
-			webernote.updateNote(noteId);
-		});
+WebernoteUI.prototype.renderUserNotes = function(info) {
+	var self = this;
 
-	}, // init
+	$('header').html($('#tmpl-header-loggedIn').html());
+	this.layout();
+
+	// If online show logout link and new note button
+	if (info.status === 'online') {
+		$('#loginout').find('a').attr('href', '#logout').text('Logout');
+		$('.new-note').removeClass('hidden');
+	}
+
+	$('header h1').find('a').on('click', self.goHome.bind(self));
+	$('#loginout').find('a').on('click', self.logout.bind(self));
+
+	// Attach new note handler
+	self.handleNote($('#notes ul'), self.webernote.onNote.bind(self.webernote));
+
+	self.webernote.tagsRef.on('child_added', function(tagsSnap) {
+		var tag = {
+			tagId: tagsSnap.name(),
+			noteCount: tagsSnap.numChildren()
+		};
+		self.createTagNav(tag);
+	});
 
 	// New note
-	newNote: function(num) {
-		// TODO: Make this just add a new default note obj to the global webernote.notes obj
-		var noteObj = webernote.dataObj.newNoteObj(num),
-			noteId = 'note' + num;
+	$('.new-note').find('a').on('click', function(e) {
+		e.preventDefault();
+		self.newNote();
+	});
 
-		webernote.setNote(noteId, noteObj);
-		webernote.showNoteList(noteId); // Show list item
-		webernote.showNote(noteId); // Show note form
+	// Note select or delete
+	$('.note').on('click', function(e) {
+		e.preventDefault();
 
-		$('#notes').find('li').removeClass('selected');
-		$('#notes').find('li[data-note='+ noteId +']').addClass('selected');
-	},
+		var target = $(e.target),
+			currentTarget = $(e.currentTarget);
 
-	// Set note
-	setNote: function(noteId, noteObj) {
-		if (noteId === null) return;
+		if (currentTarget.hasClass('note')) {
+			var noteId = $(e.currentTarget).attr('id').split('note')[1];
 
-		webernote.store.setItem(noteId, JSON.stringify(noteObj));
-		webernote.getNote(noteId);
-	},
-	// Get note
-	getNote: function(noteId) {
-		var noteObj = webernote.store.getItem(noteId);
-		noteObj = JSON.parse(noteObj);
-
-		webernote.notes[noteId] = noteObj;
-		return noteObj;
-	},
-	// Update note
-	updateNote: function(noteId) {
-		var noteForm = $('#show-note').find('form'),
-			noteList = $('#notes').find('ul');
-		var noteObj = webernote.getNote(noteId);
-
-		// Title
-		noteForm.find('.title').on('keyup', function(e) {
-			noteObj.title = $(this).val();
-			webernote.setNote(noteId, noteObj);
-			noteList.find('li[data-note='+ noteId +'] .title').text($(this).val());
-		});
-
-		// URL
-		noteForm.find('input.url').on('keyup', function(e) {
-			var url = /http(s?):\/\//.test($(this).val());
-			noteObj.url = (url) ? $(this).val() : 'http://' + $(this).val();
-			webernote.setNote(noteId, noteObj);
-			noteList.find('li[data-note='+ noteId +'] .url').text($(this).val());
-		});
-
-		// Tags
-		noteForm.find('input.tag').on('keyup', function(e) {
-			var tagsObj = ($(this).val() || '').split(', ');
-			noteObj.tags = $(this).val();
-			webernote.setNote(noteId, noteObj);
-			noteList.find('li[data-note='+ noteId +'] .tags').text($(this).val());
-		});
-
-		// Description
-		// TODO: replace this with a wyswyg editor
-		noteForm.find('div.description').on('click', function(e) {
-			var desc = $(this).html();
-			$(this).addClass('hidden');
-			$(this).next().html(desc).removeClass('hidden');
-		});
-		noteForm.find('textarea.description').on('keyup', function(e) {
-			noteObj.description = $(this).val();
-			webernote.setNote(noteId, noteObj);
-			noteList.find('li[data-note='+ noteId +'] .description').html($(this).val());
-		});
-		noteForm.find('textarea.description').blur(function(e) {
-			var desc = $(this).val();
-			$(this).addClass('hidden');
-			$(this).prev().html(desc).removeClass('hidden');
-		});
-	},
-
-/*
-		$('#notes li').on('click', function(e) {
-			e.preventDefault();
-			webernote.noteClick(e);
-		});
-
-
-	}, // end init
-
-	// Set tag
-	setTag: function(noteId, tagName) {
-		webernote.tag.setItem(noteId, JSON.stringify(tagName));
-		webernote.getTag(tagName);
-	},
-	// Get tag
-	getTag: function(tagName) {
-		var tagObj = webernote.tag.getItem(tagName);
-		tagObj = JSON.parse(tagObj);
-
-		webernote.tags[tagName] = tagObj;
-		return tagObj;
-	},
-
-
-
-	// Delete note
-	deleteNote: function(noteId) {
-		if (noteId === null) return;
-
-		return webernote.store.removeItem(noteId);
-	},
-	noteClick: function(e) {
-		if ($(e.target).hasClass('delete')) {
-			$(e.target).parent().remove();
-			webernote.deleteNote($(e.target).parent().data('note'));
-			return false;
-		}
-
-		var noteId = $(this).data('note');
-		$('#notes').find('li').removeClass('selected');
-		$(this).addClass('selected');
-
-		webernote.showNote(noteId);
-		webernote.updateNote(noteId);
-	},
-
-
-
-
-		tagObj: function(noteId, tag) {
-			if (typeof tag === 'undefined') return;
-
-			// Make fallback values if there are none
-			return {
-				id: tag.id,
-				name: tag.name || '',
-				notes: [ noteId ] || []
-			};
-		}
-*/
-	// Show note
-	showNote: function(noteId) {
-		if (noteId === null) return;
-
-		var showNote = $('#show-note'),
-			noteStr = $('._noted').clone();
-
-		// Column 3
-		var note = webernote.getNote(noteId),
-			noteObj = webernote.dataObj.noteObj(note);
-		//console.log(noteObj);
-
-		noteStr.attr('data-note', noteObj.selector).removeAttr('class');
-
-		noteStr.find('.title').val(noteObj.title);
-		noteStr.find('.url').val(noteObj.url);
-		noteStr.find('.tag').val(noteObj.tags);
-		noteStr.find('.description').html(noteObj.description);
-
-		showNote.html(noteStr);
-		//.find('textarea').focus();
-
-		// Run updater for note form
-		webernote.updateNote(noteId);
-	},
-
-	// Show list
-	showNoteList: function(noteId) {
-		if (noteId === null) return;
-
-		var noteList = $('ul', '#notes'),
-			noteStr = $('._note').clone();
-
-		// Column 2
-		var note = webernote.getNote(noteId),
-			noteObj = webernote.dataObj.noteObj(note);
-		console.log(noteObj);
-
-		noteStr.attr('data-note', noteObj.selector).removeAttr('class');
-
-		if (noteObj.title === '') {
-			noteObj.title = 'Untitled note...';
-		}
-		noteStr.find('.title').text(noteObj.title);
-		var noteDate = webernote.utils.formatDate(noteObj.created);
-		noteStr.find('.date').text(noteDate); // TODO: Parse this timestamp as readable date
-		noteStr.find('.tags').text(noteObj.tags); // TODO: Show tags if any were added only
-		noteStr.find('.description').text(noteObj.description);
-
-		noteList.prepend(noteStr);
-	},
-
-	dataObj: {
-		newNoteObj: function(num) {
-			if (typeof num === 'undefined') return;
-			var date = new Date();
-
-			return {
-				id: num,
-				selector: 'note' + num,
-				notebook: 'My Notebook',
-				title: '',
-				url: '',
-				tags: '',
-				description: '',
-				created: date.getTime(),
-				modified: date.getTime()
-			};
-		},
-		noteObj: function(note) {
-			if (typeof note === 'undefined') return;
-			var date = new Date();
-
-			// Make fallback values if there are none
-			return {
-				id: note.id,
-				selector: note.selector || 'note' + note.id,
-				notebook: note.notebook || 'My Notebook',
-				title: note.title || '',
-				url: note.url || '',
-				tags: note.tags || '',
-				description: note.description || '',
-				created: note.created || date.getTime(),
-				modified: note.modified || date.getTime()
-			};
-		}
-	},
-	trim: function() {
-		var desc = $('#notes').find('.description');
-
-		for (var i = 0; i < desc.length; i++) {
-			$(desc[i]).addClass('ellipses').addClass('multiline');
-		}
-		$('.ellipsis').ellipsis();
-	},
-
-	utils: {
-		formatDate: function(timeStamp) {
-            var date = new Date(timeStamp);
-            formattedDate = date.getMonth()+ 1 + "/" + date.getDate() + "/" + date.getFullYear();
-            return formattedDate;
-        },
-		extend: function(d, e, c) {
-			var b = function() {}, a;
-			b.prototype = e.prototype;
-			d.prototype = new b();
-			d.prototype.constructor = d;
-			d.superclass = e.prototype;
-			if (e.prototype.constructor == Object.prototype.constructor) {
-				e.prototype.constructor = e;
+			if (target.hasClass('delete')) {
+				self.deleteNote(noteId);
 			}
-			if (c) {
-				for (a in c) {
-					if (c.hasOwnPropterty(a)) {
-						d.prototype[a] = c[a];
-					}
-				}
+			else {
+				// select note
+				$('.note').removeClass('selected');
+				$(this).addClass('selected');
+
+				self.getNoteData(noteId);
 			}
-		},
-		isArray: function(array) {
-			return (array.constructor.toString().indexOf('Array') !== -1);
-		},
-		randomKey: function(array) {
-			return array[Math.floor(Math.random() * array.length)];
-		},
-		keyExists: function(key, search) {
-			if (!search || (search.constructor !== Array && search.constructor !== Object)) { return false; }
-			for (var i = 0; i < search.length; i++) {
-				if (search[i] === key) { return true; }
-			}
-			return key in search;
-		},
-		createCache: function(requestFunction) {
-			var cache = {};
-			return function(key, callback) {
-				if (!cache[key]) {
-					cache[key] = $.Deferred(function(defer) {
-						requestFunction(defer, key);
-					}).promise();
-				}
-				return cache[key].done(callback);
-			};
 		}
-	}
+	});
+
+	return function() {
+		self.webernote.unload()
+	};
 };
 
-UTIL = {
-	fire: function(func, funcname, args) {
-		var namespace = webernote;
-		funcname = (funcname === undefined) ? 'init' : funcname;
-		if (func !== '' && namespace[func] && typeof namespace[func][funcname] == 'function') {
-			namespace[func][funcname](args);
-		}
-	},
-	loadEvents: function() {
-		var b = document.body;
-		var bid = b.id;
-		//console.log(bid);
-		UTIL.fire('common');
-		UTIL.fire(bid);
-/*
-		var classes = b.clasaname.split(/\s+/), test = classes.length;
-		for (var i = 0; i < test; i++) {
-			UTIL.fire(classes[i]);
-			UTIL.fire(classes[i], bid);
+WebernoteUI.prototype.getNoteData = function(noteId) {
+	var self = this;
+
+	self.webernote.notesRef.child(noteId).on('value', function(noteSnap) {
+		var note = noteSnap.val();
+
+		self.showNoteForm(noteSnap.name(), note);
+	});
+};
+
+WebernoteUI.prototype.newNote = function() {
+	var self = this;
+
+	var notesRef = self.webernote.notesRef.push();
+	//console.log(self.webernote);
+	notesRef.set({
+		title: 'Untitled note...',
+		notebook: 'My Notebook',
+		url: '',
+		tags: '',
+		description: '',
+		created: new Date().getTime(),
+		modified: new Date().getTime()
+	});
+
+	//console.log(notesRef.name());
+	$('#notes').find('.note').removeClass('selected');
+	$('#note'+ notesRef.name()).addClass('selected');
+	self.getNoteData(notesRef.name());
+};
+
+WebernoteUI.prototype.deleteNote = function(noteId) {
+	var self = this;
+
+	console.log(noteId);
+	$('#note'+ noteId).stop().slideUp('slow').remove();
+	self.webernote.notesRef.child(noteId).remove();
+};
+
+WebernoteUI.prototype.handleNote = function(listId, func) {
+	var self = this;
+
+	func(function(noteId, note, noteSnap) {
+		//console.log(noteId, note);
+
+		var noteCount = noteSnap.numChildren();
+		note.noteId = noteId;
+		note.created = self.formatDate(note.created);
+		note.modified = self.formatDate(note.modified);
+
+		var noteEl = $(Mustache.to_html($('#tmpl-noteList-item').html(), note));
+		listId.prepend(noteEl);
+	});
+};
+
+WebernoteUI.prototype.createTagNav = function(tag) {
+	var self = this;
+
+	var tagEl = $(Mustache.to_html($('#tmpl-tag-navItem').html(), tag));
+	$('#tags .tags').parent().addClass('expanded');
+	$('#tags .tags').removeClass('hidden').append(tagEl);
+};
+
+WebernoteUI.prototype.handleTag = function(listId, tags, noteId, func) {
+	var self = this;
+
+	func(tags, noteId, function(tagId, tagsSnap) {
+		var tag = {
+			tagId: tagId,
+			noteCount: tagsSnap.numChildren()
 		};
-*/
-		UTIL.fire('common', 'finalize');
-	}
+
+		self.createTagNav(tag);
+	});
 };
-//kick it all off here
-$(document).ready(UTIL.loadEvents);
+
+WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
+	var self = this;
+
+	// Note form handlers to show updated content in noteList column for note on keyup
+	var noteForm = $('#show-note').find('form'),
+		noteList = $('#notes').find('ul');
+
+	// Title
+	noteForm.find('.title').on('keyup', function(e) {
+		noteList.find('#note'+ noteId +' .title').text($(this).val());
+	});
+	noteForm.find('.title').on('change', function(e) {
+		note.title = $(this).val();
+		self.webernote.notesRef.child(noteId).child('title').set(note.title);
+		self.webernote.notesRef.child(noteId).child('modified').set(new Date().getTime());
+	});
+
+	// Notebook
+	noteForm.find('select.notebook').on('change', function(e) {
+		console.log($(this).val());
+		//if ($(this).val)
+		// TODO: make last option 'New Notebook'
+		// when selected it should change the select menu to a text input
+		// as well as create a new notebook record plus updates the select menu
+	});
+
+	// URL
+	noteForm.find('input.url').on('keyup', function(e) {
+		var url = /http(s?):\/\//.test($(this).val());
+		//noteList.find('#note'+ noteId +' .url').text($(this).val());
+	});
+	noteForm.find('input.url').on('change', function(e) {
+		var url = /http(s?):\/\//.test($(this).val());
+		note.url = (url) ? $(this).val() : 'http://' + $(this).val();
+
+		self.webernote.notesRef.child(noteId).child('url').set(note.url);
+		self.webernote.notesRef.child(noteId).child('modified').set(new Date().getTime());
+	});
+
+	// Tags
+	noteForm.find('input.tag').on('keyup', function(e) {
+		noteList.find('#note'+ noteId +' .tags').text($(this).val());
+	});
+	noteForm.find('input.tag').on('change', function(e) {
+		note.tags = $(this).val();
+		self.webernote.notesRef.child(noteId).child('tags').set(note.tags);
+		self.webernote.notesRef.child(noteId).child('modified').set(new Date().getTime());
+	});
+	// Tags blur
+	noteForm.find('input.tag').blur(function(e) {
+		var tags = ($(this).val() || '').split(', ');
+
+		self.handleTag($('#tags .tags'), tags, noteId, self.webernote.onTag.bind(self.webernote));
+	});
+
+	// Description
+	// TODO: replace this with a wyswyg editor
+	noteForm.find('div.description').on('click', function(e) {
+		var desc = $(this).html();
+		$(this).addClass('hidden');
+		$(this).next().html(desc).removeClass('hidden');
+	});
+	noteForm.find('textarea.description').on('keyup', function(e) {
+		noteList.find('#note'+ noteId +' .description').html($(this).val());
+	});
+	noteForm.find('textarea.description').on('change', function(e) {
+		note.description = $(this).val();
+
+		self.webernote.notesRef.child(noteId).child('description').set(note.description);
+		self.webernote.notesRef.child(noteId).child('modified').set(new Date().getTime());
+	});
+	noteForm.find('textarea.description').blur(function(e) {
+		var desc = $(this).val();
+		$(this).addClass('hidden');
+		$(this).prev().html(desc).removeClass('hidden');
+	});
+};
+
+/**
+ * Render noteForm in right column
+ * Called when a note list item is clicked/selected in middle column
+ */
+WebernoteUI.prototype.showNoteForm = function(noteId, note) {
+	var self = this;
+
+	var noteForm = Mustache.to_html($('#tmpl-noteForm').html(), {
+		noteId: noteId,
+		title: note.title,
+		notebook: note.notebook,
+		url: note.url,
+		tags: note.tags,
+		description: note.description,
+		modified: new Date().getTime()
+	});
+
+	// Show noteForm
+	$('#show-note').html(noteForm);
+
+	self.updateNoteForm(noteId, note);
+
+	return function() {
+		self.webernote.unload()
+	};
+};
+
+var __webernoteUI;
+$(function() {
+	__webernoteUI = new WebernoteUI();
+});
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

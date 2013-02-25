@@ -3,7 +3,10 @@
 		return this.each(function() {
 			var el = $(this);
 
-			if(el.css("overflow") == "hidden") {
+			function height() { return t.height() > el.height(); }
+			function width() { return t.width() > el.width(); }
+
+			if (el.css("overflow") === "hidden") {
 				var text = el.html();
 				var multiline = el.hasClass('multiline');
 				var t = $(this.cloneNode(true))
@@ -15,12 +18,9 @@
 
 				el.after(t);
 
-				function height() { return t.height() > el.height(); };
-				function width() { return t.width() > el.width(); };
-
 				var func = multiline ? height : width;
 
-				while (text.length > 0 && func()){
+				while (text.length > 0 && func()) {
 					text = text.substr(0, text.length - 1);
 					t.html(text + "...");
 				}

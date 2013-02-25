@@ -130,6 +130,9 @@ STRUCTURE
 	font-weight: bold;
 }
 
+#loginout {
+	float: right;
+}
 
 /* TOOLBAR NAV */
 
@@ -314,6 +317,9 @@ STRUCTURE
 #note-nav li > a:hover {
 	text-decoration: underline;
 }
+#note-nav li.tag > a {
+	background: none;
+}
 #note-nav li.expanded > a {
 	background-position: 1px -10px;
 }
@@ -353,6 +359,9 @@ STRUCTURE
 	   -moz-box-shadow: 0 0 5px 0 rgba(94, 0, 0, 0.4);
 		 -o-box-shadow: 0 0 5px 0 rgba(94, 0, 0, 0.4);
 			box-shadow: 0 0 5px 0 rgba(94, 0, 0, 0.4);
+}
+#notes li:hover {
+	cursor: pointer;
 }
 #notes li:hover .delete {
 	display: inline-block;
@@ -494,7 +503,7 @@ STRUCTURE
 	background: #fff;
 	border: 1px solid #ddd;
 	display: inline-block;
-	padding: 5px;
+	padding: 0 5px;
 	width: 98%;
 	min-height: 88%;
 	white-space: pre-line;
