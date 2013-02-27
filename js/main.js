@@ -718,6 +718,7 @@ WebernoteUI.prototype.renderUserNotes = function(info) {
 		};
 		self.createTagNav(tag);
 	});
+
 	self.webernote.tagsRef.on('child_removed', function(tagsSnap) {
 		tagsSnap.name();
 	});
@@ -841,6 +842,23 @@ WebernoteUI.prototype.handleTag = function(listId, tags, noteId, func) {
 	});
 };
 
+WebernoteUI.prototype.updateTags = function(tags, noteId) {
+	var self = this;
+	var tags = (tags || '').split(', ');
+	var tagsSet = self.loggedIn.tags;
+	var tagsSetKeys = Object.keys(tagsSet);
+
+console.log(tagsSet);
+
+	for (var i = 0; i < tagsSetKeys.length; i++) {
+		if (self.webernote.keyExists(tagsSetKeys[i], tags)) {
+			self.webernote.tagsRef.child(tagsSetKeys[i]).child(noteId).set(noteId);
+		} else {
+			self.webernote.tagsRef.child(tagsSetKeys[i]).child(noteId).remove();
+		}
+	}
+};
+
 WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 	var self = this;
 
@@ -889,10 +907,8 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 		self.webernote.notesRef.child(noteId).child('tags').set(note.tags);
 		self.webernote.notesRef.child(noteId).child('modified').set(new Date().getTime());
 
-		var tags = ($(this).val() || '').split(', ');
-		for (var i = 0; i < tags.length; i++) {
-			self.webernote.tagsRef.child(tags[i]).child(noteId).set(noteId);
-		}
+		self.updateTags($(this).val(), noteId);
+
 		//self.handleTag($('#tags .tags'), tags, noteId, self.webernote.onTag.bind(self.webernote));
 	});
 	// Tags blur
