@@ -378,26 +378,19 @@ Webernote.prototype.onNote = function(onComplete) {
 		onComplete(noteSnap.name(), noteSnap.val(), noteSnap);
 	});
 };
+
 Webernote.prototype.onTag = function(tags, noteId, onComplete) {
 	var self = this;
 
 	self.validateCallback(onComplete);
 
-	console.log(self.tagsRef);
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
-
-		if (self.keyExists(tag, self.tagsRef)) {
-			return;
-		}
-		console.log(tag, self.tagsRef);
 
 		self.tagsRef.child(tag).child(noteId).set(noteId);
 	}
 
 	self.tagsRef.on('child_added', function(tagsSnap) {
-		//console.log(tagsSnap.name(), tagsSnap.val());
-
 		onComplete(tagsSnap.name(), tagsSnap);
 	});
 };
@@ -717,12 +710,16 @@ WebernoteUI.prototype.renderUserNotes = function(info) {
 	// Attach new note handler
 	self.handleNote($('#notes ul'), self.webernote.onNote.bind(self.webernote));
 
+	// Create tags handler
 	self.webernote.tagsRef.on('child_added', function(tagsSnap) {
 		var tag = {
 			tagId: tagsSnap.name(),
 			noteCount: tagsSnap.numChildren()
 		};
 		self.createTagNav(tag);
+	});
+	self.webernote.tagsRef.on('child_removed', function(tagsSnap) {
+		tagsSnap.name();
 	});
 
 	// New note
@@ -827,10 +824,19 @@ WebernoteUI.prototype.handleTag = function(listId, tags, noteId, func) {
 
 	func(tags, noteId, function(tagId, tagsSnap) {
 		var tag = {
-			tagId: tagId,
-			noteCount: tagsSnap.numChildren()
+			tagId: null,
+			noteCount: null
 		};
 
+		// If tag doesn't exist
+		if (! self.webernote.keyExists(tagId, self.loggedIn.tags)) {
+			tag.tagId = tagId;
+
+			// if noteId doesn't exist
+			if (self.webernote.keyExists(noteId, self.loggedIn.tags[tagId])) {
+				tag.noteCount = tagsSnap.numChildren();
+			}
+		}
 		self.createTagNav(tag);
 	});
 };
@@ -882,12 +888,16 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 		note.tags = $(this).val();
 		self.webernote.notesRef.child(noteId).child('tags').set(note.tags);
 		self.webernote.notesRef.child(noteId).child('modified').set(new Date().getTime());
+
+		var tags = ($(this).val() || '').split(', ');
+		for (var i = 0; i < tags.length; i++) {
+			self.webernote.tagsRef.child(tags[i]).child(noteId).set(noteId);
+		}
+		//self.handleTag($('#tags .tags'), tags, noteId, self.webernote.onTag.bind(self.webernote));
 	});
 	// Tags blur
 	noteForm.find('input.tag').blur(function(e) {
-		var tags = ($(this).val() || '').split(', ');
 
-		self.handleTag($('#tags .tags'), tags, noteId, self.webernote.onTag.bind(self.webernote));
 	});
 
 	// Description
