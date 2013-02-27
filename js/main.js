@@ -709,6 +709,7 @@ WebernoteUI.prototype.renderUserNotes = function(info) {
 
 	// Attach new note handler
 	self.handleNote($('#notes ul'), self.webernote.onNote.bind(self.webernote));
+		console.log(self);
 
 	// Create tags handler
 	self.webernote.tagsRef.on('child_added', function(tagsSnap) {
@@ -812,14 +813,6 @@ WebernoteUI.prototype.handleNote = function(listId, func) {
 	});
 };
 
-WebernoteUI.prototype.createTagNav = function(tag) {
-	var self = this;
-
-	var tagEl = $(Mustache.to_html($('#tmpl-tag-navItem').html(), tag));
-	$('#tags .tags').parent().addClass('expanded');
-	$('#tags .tags').removeClass('hidden').append(tagEl);
-};
-
 WebernoteUI.prototype.handleTag = function(listId, tags, noteId, func) {
 	var self = this;
 
@@ -842,13 +835,21 @@ WebernoteUI.prototype.handleTag = function(listId, tags, noteId, func) {
 	});
 };
 
-WebernoteUI.prototype.updateTags = function(tags, noteId) {
+WebernoteUI.prototype.createTagNav = function(tag) {
 	var self = this;
-	var tags = (tags || '').split(', ');
-	var tagsSet = self.loggedIn.tags;
-	var tagsSetKeys = Object.keys(tagsSet);
 
-console.log(tagsSet);
+	var tagEl = $(Mustache.to_html($('#tmpl-tag-navItem').html(), tag));
+	$('#tags .tags').parent().addClass('expanded');
+	$('#tags .tags').removeClass('hidden').html(tagEl);
+};
+
+WebernoteUI.prototype.updateTags = function(tags, noteId) {
+	var self = this,
+		tags = (tags || '').split(', '),
+		tagsSet = self.loggedIn.tags,
+		tagsSetKeys = Object.keys(tagsSet);
+
+console.log(tags);
 
 	for (var i = 0; i < tagsSetKeys.length; i++) {
 		if (self.webernote.keyExists(tagsSetKeys[i], tags)) {
@@ -970,8 +971,3 @@ var __webernoteUI;
 $(function() {
 	__webernoteUI = new WebernoteUI();
 });
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
