@@ -88,9 +88,9 @@
                             <script id="tmpl-notebook-navItem" type="text/html">
                                 <li id="notebook-{{notebookId}}">
                                     <a href="?notebook={{notebookId}}">
-                                        <span class="name">{{notebookName}}</span>
+                                        <span class="name">{{notebook}}</span>
                                     </a>
-                                    <span class="count">({{notebookCount}})</span>
+                                    <span class="count">{{noteCount}}</span>
                                 </li>
                             </script>
                         </li>
@@ -238,7 +238,16 @@
                     <form data-id="note{{noteId}}">
                         <div class="top">
                             <input type="hidden" name="modified" id="modified" />
+                            <input type="hidden" name="noteId" id="noteId" value="{{noteId}}" />
                             <input type="text" class="title" name="title" value="{{title}}" placeholder="Click to set title..." />
+                            <select name="notebook" class="notebook">
+                                <option value="{{notebookId}}" selected="selected">{{notebook}}</option>
+                                <option value="new-notebook">New Notebook</option>
+                            </select>
+                            <span class="new-notebook hidden">
+                                <input type="text" name="new-notebook" class="notebook" placeholder="Notebook name..." />
+                                <a href="#" id="cancel">x</a>
+                            </span>
                         </div>
                         <div class="mid">
                             <input type="url" class="url" name="url" value="{{url}}" placeholder="http://" />
@@ -250,15 +259,8 @@
                     </form>
                 </script>
 
-                <script id="tmpl-notebook-select" type="text/html">
-                    <select name="notebook" class="notebook">
-                        <option value="{{notebook}}" selected="selected">{{notebook}}</option>
-                        <option value="new-notebook">New Notebook</option>
-                    </select>
-                    <span class="new-notebook hidden">
-                        <input type="text" name="new-notebook" class="notebook" placeholder="Notebook name..." />
-                        <a href="#" id="cancel">x</a>
-                    </span>
+                <script id="tmpl-notebook-option" type="text/html">
+                        <option value="{{notebookId}}" selected="selected">{{notebook}}</option>
                 </script>
 
             </td>

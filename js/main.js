@@ -636,6 +636,7 @@ WebernoteUI.prototype.getNoteData = function(noteId) {
 
 		self.showNoteForm(noteSnap.name(), note);
 	});
+	self.webernote.notesRef.child(noteId).off();
 };
 
 WebernoteUI.prototype.newNote = function() {
@@ -656,7 +657,10 @@ WebernoteUI.prototype.newNote = function() {
 	//console.log(notesRef.name());
 	$('#notes').find('.note').removeClass('selected');
 	$('#note'+ notesRef.name()).addClass('selected');
+
 	self.getNoteData(notesRef.name());
+
+	//self.webernote.notesRef.child(noteId).off();
 };
 
 WebernoteUI.prototype.deleteNote = function(noteId) {
@@ -672,6 +676,18 @@ WebernoteUI.prototype.handleNote = function(listId, func) {
 
 	func(function(noteId, note, noteSnap) {
 		//console.log(noteId, note);
+
+		console.log(noteSnap.val().notebook);
+		var notebook = {
+			noteId: noteId,
+			tagId: noteSnap.val().notebook.replace(' ', '-').toLowerCase(),
+			notebook: noteSnap.val().notebook
+		};
+
+		self.webernote.notebooksRef.child(noteId).set(notebook.notebook);
+		self.webernote.notebooksRef.off();
+
+		self.webernote.notesRef.child(noteId).child('notebooks').child(notebook.tagId).set(notebook.notebook);
 
 		var initialTags = [];
 		for (var key in noteSnap.val().tags) {
@@ -695,11 +711,12 @@ WebernoteUI.prototype.handleNote = function(listId, func) {
 	});
 };
 
-WebernoteUI.prototype.createNotebookNav = function(notebookSnap) {
+WebernoteUI.prototype.createNotebookNav = function(notebooksSnap) {
 	var self = this;
 
 	var notebook = {
 		notebookId: notebooksSnap.name(),
+		notebook: notebooksSnap.val(),
 		noteCount: notebooksSnap.numChildren()
 	};
 
@@ -769,7 +786,7 @@ WebernoteUI.prototype.removeTagNav = function(tag, noteId) {
 	});
 };
 
-WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
+WebernoteUI.prototype.updateNoteForm = function(noteId, note, notebook) {
 	var self = this;
 
 	// Note form handlers to show updated content in noteList column for note on keyup
@@ -787,6 +804,9 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 	});
 
 	// Notebook
+	var option = Mustache.to_html($('#tmpl-notebook-option').html(), notebook);
+	noteForm.find('.top').find('select.notebook').prepend(option);
+
 	noteForm.find('select.notebook').on('change', function(e) {
 		if ($(this).val() === 'new-notebook') {
 			noteForm.find('select.notebook').addClass('hidden');
@@ -800,12 +820,17 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 	noteForm.find('.new-notebook').on('keyup', function(e) {
 
 	});
-	noteForm.find('.new-notebook').on('change', function(e) {
+	noteForm.find('input.notebook').on('change', function(e) {
+		if (notebookStr === 'new-notebook') return;
+
 		note.notebook = $(this).val();
+		var notebookStr = note.notebook.replace(' ', '-').toLowerCase();
+
 		self.webernote.notesRef.child(noteId).child('notebook').set(note.notebook);
 		self.webernote.notesRef.child(noteId).child('modified').set(new Date().getTime());
-	});
+		self.webernote.notebooksRef.child(noteId).set(note.notebook);
 
+	});
 
 	// URL
 	noteForm.find('input.url').on('keyup', function(e) {
@@ -832,20 +857,16 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 		initialTags: initialTags,
 		select: true,
 		tagsChanged: function(thisTag, action) {
-			//console.log(thisTag + ' was ' + action);
 			if (action === 'added') {
-				//console.log(thisTag, noteId);
 				self.webernote.tagsRef.child(thisTag).child(noteId).set(noteId);
 				self.webernote.notesRef.child(noteId).child('tags').child(thisTag).set(thisTag);
 
 				self.webernote.tagsRef.child(thisTag).on('value', function(tagsSnap) {
-					//console.log(tagsSnap);
 					self.createTagNav(tagsSnap);
 				});
 
 				$('.tagit-input').focus();
 			} else if (action === 'popped') {
-				//console.log(thisTag, noteId);
 				self.webernote.tagsRef.child(thisTag).child(noteId).remove();
 				self.webernote.notesRef.child(noteId).child('tags').child(thisTag).remove();
 
@@ -855,14 +876,12 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 			}
 		}
 	});
-
 	if (! $('.tagit-choice').length) {
 		$('.tagit').prepend('<span class="placeholder">Click to add tags...</span>');
 	}
 	$('.tagit-input').on('focus', function(e) {
 		$('.placeholder').hide();
 	});
-
 
 	// Description
 	// TODO: replace this with a wyswyg editor
@@ -892,7 +911,7 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 		self.selectNote(e);
 	});
 };
-
+//95948
 
 /**
  * Render noteForm in right column
@@ -901,23 +920,22 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 WebernoteUI.prototype.showNoteForm = function(noteId, note) {
 	var self = this;
 
-	var noteForm = Mustache.to_html($('#tmpl-noteForm').html(), {
+	var notebook = {
 		noteId: noteId,
 		title: note.title,
+		notebookId: note.notebook.replace(' ', '-').toLowerCase(),
+		notebook: note.notebook,
 		url: note.url,
 		tags: '<span class="placeholder">Click to add tags...</span>',
 		description: note.description,
 		modified: new Date().getTime()
-	});
+	};
+
+	var noteForm = Mustache.to_html($('#tmpl-noteForm').html(), notebook);
 	// Make noteForm
 	$('#show-note').html(noteForm);
 
-	var notebookSelect = Mustache.to_html($('#tmpl-notebook-select').html(), {
-		notebook: note.notebook
-	});
-	$('#show-note').find('.top').append(notebookSelect);
-
-	self.updateNoteForm(noteId, note);
+	self.updateNoteForm(noteId, note, notebook);
 
 	return function() {
 		self.webernote.unload()
