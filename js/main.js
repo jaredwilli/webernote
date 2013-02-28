@@ -948,6 +948,14 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 		}
 	});
 
+	if (! $('.tagit-choice').length) {
+		$('.tagit').prepend('<span class="placeholder">Click to add tags...</span>');
+	}
+	$('.tagit-input').on('focus', function(e) {
+		$('.placeholder').hide();
+	});
+
+
 	// Description
 	// TODO: replace this with a wyswyg editor
 	noteForm.find('div.description').on('click', function(e) {
@@ -990,7 +998,7 @@ WebernoteUI.prototype.showNoteForm = function(noteId, note) {
 		title: note.title,
 		notebook: note.notebook,
 		url: note.url,
-		tags: '',
+		tags: '<span class="placeholder">Click to add tags...</span>',
 		description: note.description,
 		modified: new Date().getTime()
 	});
