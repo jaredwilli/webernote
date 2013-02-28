@@ -446,6 +446,7 @@ STRUCTURE
 }
 #show-note .top {
 	background: #fff;
+	position: relative;
 }
 #note-list .filter,
 #show-note .mid {
@@ -485,13 +486,39 @@ STRUCTURE
 	padding: 0 5px;
 }
 #show-note input.title,
+#show-note .new-notebook,
 #show-note input.url,
 #show-note input.tag {
 	border: 1px solid rgb(238, 238, 238);
-	padding: 6px;
+	padding: 5px;
 }
 #show-note input.title {
 	width: 60%;
+	margin: 5px 5px 5px 1px;
+	position: relative;
+}
+#show-note select.notebook {
+	font-size: 14px;
+}
+#show-note .new-notebook {
+	width: 33%;
+	position: absolute;
+	margin: 5px 1px 5px 5px;
+	padding: 0;
+	display: inline-block;
+	height: 26px;
+}
+#show-note input.notebook {
+	width: 100%;
+	border: 0;
+	padding: 4px 5px 3px;
+	position: absolute;
+}
+#show-note #cancel {
+	position: absolute;
+	right: 10px;
+	top: 2px;
+	z-index: 1;
 }
 #show-note input.url,
 #show-note input.tag {

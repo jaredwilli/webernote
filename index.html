@@ -239,12 +239,6 @@
                         <div class="top">
                             <input type="hidden" name="modified" id="modified" />
                             <input type="text" class="title" name="title" value="{{title}}" placeholder="Click to set title..." />
-                            <!-- TODO: Make this into a template -->
-                            <select name="notebook" class="notebook">
-                                <option value="{{notebook}}" selected="selected">{{notebook}}</option>
-                                <option value="New Notebook">New Notebook</option>
-                            </select>
-                            <input type="text" name="new-notebook" class="new-notebook visuallyhidden" placeholder="Notebook name..." />
                         </div>
                         <div class="mid">
                             <input type="url" class="url" name="url" value="{{url}}" placeholder="http://" />
@@ -255,6 +249,18 @@
                         <textarea class="description">{{description}}</textarea>
                     </form>
                 </script>
+
+                <script id="tmpl-notebook-select" type="text/html">
+                    <select name="notebook" class="notebook">
+                        <option value="{{notebook}}" selected="selected">{{notebook}}</option>
+                        <option value="new-notebook">New Notebook</option>
+                    </select>
+                    <span class="new-notebook hidden">
+                        <input type="text" name="new-notebook" class="notebook" placeholder="Notebook name..." />
+                        <a href="#" id="cancel">x</a>
+                    </span>
+                </script>
+
             </td>
         </tr>
     </table>

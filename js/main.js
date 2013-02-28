@@ -247,109 +247,6 @@ Webernote.prototype.getNote = function(userId, noteId, onComplete) {
 };
 
 /**
- * Get the notes within a specific notebook, given a userId and notebookId.
- * The onComplete() callback will be provided an Array as a single argument,
- * containing the ID's of the notes within a notebook.
- *
- * You need to be authenticated through login() to use this function.
- *
- * @param    {string}    userId          The userId for the current user.
- *
- * @param 	 {string} 	 notebookId		 The ID of the notebook to look in.
- *
- * @param    {Function}  onComplete  	 The callback to call with the note ID's.
- */
-
-Webernote.prototype.getNotebook = function(userId, notebookId, onComplete) {
-	var self = this;
-	self.validateString(userId, 'userId');
-	self.validateCallback(notebookId, 'notebookId');
-	self.validateCallback(onComplete, true);
-
-	self.firebase.child('users').child(userId).child('notebooks').child(notebookId).once('value', function(snap) {
-		onComplete(snap.val());
-	});
-};
-
-/**
- * Get the notes with a specific tag, given a userId and tagId. The
- * onComplete() callback will be provided an Array as a single argument,
- * containing the ID's of the notes with that have the tag.
- *
- * You need to be authenticated through login() to use this function.
- *
- * @param    {string}    userId          The userId for the current user.
- *
- * @param 	 {string} 	 tagId			 The ID of the tag to get notes for.
- *
- * @param    {Function}  onComplete  	 The callback to call with the note ID's.
- */
-
-Webernote.prototype.getTag = function(userId, tagId, onComplete) {
-	var self = this;
-	self.validateString(userId, 'userId');
-	self.validateString(tagId, 'tagId');
-	self.validateCallback(onComplete, true);
-
-	self.firebase.child('users').child(userId).child('tags').child(tagId).once('value', function(snap) {
-		onComplete(snap.val());
-	});
-};
-
-/**
- * Save a note as the current user. The provided callback will be called with
- * (err, done) where "err" will be false if the save succeeded, and done will
- * be set to the ID of the note just saved.
- *
- * You need to be authenticated through login() to use this function.
- *
- * @param    {string}    userId     		The userId for the current user.
- *
- * @param    {Object}    noteData   		A data object for each form field value.
- *
- * @param    {Function}  onComplete  		The callback to call when the save is done.
- */
-
-Webernote.prototype.save = function(userId, noteData, onComplete) {
-	var self = this;
-	self.validateString(userId, 'userId');
-	self.validateObject(noteData, 'noteData');
-	self.validateCallback(onComplete, true);
-
-	// Add to the users notes using push() to ensure a unique ID
-	var notesRef = self.firebase.child('users').child(userId).child('notes').push(),
-		noteRefId = notesRef.name();
-
-	// Set the note
-	notesRef.set(noteData, function(err) {
-		if (err) {
-			onComplete(new Error('Could not save'), false);
-			return;
-		}
-
-		// Add reference to note just pushed by adding it to notes list of current user
-		var listNoteRef = self.mainUser.child('notes').child(noteRefId);
-		listNoteRef.set(true, function(err) {
-			if (err) {
-				onComplete(new Error('Could not save note'), false);
-				return;
-			}
-
-			// Check the user notebooks if noteData.notebook exists and add it if not. Once the
-			// notebook exists add the noteId to the noteData.notebook in notebooks for the user.
-			//self.mainUser.child('notebooks').child(noteData.notebook).set(true);
-
-			// Check the user tags for noteData.tags once the string is split(', ') up and add if
-			// any tags don't exist. Add the noteId to each tag in the user's tags as a new record.
-			//self.mainUser.child('tags').child(noteData.tags).set(true);
-		});
-
-		// Done!
-		onComplete(false, noteRefId);
-	});
-};
-
-/**
  * Register a callback to be notified whenever a new note appears on the
  * current user's note list. This is usually triggered by another user saving a
  * note (see Webernote.save()), which will appear in real-time on the current
@@ -376,33 +273,6 @@ Webernote.prototype.onNote = function(onComplete) {
 
 	self.notesRef.on('child_added', function(noteSnap) {
 		onComplete(noteSnap.name(), noteSnap.val(), noteSnap);
-	});
-};
-
-Webernote.prototype.onTag = function(tags, noteId, onComplete) {
-	var self = this;
-
-	self.validateCallback(onComplete);
-
-	for (var i = 0; i < tags.length; i++) {
-		var tag = tags[i];
-
-		self.tagsRef.child(tag).child(noteId).set(noteId);
-	}
-
-	self.tagsRef.on('child_added', function(tagsSnap) {
-		onComplete(tagsSnap.name(), tagsSnap);
-	});
-};
-
-Webernote.prototype.onNotebook = function(onComplete) {
-	var self = this;
-
-	self.validateCallback(onComplete);
-
-	self.notebooksRef = self.mainUser.child('notebooks');
-	self.notebooksRef.on('child_added', function(notebookSnap) {
-		onComplete(notebookSnap.name(), notebookSnap.val())
 	});
 };
 
@@ -635,10 +505,6 @@ WebernoteUI.prototype.goProfile = function(userId) {
 	this.go(userId);
 };
 
-WebernoteUI.prototype.goNewNote = function(newNoteId) {
-	this.go(newNoteId);
-};
-
 WebernoteUI.prototype.notFound = function() {
 	//this.notFound();
 	this.renderHome();
@@ -716,6 +582,10 @@ WebernoteUI.prototype.renderUserNotes = function(info) {
 	// Create tags handler
 	self.webernote.tagsRef.on('child_added', function(tagsSnap) {
 		self.createTagNav(tagsSnap);
+	});
+
+	self.webernote.notebooksRef.on('child_added', function(notebooksSnap) {
+		self.createNotebookNav(notebooksSnap);
 	});
 
 	// New note
@@ -825,6 +695,32 @@ WebernoteUI.prototype.handleNote = function(listId, func) {
 	});
 };
 
+WebernoteUI.prototype.createNotebookNav = function(notebookSnap) {
+	var self = this;
+
+	var notebook = {
+		notebookId: notebooksSnap.name(),
+		noteCount: notebooksSnap.numChildren()
+	};
+
+	if ($('#notebook-'+ notebook.notebookId).length > 0) {
+		if (notebook.noteCount < 1 || notebook.noteCount === null) {
+			$('#notebook-'+ notebook.notebookId).remove();
+		} else {
+			$('#notebook-'+ notebook.notebookId).find('.count').text(notebook.noteCount);
+		}
+	} else {
+		var notebookEl = $(Mustache.to_html($('#tmpl-notebook-navItem').html(), notebook));
+		$('#notebooks li:first').addClass('expanded').find('.notebooks').removeClass('hidden').append(notebookEl);
+	}
+
+	// Select or delete note
+	$('.note').on('click', function(e) {
+		e.preventDefault();
+		self.selectNote(e);
+	});
+};
+
 WebernoteUI.prototype.createTagNav = function(tagsSnap) {
 	var self = this;
 
@@ -892,12 +788,24 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 
 	// Notebook
 	noteForm.find('select.notebook').on('change', function(e) {
-		console.log($(this).val());
-		//if ($(this).val)
+		if ($(this).val() === 'new-notebook') {
+			noteForm.find('select.notebook').addClass('hidden');
+			noteForm.find('.new-notebook').removeClass('hidden');
+		}
+
 		// TODO: make last option 'New Notebook'
 		// when selected it should change the select menu to a text input
 		// as well as create a new notebook record plus updates the select menu
 	});
+	noteForm.find('.new-notebook').on('keyup', function(e) {
+
+	});
+	noteForm.find('.new-notebook').on('change', function(e) {
+		note.notebook = $(this).val();
+		self.webernote.notesRef.child(noteId).child('notebook').set(note.notebook);
+		self.webernote.notesRef.child(noteId).child('modified').set(new Date().getTime());
+	});
+
 
 	// URL
 	noteForm.find('input.url').on('keyup', function(e) {
@@ -996,7 +904,6 @@ WebernoteUI.prototype.showNoteForm = function(noteId, note) {
 	var noteForm = Mustache.to_html($('#tmpl-noteForm').html(), {
 		noteId: noteId,
 		title: note.title,
-		notebook: note.notebook,
 		url: note.url,
 		tags: '<span class="placeholder">Click to add tags...</span>',
 		description: note.description,
@@ -1004,6 +911,11 @@ WebernoteUI.prototype.showNoteForm = function(noteId, note) {
 	});
 	// Make noteForm
 	$('#show-note').html(noteForm);
+
+	var notebookSelect = Mustache.to_html($('#tmpl-notebook-select').html(), {
+		notebook: note.notebook
+	});
+	$('#show-note').find('.top').append(notebookSelect);
 
 	self.updateNoteForm(noteId, note);
 
