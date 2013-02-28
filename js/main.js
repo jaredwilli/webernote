@@ -657,6 +657,9 @@ WebernoteUI.prototype.renderHome = function(e) {
 	}
 
 	$('header').html($('#tmpl-header-loggedOut').html());
+	$('#tags li:first').removeClass('expanded').find('.tags li').remove();
+	$('#notes ul').html('');
+	$('#show-note form').remove();
 	this.layout();
 
 	/*var body = Mustache.to_html($('#tmpl-content').html(), {
@@ -721,32 +724,38 @@ WebernoteUI.prototype.renderUserNotes = function(info) {
 		self.newNote();
 	});
 
-	// Note select or delete
+	// Select or delete note
 	$('.note').on('click', function(e) {
 		e.preventDefault();
-
-		var target = $(e.target),
-			currentTarget = $(e.currentTarget);
-
-		if (currentTarget.hasClass('note')) {
-			var noteId = $(e.currentTarget).attr('id').split('note')[1];
-
-			if (target.hasClass('delete')) {
-				self.deleteNote(noteId);
-			}
-			else {
-				// select note
-				$('.note').removeClass('selected');
-				$(this).addClass('selected');
-
-				self.getNoteData(noteId);
-			}
-		}
+		self.selectNote(e);
 	});
 
 	return function() {
 		self.webernote.unload()
 	};
+};
+
+WebernoteUI.prototype.selectNote = function(e) {
+	var self = this;
+
+	// Note select or delete
+	var target = $(e.target),
+		currentTarget = $(e.currentTarget);
+
+	if (currentTarget.hasClass('note')) {
+		var noteId = $(e.currentTarget).attr('id').split('note')[1];
+
+		if (target.hasClass('delete')) {
+			self.deleteNote(noteId);
+		}
+		else {
+			// select note
+			$('.note').removeClass('selected');
+			$('#note'+ noteId).addClass('selected');
+
+			self.getNoteData(noteId);
+		}
+	}
 };
 
 WebernoteUI.prototype.getNoteData = function(noteId) {
@@ -825,12 +834,43 @@ WebernoteUI.prototype.createTagNav = function(tagsSnap) {
 	};
 
 	if ($('#tag-'+ tag.tagId).length > 0) {
-		$('#tag-'+ tag.tagId).find('.count').text(tag.noteCount);
+		if (tag.noteCount < 1 || tag.noteCount === null) {
+			$('#tag-'+ tag.tagId).remove();
+		} else {
+			$('#tag-'+ tag.tagId).find('.count').text(tag.noteCount);
+		}
 	} else {
 		var tagEl = $(Mustache.to_html($('#tmpl-tag-navItem').html(), tag));
-		$('#tags .tags').parent().addClass('expanded');
-		$('#tags .tags').removeClass('hidden').append(tagEl);
+		$('#tags li:first').addClass('expanded').find('.tags').removeClass('hidden').append(tagEl);
 	}
+
+	// Select or delete note
+	$('.note').on('click', function(e) {
+		e.preventDefault();
+		self.selectNote(e);
+	});
+};
+
+WebernoteUI.prototype.removeTagNav = function(tag, noteId) {
+	var self = this;
+	var count = $('#tag-'+ tag).find('.count');
+
+	self.webernote.tagsRef.child(tag).on('value', function(snap) {
+
+	});
+
+	if (count.text() === 0) {
+		$('#tag-'+ tag).remove();
+	} else {
+		console.log(count.text());
+		count.text(count.text());
+	}
+
+	// Select or delete note
+	$('.note').on('click', function(e) {
+		e.preventDefault();
+		self.selectNote(e);
+	});
 };
 
 WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
@@ -873,12 +913,11 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 	});
 
 	// Tags
-	console.log(note.tags);
 	var initialTags = [];
 	for (var key in note.tags) {
 		initialTags.push(key);
 	}
-	$('#notes').find('#note'+ noteId +' .tag-item').text(initialTags.join(', '));
+	noteList.find('#note'+ noteId +' .tag-item').text(initialTags.join(', '));
 
 	noteForm.find('.tag').tagit({
 		tagSource: self.loggedIn.availableTags,
@@ -887,50 +926,27 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 		tagsChanged: function(thisTag, action) {
 			//console.log(thisTag + ' was ' + action);
 			if (action === 'added') {
-				console.log(thisTag, noteId);
+				//console.log(thisTag, noteId);
 				self.webernote.tagsRef.child(thisTag).child(noteId).set(noteId);
 				self.webernote.notesRef.child(noteId).child('tags').child(thisTag).set(thisTag);
 
 				self.webernote.tagsRef.child(thisTag).on('value', function(tagsSnap) {
+					//console.log(tagsSnap);
 					self.createTagNav(tagsSnap);
 				});
 
 				$('.tagit-input').focus();
 			} else if (action === 'popped') {
-				console.log(thisTag, noteId);
+				//console.log(thisTag, noteId);
 				self.webernote.tagsRef.child(thisTag).child(noteId).remove();
 				self.webernote.notesRef.child(noteId).child('tags').child(thisTag).remove();
 
-				self.webernote.tagsRef.child(thisTag).on('child_removed', function(tagsSnap) {
-					self.createTagNav(tagsSnap);
-				});
+				self.removeTagNav(thisTag, noteId);
 
 				$('.tagit-input').focus();
 			}
 		}
 	});
-
-	$('.tagit-input').blur(function(e) {
-		e.preventDefault();
-		var tags = $('.tag').tagit('tags');
-	});
-
-	// noteForm.find('input.tag').on('keyup', function(e) {
-	// 	noteList.find('#note'+ noteId +' .tags').text($(this).val());
-	// });
-	// noteForm.find('input.tag').on('change', function(e) {
-	// 	note.tags = $(this).val();
-	// 	self.webernote.notesRef.child(noteId).child('tags').set(note.tags);
-	// 	self.webernote.notesRef.child(noteId).child('modified').set(new Date().getTime());
-
-	// 	self.updateTags($(this).val(), noteId);
-
-	// 	//self.handleTag($('#tags .tags'), tags, noteId, self.webernote.onTag.bind(self.webernote));
-	// });
-	// // Tags blur
-	// noteForm.find('input.tag').blur(function(e) {
-
-	// });
 
 	// Description
 	// TODO: replace this with a wyswyg editor
@@ -953,7 +969,14 @@ WebernoteUI.prototype.updateNoteForm = function(noteId, note) {
 		$(this).addClass('hidden');
 		$(this).prev().html(desc).removeClass('hidden');
 	});
+
+	// Select or delete note
+	$('.note').on('click', function(e) {
+		e.preventDefault();
+		self.selectNote(e);
+	});
 };
+
 
 /**
  * Render noteForm in right column

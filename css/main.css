@@ -317,7 +317,7 @@ STRUCTURE
 #note-nav li > a:hover {
 	text-decoration: underline;
 }
-#note-nav li.tag > a {
+#note-nav li.tag-link > a {
 	background: none;
 }
 #note-nav li.expanded > a {
@@ -374,9 +374,10 @@ STRUCTURE
 }
 
 #notes .date {
-	color: rgb(130, 130, 130);
+	color: rgb(190, 190, 190);
+	font-size: 14px;
 }
-#notes .tags {
+#notes .tag-item {
 	color: rgb(157, 183, 252);
 }
 #notes ul {
@@ -513,7 +514,7 @@ STRUCTURE
 	width: 150px;
 }
 #show-note div.description {
-	border: 1px solid #ddd;
+	border: 0;
 	padding: 5px;
 	width: 100%;
 	min-height: 87%;
@@ -521,10 +522,10 @@ STRUCTURE
 }
 #show-note textarea,
 #show-note textarea:active {
-	border: 1px solid #ddd;
+	border: 0;
 	padding: 5px;
 	width: 100%;
-	min-height: 88%;
+	min-height: 87%;
 }
 
 

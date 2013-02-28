@@ -281,6 +281,7 @@
         },
 
         _addTag:function (label, value) {
+            this.input.autocomplete();
             this.input.autocomplete('close').val("");
 
             //are we trying to add a tag that should be split?
