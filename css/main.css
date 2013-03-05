@@ -18,7 +18,7 @@ html {
     overflow: hidden;
 }
 body {
-    font: 14px/22px Helvetica Neue, Helvetica, Arial;
+    font: 14px/22px "Helvetica Neue", "Helvetica", "Arial";
     padding: 0;
     margin: 5px auto;
     width: 90%;
@@ -28,13 +28,13 @@ a {
     text-decoration: none;
 }
 h1 {
-    font: bold 18px Helvetica, Myriad Pro;
+    font: bold 18px "Helvetica", "Myriad Pro";
     padding: 0;
     margin: 0;
 }
 h2 {
-    font: bold 12px/100% Helvetica, Arial, sans-serif;
-    margin: 0 0 .5em;
+    font: bold 12px/100% "Helvetica", "Arial", "sans-serif";
+    margin: 0 0 0.5em;
     padding: 0;
 }
 p { margin: 0; padding: 0; }
@@ -175,9 +175,9 @@ STRUCTURE
 	background: hsla(22, 100%, 53%, 0.9);
 }
 #toolbar .new-note a {
+	padding: 0;
 	text-shadow: -1px -1px 0 hsla(0, 92%, 25%, 0.9),
 				  1px 1px 0 hsla(12, 81%, 54%, 0.75);
-	padding: 0;
 }
 #toolbar .new-note a .plus {
 	background: rgba(0, 0, 0, 0.1);
@@ -263,7 +263,8 @@ STRUCTURE
 	background: rgba(85, 187, 255, 0.85);
 	border: 1px solid rgb(118, 158, 218);
 	color: #fff;
-	text-shadow: 0 -1px 1px rgb(106, 144, 158), 1px 1px 0 rgb(126, 170, 187);
+	text-shadow: 0 -1px 1px rgb(106, 144, 158),
+				 1px 1px 0 rgb(126, 170, 187);
 	margin: 0;
 
 	-webkit-border-radius: 4px;
@@ -310,7 +311,7 @@ STRUCTURE
 	margin: 1px 0 0 5px;
 }
 #note-nav li > a {
-	background: url(../img/arrow.png) no-repeat 1px 4px;
+	background: url("../img/arrow.png") no-repeat 1px 4px;
 	padding: 0 0 0 14px;
 	text-decoration: none;
 }
@@ -372,7 +373,6 @@ STRUCTURE
 #notes li:hover .delete {
 	display: inline-block;
 }
-
 #notes .date {
 	color: rgb(190, 190, 190);
 	font-size: 14px;
@@ -398,23 +398,75 @@ STRUCTURE
 #notes .selected {
 	border: 1px solid hsl(206, 90%, 61%);
 
-	/*background: rgb(205,235,139);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(205,235,139,1)), color-stop(100%,rgba(205,235,139,1)));
-	background: -webkit-linear-gradient(top, rgba(205,235,139,1) 0%,rgba(205,235,139,1) 100%);
-	background:    -moz-linear-gradient(top, rgba(205,235,139,1) 0%, rgba(205,235,139,1) 100%);
-	background:     -ms-linear-gradient(top, rgba(205,235,139,1) 0%,rgba(205,235,139,1) 100%);
-	background:      -o-linear-gradient(top, rgba(205,235,139,1) 0%,rgba(205,235,139,1) 100%);
-	background:         linear-gradient(to bottom, rgba(205,235,139,1) 0%,rgba(205,235,139,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8b', endColorstr='#cdeb8b',GradientType=0 );*/
-
 	background: rgb(235,241,246);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235,241,246,1)), color-stop(36%,rgba(213,235,251,1)), color-stop(98%,rgba(182,213,234,1)));
-	background: -webkit-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(213,235,251,1) 36%,rgba(182,213,234,1) 98%);
-	background: -moz-linear-gradient(top, rgba(235,241,246,1) 0%, rgba(213,235,251,1) 36%, rgba(182,213,234,1) 98%);
-	background: -ms-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(213,235,251,1) 36%,rgba(182,213,234,1) 98%);
-	background: -o-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(213,235,251,1) 36%,rgba(182,213,234,1) 98%);
-	background: linear-gradient(to bottom, rgba(235,241,246,1) 0%,rgba(213,235,251,1) 36%,rgba(182,213,234,1) 98%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#b6d5ea',GradientType=0 );
+	background: -webkit-gradient(linear, left top, left bottom,
+		color-stop(0%, rgba(235,241,246,1)),
+		color-stop(36%,rgba(213,235,251,1)),
+		color-stop(98%,rgba(182,213,234,1))
+	);
+	background: -webkit-linear-gradient(top,
+		rgba(235, 241, 246, 1) 0%,
+		rgba(213, 235, 251, 1) 36%,
+		rgba(182, 213, 234, 1) 98%
+	);
+	background: -moz-linear-gradient(top,
+		rgba(235, 241, 246, 1) 0%,
+		rgba(213, 235, 251, 1) 36%,
+		rgba(182, 213, 234, 1) 98%
+	);
+	background: -ms-linear-gradient(top,
+		rgba(235, 241, 246, 1) 0%,
+		rgba(213, 235, 251, 1) 36%,
+		rgba(182, 213, 234, 1) 98%
+	);
+	background: -o-linear-gradient(top,
+		rgba(235, 241, 246, 1) 0%,
+		rgba(213, 235, 251, 1) 36%,
+		rgba(182, 213, 234, 1) 98%
+	);
+	background: linear-gradient(to bottom,
+		rgba(235, 241, 246, 1) 0%,
+		rgba(213, 235, 251, 1) 36%,
+		rgba(182, 213, 234, 1) 98%
+	);
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		startColorstr='#ebf1f6',
+		endColorstr='#b6d5ea',
+		GradientType=0
+	);
+}
+#notes li.delete {
+	border-color: #ff1a00;
+
+	background: rgb(241, 111, 92);
+	background: -moz-linear-gradient(top,
+		rgba(241, 111, 92, 1) 0%,
+		rgba(248, 80, 50, 1) 100%
+	);
+	background: -webkit-gradient(linear, left top, left bottom,
+		color-stop(0%, rgba(241, 111, 92, 1)),
+		color-stop(100%, rgba(248, 80, 50, 1))
+	);
+	background: -webkit-linear-gradient(top,
+		rgba(241, 111, 92, 1) 0%,
+		rgba(248, 80, 50, 1) 100%
+	);
+	background: -o-linear-gradient(top,
+		rgba(241, 111, 92, 1) 0%,
+		rgba(248, 80, 50, 1) 100%
+	);
+	background: -ms-linear-gradient(top,
+		rgba(241, 111, 92, 1) 0%,
+		rgba(248, 80, 50, 1) 100%);
+	background: linear-gradient(to bottom,
+		rgba(241, 111, 92, 1) 0%,
+		rgba(248, 80, 50, 1) 100%
+	);
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		startColorstr='#f16f5c',
+		endColorstr='#f85032',
+		GradientType=0
+	);
 }
 #notes h2 {
 	margin: 0;
@@ -454,7 +506,10 @@ STRUCTURE
 	border-width: 2px 0;
 
 	background-color: rgb(216, 227, 228);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(216, 227, 228, 0.9)), to(rgba(216, 227, 228, 0.3)));
+	background-image: -webkit-gradient(linear, left top, left bottom,
+		from( rgba(216, 227, 228, 0.9)),
+		to( rgba(216, 227, 228, 0.3))
+	);
 	background-image: -webkit-linear-gradient(top, rgba(216, 227, 228, 0.9), rgba(216, 227, 228, 0.3));
 	background-image:    -moz-linear-gradient(top, rgba(216, 227, 228, 0.9), rgba(216, 227, 228, 0.3));
 	background-image:      -o-linear-gradient(top, rgba(216, 227, 228, 0.9), rgba(216, 227, 228, 0.3));
@@ -528,17 +583,19 @@ STRUCTURE
 }
 #show-note input.url {
 	position: relative;
-	top: -5px;
+	top: 3px;
 }
 #show-note input.tag {
 	width: 46%;
 	margin: 0;
 }
 #show-note select {
-	border: 1px solid #eee;
-	margin: 5px;
-	height: 30px;
-	width: 150px;
+	border: 1px solid #EEE;
+    height: 30px;
+    width: 150px;
+    margin: 5px;
+    padding: 3px 0 0;
+    vertical-align: top;
 }
 #show-note div.description {
 	border: 0;
@@ -554,13 +611,23 @@ STRUCTURE
 	width: 100%;
 	min-height: 87%;
 }
-
+#show-note .tagit {
+	background: #fff;
+    border: 1px solid #BECAD5;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    width: 46%;
+    margin: 0 0 6px;
+    vertical-align: top;
+}
 .placeholder {
 	position: absolute;
 	top: 5px;
 	left: 5px;
-	color: rgb(153, 153, 153)
+	color: rgb(153, 153, 153);
 }
+
 
 
 /************************************/
@@ -699,61 +766,12 @@ ul.tagit input[type="text"] {
 /* ==========================================================================
    Helper classes
    ========================================================================== */
-
-.ir {
-    background-color: transparent;
-    border: 0;
-    overflow: hidden;
-    *text-indent: -9999px;
-}
-
-.ir:before {
-    content: "";
-    display: block;
-    width: 0;
-    height: 100%;
-}
-
-.hidden {
-    display: none !important;
-    visibility: hidden;
-}
-
-.visuallyhidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    position: absolute;
-}
-
+.invisible { visibility: hidden; }
+.hidden { display: none; visibility: hidden; }
+.ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
+.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
 .visuallyhidden.focusable:active,
-.visuallyhidden.focusable:focus {
-    clip: auto;
-    width: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    position: static;
-}
-
-.invisible {
-    visibility: hidden;
-}
-
-.clearfix:before,
-.clearfix:after {
-    content: " ";
-    display: table;
-}
-
-.clearfix:after {
-    clear: both;
-}
-
-.clearfix {
-    *zoom: 1;
-}
+.visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1; }

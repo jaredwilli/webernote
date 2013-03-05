@@ -32,6 +32,27 @@
 <script id="tmpl-header-loggedOut" type="text/html">
     <div id="loginout">
         <a id="login" href="#">Login</a>
+
+        <ul class="sign-in">
+            <li>
+                <a class="facebook-button blue facebook-signin" href="/auth?provider=facebook">
+                    <div class="icon"></div>
+                    Sign in with <b>Facebook</b>
+                </a>
+            </li>
+            <li>
+                <a class="github-button grey github-signin" href="/auth?provider=github">
+                    <div class="icon"></div>
+                    Sign in with <b>Github</b>
+                </a>
+            </li>
+            <li>
+                <a class="twitter-button blue twitter-signin" href="/auth?provider=twitter">
+                    <div class="icon"></div>
+                    Sign in with <div class="logo"></div>
+                </a>
+            </li>
+        </ul>
     </div>
 
     <h1><a href="#">Webernote</a></h1>
@@ -82,8 +103,16 @@
                 <div id="note-nav">
 
                     <ul id="notebooks">
-                        <li><a href="#">Notebooks</a>
+                        <li class="expanded">
+                            <a href="#">Notebooks</a>
+
                             <ul class="notebooks">
+                                <li id="notebook-all">
+                                    <a href="?notebook=all">
+                                        <span class="name">All Notes</span>
+                                    </a>
+                                    <span class="count">0</span>
+                                </li>
                             </ul>
                             <script id="tmpl-notebook-navItem" type="text/html">
                                 <li id="notebook-{{notebookId}}">
@@ -258,11 +287,6 @@
                         <textarea class="description">{{description}}</textarea>
                     </form>
                 </script>
-
-                <script id="tmpl-notebook-option" type="text/html">
-                        <option value="{{notebookId}}" selected="selected">{{notebook}}</option>
-                </script>
-
             </td>
         </tr>
     </table>
