@@ -1,0 +1,33 @@
+<form>
+	<h2>Register</h2>
+
+	<!-- <label for="username">Name:
+		<input type="text" name="name" placeholder="Name..." ng-model="newUser.name" />
+	</label>
+	<br /> -->
+
+	<label for="email">Email:
+		<input type="text" name="email" placeholder="Email address..." ng-model="newUser.email" />
+	</label>
+	<br />
+
+	<label for="password">Password:
+		<input type="password" name="password" placeholder="Password..." ng-model="newUser.password">
+	</label>
+	<br />
+
+	<button type="button" ng-click="register(newUser)">Register</button>
+
+	<ul>
+		<li><a href="#/resetpassword">Forgot Password</a></li>
+		<li><a href="#/login">Login</a></li>
+	</ul>
+</form>
+
+
+<ul>
+	<li ng-repeat="user in users">{{user.name}}</li>
+</ul>
+
+{{newUser | json}}
+{{master | json}}

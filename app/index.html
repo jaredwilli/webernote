@@ -1,0 +1,102 @@
+
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<title></title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<link rel="stylesheet" href="styles/main.css">
+</head>
+<body data-ng-app="angApp">
+<!--[if lt IE 7]>
+	<p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+
+<!--[if lt IE 9]>
+	<script src="components/es5-shim/es5-shim.js"></script>
+	<script src="components/json3/lib/json3.min.js"></script>
+<![endif]-->
+
+<!-- Add your site or application content here -->
+<div class="container">
+	<header>
+		<div id="loginout">
+			<a id="login" href="#" ng-click="login('twitter')">Login</a>
+			<a id="logout" href="#/logout" ng-hide>Logout</a>
+		</div>
+
+		<h1><a href="#/">Webernote</a></h1>
+	</header>
+
+	<div id="pagewrap">
+		<nav id="toolbar">
+			<ul>
+				<li><a href="#/">Home</a></li>
+				<li><a href="#">Edit</a></li>
+				<li><a href="#">View</a></li>
+				<li><a href="#">Note</a></li>
+				<li><a href="#">Format</a></li>
+				<li><a href="#">Tools</a></li>
+				<li><a href="#">Help</a></li>
+				<li><a href="#/users">Users</a></li>
+
+				<li class="new-note" ng-controller="MainCtrl">
+					<a id="newNote" href="#" ng-click="addNote()">
+						<span class="plus">+</span>
+						New Note
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+		<nav id="note-types">
+			<ul>
+			<li><a href="#">All Notes</a></li>
+			<li><a href="#">Notebooks</a></li>
+			<li><a href="#">Tags</a></li>
+			<li><a href="#">Web Clips</a></li>
+			<li><a href="#">Mobile</a></li>
+			<li><a href="#">Files</a></li>
+			<li><em>For quick access, drag notes, notebooks and tags here</em></li>
+			</ul>
+		</nav>
+
+		<ng-view></ng-view>
+	</div>
+</div>
+
+<script src="components/angular/angular.js"></script>
+<script src="//cdn.firebase.com/v0/firebase.js"></script>
+<script src="//cdn.firebase.com/v0/firebase-auth-client.js"></script>
+<script src="components/angularFire.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="components/colResizable.js"></script>
+
+<!-- build:js scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/main.js"></script>
+<script src="scripts/services/noteFactory.js"></script>
+<script src="scripts/directives/noteBlur.js"></script>
+<!--
+<script src="scripts/controllers/login.js"></script>
+<script src="scripts/services/auth.js"></script>
+-->
+
+<!-- endbuild -->
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+	var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+</body>
+</html>
