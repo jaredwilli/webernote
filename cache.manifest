@@ -1,0 +1,32 @@
+CACHE MANIFEST
+# 1-9-2013:v1
+
+# Explicitly cached 'master entries'.
+CACHE:
+
+favicon.ico
+
+css/main.css
+js/plugins.js
+js/main.js
+
+
+# All URLs that start with the following lines
+# are whitelisted.
+NETWORK:
+
+http://anit-code.com/
+http://anit-code.com/examples/evernote/
+http://anti-code.com/webernote/
+
+# Additional items to cache.
+CACHE:
+
+#js/libs/modernizr-2.0.6.min.js
+js/libs/jquery-1.8.3.min.js
+
+http://code.jquery.com/jquery-1.8.3.min.js
+
+FALLBACK:
+
+#/ offline.html
