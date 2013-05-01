@@ -3,17 +3,37 @@
 angular.module('angApp').
 
 controller('MainCtrl', [
+	'$rootScope',
 	'$scope',
+	'$location',
+	'authService',
 	'noteFactory',
 
-	function MainCtrl($scope, noteFactory) {
-		console.log(noteFactory);
+	function MainCtrl($rootScope,$scope, $location, authService, noteFactory) {
+		// Redirect to /login route if currentUser doesn't exist
+		if (!$rootScope.users) {
+			$location.path('/login');
+		}
 
-		$scope.notes = noteFactory.getAllNotes('notes');
+		console.log('Users: ', $rootScope.users);
+
+		$rootScope.users.add = function() {
+
+		};
+
+		$scope.notes = noteFactory.getAllNotes('users/' + authService.currentUser + '/notes');
 		$scope.editedNote = '';
 
+		$scope.login = function() {
+			$location.path('/login');
+		};
+		$scope.logout = function() {
+			$location.path('/logout');
+		};
+
 		$scope.addNote = function() {
-			noteFactory.addNote();
+			var note = noteFactory.addNote();
+			$scope.editNote(note);
 		};
 
 		$scope.editNote = function(note) {
@@ -29,12 +49,34 @@ controller('MainCtrl', [
 ]).
 
 controller('LoginCtrl', [
-	'$scope',
-	'angularFire',
+	'$rootScope',
+	'$location',
 	'authService',
 
-	function LoginCtrl($scope, angularFire, authService) {
+	function LoginCtrl($rootScope, $location, authService) {
+		console.log(authService);
+		var provider = 'twitter',
+			options = { 'rememberMe': true };
 
+		var user = authService.authClient.login(provider, options);
+		console.log($rootScope.users);
 	}
+]).
 
+
+controller('LogoutCtrl', [
+	'$scope',
+	'$location',
+	'authService',
+
+	function LogoutCtrl($scope, $location, authService) {
+		console.log(authService.logout($scope));
+		authService.logout($scope);
+
+		if (!authService.currentUser) {
+			$location.path('/');
+		}
+	}
 ]);
+
+

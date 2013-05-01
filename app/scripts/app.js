@@ -1,13 +1,9 @@
 'use strict';
 
-/*angular.module('firebase', []).value('Firebase', Firebase);
-angular.module('firebaseAuthClient', []).value('FirebaseAuthClient', FirebaseAuthClient);*/
-
-var app = window.app = angular.module('angApp', ['firebase', 'firebaseAuth']);
+var app = window.app = angular.module('angApp', ['firebase']);
 
 app.config([
 	'$routeProvider',
-
 	function($routeProvider) {
 		$routeProvider
 			.when('/', {
@@ -18,10 +14,10 @@ app.config([
 				templateUrl: 'views/main.html',
 				controller: 'LoginCtrl'
 			})
-			// .when('/logout', {
-			// 	templateUrl: 'views/main.html',
-			// 	controller: 'LoginCtrl'
-			// })
+			.when('/logout', {
+				templateUrl: 'views/main.html',
+				controller: 'LoginCtrl'
+			})
 			// .when('/users', {
 			// 	templateUrl: 'views/users.html',
 			// 	controller: 'UsersCtrl'
@@ -34,4 +30,16 @@ app.config([
 				redirectTo: '/'
 			});
 	}
-]);
+])/*.
+
+run('angApp', [
+	'$rootScope',
+
+	function($rootScope) {
+		$rootScope.authObj = {
+			provider: 'twitter',
+			isAuthenticated: localStorage.getItem('authenticated'),
+			authToken: localStorage.getItem('authToken')
+		};
+	}
+]);*/;

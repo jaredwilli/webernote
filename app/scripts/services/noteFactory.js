@@ -4,9 +4,8 @@ angular.module('angApp').
 
 factory('noteFactory', [
 	'angularFireCollection',
-
 	function noteFactory(angularFireCollection) {
-		var url = 'https://jaredwilli.firebaseio.com/';
+		var baseUrl = 'https://webernote.firebaseio.com/';
 
 		return {
 			addNote: function() {
@@ -23,11 +22,11 @@ factory('noteFactory', [
 				});
 			},
 			getAllNotes: function(path) {
-				var ref = angularFireCollection(url + '/' + path);
+				var ref = angularFireCollection(baseUrl + '/' + path);
 				return ref;
 			},
 			getNote: function(note) {
-				var ref = angularFireCollection(url + '/notes/' + note);
+				var ref = angularFireCollection(baseUrl + '/notes/' + note);
 				return ref;
 			},
 			editNote: function(note) {
@@ -35,7 +34,7 @@ factory('noteFactory', [
 			},
 			deleteNote: function(note) {
 				console.log(this.getAllNotes('notes'));
-				this.getAllNotes('notes').remove(note);
+				//this.getAllNotes('notes').remove(note);
 			}
 		};
 	}

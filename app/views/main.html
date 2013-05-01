@@ -59,7 +59,7 @@
 
 				<div id="notes">
 					<ul>
-						<li class="note" ng-repeat="note in notes | filter:note.query | orderBy:note.modified" ng-click="editNote(note)">
+						<li class="note" ng-repeat="note in notes | filter:note.query | orderBy:note.modified" ng-click="editNote(note)" selected>
 							<a class="delete" href="#" ng-click="deleteNote(note)">X</a>
 
 							<h2 class="title">{{ note.title }}</h2>
@@ -99,8 +99,8 @@
 						<!--<input type="text" class="tag" name="tag" value="{{tags}}" placeholder="Click to add tag..." />-->
 						<ul class="tag" data-name="nameOfSelect" blurnote></ul>
 					</div>
-					<div class="description" ng-model="editedNote.description" ng-click="">{{ editedNote.description }}</div>
-					<textarea class="description" ng-model="editedNote.description" blurnote>{{ editedNote.description }}</textarea>
+					<!-- <div class="description" ng-model="editedNote.description" ng-click="">{{ editedNote.description }}</div> -->
+					<textarea class="description" ng-model="editedNote.description" ui-tinymce blurnote>{{ editedNote.description }}</textarea>
 				</form>
 			</div>
 		</td>

@@ -2,6 +2,26 @@
 
 angular.module('angApp').
 
+directive('noteblur', function() {
+    return function(scope, elm, attrs) {
+        elm.bind('blur', function() {
+			scope.editedNote.modified = new Date().getTime();
+			scope.$apply(attrs.noteblur); //scope.editedNote
+        });
+    };
+}).
+
+directive('selected', function() {
+    return function(scope, elm, attrs) {
+        elm.bind('click', function() {
+			scope.editedNote.modified = new Date().getTime();
+			scope.$apply(attrs.noteblur); //scope.editedNote
+        });
+    };
+});
+
+/*.
+
 directive('blurnote', function() {
     return {
         link: function(scope, elm, attrs) {
@@ -11,7 +31,7 @@ directive('blurnote', function() {
             });
         }
     };
-})/*.
+})
 
 directive('togglenav', function() {
 	return {
