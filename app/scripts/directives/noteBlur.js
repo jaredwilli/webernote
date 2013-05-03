@@ -2,6 +2,29 @@
 
 angular.module('angApp').
 
+directive('loginout', function($parse) {
+	return {
+		restrict: 'E',
+		transclude: true,
+		scope: {
+			loginout: '@loginlink'
+		},
+		template: '<a href="{{ loginout.href }}" loginlink="{{ loginout.state }}" ng-model="loginout">{{ loginout.text }}</a>',
+		link: function(scope, el, attrs) {
+			console.log(scope, el, attrs);
+
+			var loginLink = angular.element(el);
+
+		}
+	};
+}).
+
+/*
+scope.$watch(attrs.loginout, function(name) {
+	el.text('Hello' + name);
+});
+*/
+
 directive('noteblur', function() {
     return function(scope, elm, attrs) {
         elm.bind('blur', function() {
@@ -31,7 +54,7 @@ directive('blurnote', function() {
             });
         }
     };
-})
+}).
 
 directive('togglenav', function() {
 	return {
@@ -57,4 +80,4 @@ directive('togglenav', function() {
 			toggle();
 		}
 	};
-})*/;
+})*/

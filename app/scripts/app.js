@@ -8,8 +8,8 @@ app.config([
 		$routeProvider
 			.when('/', {
 				templateUrl: 'views/main.html',
-				controller: 'MainCtrl'
 			})
+/*
 			.when('/login', {
 				templateUrl: 'views/main.html',
 				controller: 'LoginCtrl'
@@ -18,10 +18,11 @@ app.config([
 				templateUrl: 'views/main.html',
 				controller: 'LoginCtrl'
 			})
-			// .when('/users', {
-			// 	templateUrl: 'views/users.html',
-			// 	controller: 'UsersCtrl'
-			// })
+*/
+			.when('/user/:userId', {
+				templateUrl: 'views/main.html',
+				controller: 'UsersCtrl'
+			})
 			/*.when('/newNote', {
 				templateUrl: 'views/main.html',
 				controller: 'MainCtrl'
@@ -30,16 +31,16 @@ app.config([
 				redirectTo: '/'
 			});
 	}
-])/*.
+]).
 
-run('angApp', [
+run([
 	'$rootScope',
+	'$location',
+	'authService',
+	'angularFire',
 
-	function($rootScope) {
-		$rootScope.authObj = {
-			provider: 'twitter',
-			isAuthenticated: localStorage.getItem('authenticated'),
-			authToken: localStorage.getItem('authToken')
-		};
+	function($rootScope, $location, authService, angularFire) {
+
+
 	}
-]);*/;
+]);

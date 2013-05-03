@@ -23,11 +23,11 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<div class="container">
+<div class="container" ng-controller="MainCtrl">
 	<header>
 		<div id="loginout">
-			<a id="login" href="#" ng-click="login()">Login</a>
-			<a id="logout" href="#/logout" ng-hide>Logout</a>
+			<a id="login" href="" ng-click="login()">Login</a>
+			<a id="logout" href="" ng-click="logout()">Logout</a>
 		</div>
 
 		<h1><a href="#/">Webernote</a></h1>
@@ -45,7 +45,7 @@
 				<li><a href="#">Help</a></li>
 				<li><a href="#/users">Users</a></li>
 
-				<li class="new-note" ng-controller="MainCtrl">
+				<li class="new-note">
 					<a id="newNote" href="#" ng-click="addNote()">
 						<span class="plus">+</span>
 						New Note
