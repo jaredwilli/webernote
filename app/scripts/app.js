@@ -1,6 +1,6 @@
 'use strict';
 
-var app = window.app = angular.module('angApp', ['firebase']);
+var app = window.app = angular.module('angApp', ['ui', 'firebase']);
 
 app.config([
 	'$routeProvider',
@@ -9,24 +9,10 @@ app.config([
 			.when('/', {
 				templateUrl: 'views/main.html',
 			})
-/*
-			.when('/login', {
-				templateUrl: 'views/main.html',
-				controller: 'LoginCtrl'
-			})
-			.when('/logout', {
-				templateUrl: 'views/main.html',
-				controller: 'LoginCtrl'
-			})
-*/
 			.when('/user/:userId', {
 				templateUrl: 'views/main.html',
-				controller: 'UsersCtrl'
+				controller: 'UserCtrl'
 			})
-			/*.when('/newNote', {
-				templateUrl: 'views/main.html',
-				controller: 'MainCtrl'
-			})*/
 			.otherwise({
 				redirectTo: '/'
 			});
@@ -36,10 +22,9 @@ app.config([
 run([
 	'$rootScope',
 	'$location',
-	'authService',
 	'angularFire',
 
-	function($rootScope, $location, authService, angularFire) {
+	function($rootScope, $location, angularFire) {
 
 
 	}

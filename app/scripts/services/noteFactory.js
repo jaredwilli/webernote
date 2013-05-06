@@ -17,11 +17,22 @@ factory('fireFactory', [
 factory('noteFactory', [
 	'angularFireCollection',
 	function noteFactory(angularFireCollection) {
-		var baseUrl = 'https://webernote.firebaseio.com/';
+		var baseUrl = 'https://webernote.firebaseio.com/users/';
 
 		return {
-			addNote: function() {
-				this.getAllNotes('notes').add({
+			getAllNotes: function(path) {
+				//console.log(baseUrl + '/' + path);
+				var ref = angularFireCollection(baseUrl + '/' + path);
+
+				return ref;
+			},
+			getNote: function(path, note) {
+				var ref = angularFireCollection(baseUrl + '/' + path + '/' + note);
+				return ref;
+			},
+			addNote: function(path) {
+				console.log(this.getAllNotes(path));
+				var note = {
 					title: 'Untitled note...',
 					notebook: 'My Notebook',
 					url: '',
@@ -29,24 +40,18 @@ factory('noteFactory', [
 					description: '',
 					modified: new Date().getTime(),
 					created: new Date().getTime()
-				}, function(snap) {
-					console.log('note added');
+				};
+
+				this.getAllNotes(path).add(note, function(snap) {
+					console.log('note added', snap);
 				});
 			},
-			getAllNotes: function(path) {
-				var ref = angularFireCollection(baseUrl + '/' + path);
-				return ref;
+			editNote: function(path, note) {
+				this.getAllNotes(path).update(note);
 			},
-			getNote: function(note) {
-				var ref = angularFireCollection(baseUrl + '/notes/' + note);
-				return ref;
-			},
-			editNote: function(note) {
-				this.getAllNotes('notes').update(note);
-			},
-			deleteNote: function(note) {
-				console.log(this.getAllNotes('notes'));
-				//this.getAllNotes('notes').remove(note);
+			deleteNote: function(path, note) {
+				console.log(path, note);
+				this.getAllNotes(path).remove(note);
 			}
 		};
 	}

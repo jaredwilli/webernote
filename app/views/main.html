@@ -1,4 +1,4 @@
-<table id="resizable">
+<table id="resizable" resizable fullheight>
 	<tr>
 		<td valign="top">
 			<div id="note-nav">
@@ -59,11 +59,9 @@
 
 				<div id="notes">
 					<ul>
-						<li class="note" ng-repeat="note in notes | filter:note.query | orderBy:note.modified" ng-click="editNote(note)" selected>
+						<li class="note" ng-repeat="note in notes | filter:note.query | orderBy:note.modified" ng-click="editNote(note)" selectnote>
 							<a class="delete" href="#" ng-click="deleteNote(note)">X</a>
-
 							<h2 class="title">{{ note.title }}</h2>
-
 							<p>
 								<span class="date">{{ note.modified | date }}</span>
 								<span class="tag-item">{{ note.tags }}</span>
@@ -85,7 +83,7 @@
 
 						<select name="notebook" class="notebook" ng-model="editedNote.notebook">
 							<option value="{{ editedNote.notebook }}" selected="selected" blurnote>{{ editedNote.notebook }}</option>
-							<option value="new-notebook" ng-click="newNotebook()">New Notebook</option>
+							<option value="new-notebook" ng-click="newNotebook(note)">New Notebook</option>
 						</select>
 
 						<span class="new-notebook hidden">
@@ -96,11 +94,11 @@
 
 					<div class="mid">
 						<input type="url" class="url" name="url" value="{{ editedNote.url }}" placeholder="http://" ng-model="editedNote.url" blurnote />
-						<!--<input type="text" class="tag" name="tag" value="{{tags}}" placeholder="Click to add tag..." />-->
-						<ul class="tag" data-name="nameOfSelect" blurnote></ul>
+						<ul class="tag" data-name="nameOfSelect" tagit>
+
+						</ul>
 					</div>
-					<!-- <div class="description" ng-model="editedNote.description" ng-click="">{{ editedNote.description }}</div> -->
-					<textarea class="description" ng-model="editedNote.description" ui-tinymce blurnote>{{ editedNote.description }}</textarea>
+					<textarea class="description" ng-model="editedNote.description" blurnote>{{ editedNote.description }}</textarea>
 				</form>
 			</div>
 		</td>

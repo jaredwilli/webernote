@@ -5,73 +5,30 @@ angular.module('angApp').
 controller('MainCtrl', [
 	'$scope',
 	'$location',
-	'filterFilter',
 	'angularFire',
 	'fireFactory',
 
-	function MainCtrl($scope, $location, filterFilter, angularFire, fireFactory) {
+	function MainCtrl($scope, $location, angularFire, fireFactory) {
 		var baseurl = 'https://webernote.firebaseio.com';
 
 		var usersurl = baseurl + '/users/',
 			usersRef = angularFire(usersurl, $scope, 'users', {});
 
-		var authCallback = function(error, user) {
+
+		// FirebaseAuth callback
+		$scope.authCallback = function(error, user) {
 			if (error) {
-				console.log(error);
+				console.log('error: ', error);
 			} else if (user) {
-				// Set the userRef on the $rootScope
-				var userRef = angularFire(usersurl + user.id, $scope, 'user', {});
+				//console.log('Logged In');
+				// Store the auth token
+				localStorage.setItem('token', user.firebaseAuthToken);
 
-				userRef.then(function(user) {
-					console.log(user);
-					startWatch($scope, filterFilter);
-				});
-			} else {
-				// Logged out
-			}
-		},
-		authClient = new FirebaseAuthClient(fireFactory.firebaseRef('users'), authCallback);
+				$scope.userId = user.id;
 
-
-		if ($location.path() === '') {
-			$location.path('/');
-		}
-
-		$scope.location = $location;
-
-
-		$scope.login = function() {
-			var token = localStorage.getItem('token'),
-				provider = 'twitter',
-				options = { 'rememberMe': true };
-			console.log(token);
-			if (token) {
-				fireFactory.firebaseRef('users').auth(token, authCallback);
-			} else {
-				authClient.login(provider, options);
-			}
-		};
-
-		$scope.logout = function() {
-			fireFactory.firebaseRef('users').unauth();
-		};
-
-
-		function startWatch($rootScope, filterFilter) {
-			console.log($scope, filterFilter());
-
-			$scope.$watch('users', function(users) {
-				console.log(users);
-			});
-
-			$scope.$watch('location.path()', function(path) {
-				//$scope.statusFilter = (path === '/active') ?
-			});
-
-
-
-			/*
-			userRef.once('value', function(data) {
+				// Set the userRef and add user child refs once
+				$scope.userRef = fireFactory.firebaseRef('users').child(user.id);
+				$scope.userRef.once('value', function(data) {
 					// Set the userRef children if this is first login
 					var val = data.val();
 					var info = {
@@ -85,75 +42,87 @@ controller('MainCtrl', [
 					if (val) {
 						info = val;
 					}
-					userRef.set(info); // set user child data once
+					$scope.userRef.set(info); // set user child data once
+				});
 
-					// Store the token and userId in localStorage
-					localStorage.setItem('token', user.firebaseAuthToken);
-			*/
+				var promise = angularFire(usersurl + $scope.userRef.name(), $scope, $scope.userRef.name(), {});
+				console.log(promise);
+				promise.then(function(user) {
+					console.log(user);
+					$location.path('/user/' + $scope.userRef.name());
+					//$scope.startWatch($scope, filterFilter);
+				});
+
+			} else {
+				// Logged out
+				console.log('Logged Out');
+			}
+		};
+
+		var authClient = new FirebaseAuthClient(fireFactory.firebaseRef('users'), $scope.authCallback);
+
+		if ($location.path() === '') {
+			$location.path('/');
 		}
+		$scope.location = $location;
+
+
+		$scope.login = function() {
+			var token = localStorage.getItem('token'),
+				provider = 'twitter',
+				options = { 'rememberMe': true };
+
+			if (token) {
+				console.log('login with token');
+				fireFactory.firebaseRef('users').auth(token, $scope.authCallback);
+			} else {
+				console.log('login with authClient');
+				authClient.login(provider, options);
+			}
+		};
+
+		$scope.logout = function() {
+			localStorage.clear();
+			fireFactory.firebaseRef('users/' + $scope.userId).unauth();
+		};
 	}
 ]).
-/*
-controller('LoginCtrl', [
-	'$rootScope',
-	'$location',
-	'authService',
-	function LoginCtrl($rootScope, $location, authService) {
-		// Set user info on $rootScope if session token exists otherwise redirect to login
-		if ($rootScope.session.token) {
-			authService.withToken($rootScope.session.token);
-			console.log('with token: ', $rootScope._user);
-		}
-		else if (!$rootScope.session.token || $rootScope._user) {
-			authService.withoutToken.login(provider, options);
-			console.log('no token: ', $rootScope);
-		}
-	}
-]).
-
-controller('LogoutCtrl', [
-	'$rootScope',
-	'$location',
-	'authService',
-	function LogoutCtrl($rootScope, $location, authService) {
-		console.log($rootScope._user);
-		$rootScope._user.logout();
-
-		// Redirect to / once logged out
-		$location.path('/');
-	}
-]).
-*/
 
 controller('UserCtrl', [
-	'$rootScope',
 	'$scope',
 	'$location',
-	'authService',
 	'noteFactory',
 
-	function UserCtrl($rootScope, $scope, $location, authService, noteFactory) {
-		// Redirect to /login route if currentUser doesn't exist
-		// if (!$rootScope.users) {
-		// 	$location.path('/login');
-		// }
+	function UserCtrl($scope, $location, noteFactory) {
 
-		$scope.notes = noteFactory.getAllNotes('users/' + $rootScope.user.name() + '/notes');
+		//console.log($scope.$parent.user);
+		$scope.$parent.$watch('userId', function(userId) {
+			//console.log('$watch.userId: ', userId);
+			$scope.userId = userId;
+			$scope.notes = noteFactory.getAllNotes($scope.userId + '/notes');
+		});
+
+		$scope.$watch('location.path()', function(path) {
+			//$scope.statusFilter = (path === '/') ? $location.path('/user/' + $scope.userRef.name()) : console.log(path);;
+			//console.log($scope, path);
+		});
+
 		$scope.editedNote = '';
 
 		$scope.addNote = function() {
-			var note = noteFactory.addNote();
+			var note = noteFactory.addNote($scope.userId + '/notes');
+			console.log('NOTE: ', note);
 			$scope.editNote(note);
 		};
 
 		$scope.editNote = function(note) {
 			$scope.editedNote = note;
-			//console.log($scope.editedNote);
-			noteFactory.editNote(note);
+			//console.log('editedNote', $scope.editedNote);
+			noteFactory.editNote($scope.userId +'/notes', note);
 		};
 
 		$scope.deleteNote = function(note) {
-			noteFactory.deleteNote(note);
+			noteFactory.deleteNote($scope.userId +'/notes', note);
 		};
 	}
 ]);
