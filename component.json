@@ -8,7 +8,11 @@
     "angular-resource": "~1.0.5",
     "angular-cookies": "~1.0.5",
     "angular-ui": "0.4.0",
-    "angular-ui-date": "latest"
+    "angular-ui-date": "latest",
+    "angular-ui-select2": "latest",
+    "angular-ui-tinymce": "latest",
+    "angular-ui-codemirror": "latest",
+    "angular-fire": "latest"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.5",
