@@ -1,49 +1,89 @@
 'use strict';
 
-angular.module('angApp').
+app.
 
 controller('UserCtrl', [
-	'$rootScope',
 	'$scope',
 	'$location',
-	'authService',
 	'noteFactory',
+	'notebookFactory',
+	'tagFactory',
 
-	function UserCtrl($rootScope, $scope, $location, authService, noteFactory) {
-		// Redirect to /login route if currentUser doesn't exist
-		if (!$rootScope.users) {
-			$location.path('/login');
-		}
+	function UserCtrl($scope, $location, noteFactory, notebookFactory, tagFactory) {
 
-		console.log('Users: ', $rootScope.user);
-
-		/*$rootScope.users.add = function() {
-
-		};*/
-
-		$scope.notes = noteFactory.getAllNotes('users/' + authService.currentUser + '/notes');
 		$scope.editedNote = '';
+		$scope.editedNotebook = '';
+		$scope.editedTag = '';
 
-		$scope.login = function() {
-			$location.path('/login');
-		};
-		$scope.logout = function() {
-			$location.path('/logout');
-		};
+		//console.log($scope.$parent.user);
+		$scope.$parent.$watch('userId', function(userId) {
+			//console.log('$watch.userId: ', userId);
+			$scope.userId = userId;
+
+			$scope.notes = noteFactory.getAllNotes($scope.userId + '/notes');
+			$scope.notebooks = notebookFactory.getAllNotebooks($scope.userId + '/notebooks');
+			$scope.tags = tagFactory.getAllTags($scope.userId + '/tags');
+
+			//console.log($scope.notes);
+			//console.log('TAGS: ', $scope.tags);
+
+		});
+
+		$scope.$watch('location.path()', function(path) {
+			//$scope.statusFilter = (path === '/') ? $location.path('/user/' + $scope.userRef.name()) : console.log(path);;
+			//console.log($scope, path);
+		});
+
+		// Notes
 
 		$scope.addNote = function() {
-			var note = noteFactory.addNote();
+			var note = noteFactory.addNote($scope.userId + '/notes');
+			//console.log('NOTE: ', note);
 			$scope.editNote(note);
 		};
 
 		$scope.editNote = function(note) {
+//			$location.path($location.path() + '/note/' + note.$id.replace('-', '_'));
+
 			$scope.editedNote = note;
-			//console.log($scope.editedNote);
-			noteFactory.editNote(note);
+
+			//console.log('editedNote', $scope.editedNote);
+			noteFactory.editNote($scope.userId + '/notes', note);
+		};
+		$scope.deleteNote = function(note) {
+			noteFactory.deleteNote($scope.userId + '/notes', note);
 		};
 
-		$scope.deleteNote = function(note) {
-			noteFactory.deleteNote(note);
+
+		// Notebooks
+		$scope.addNotebook = function() {
+			var notebook = notebookFactory.addNotebook($scope.userId + '/notebooks');
+			console.log('NOTEBOOK: ', notebook);
+			$scope.editNotebook(notebook);
+		};
+		$scope.editNotebook = function(notebook) {
+			$scope.editedNotebook = notebook;
+			//console.log('editedNotebook', $scope.editedNotebook);
+			notebookFactory.editNotebook($scope.userId + '/notebooks', notebook);
+		};
+		$scope.deleteNotebook = function(notebook) {
+			notebookFactory.deleteNotebook($scope.userId + '/notebooks', notebook);
+		};
+
+
+		// Tags
+		$scope.addTag = function() {
+			var tag = tagFactory.addTag($scope.userId + '/tags');
+			console.log('TAG: ', tag);
+			$scope.editTag(tag);
+		};
+		$scope.editTag = function(tag) {
+			$scope.editedTag = tag;
+			//console.log('editedTag', $scope.editedTag);
+			tagFactory.editTag($scope.userId + '/tags', tag);
+		};
+		$scope.deleteTag = function(tag) {
+			tagFactory.deleteTag($scope.userId + '/tags', tag);
 		};
 	}
 ]);

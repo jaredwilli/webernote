@@ -1,19 +1,24 @@
 'use strict';
 
-var app = window.app = angular.module('angApp', ['ui', 'firebase']);
+var app = window.app = angular.module('angApp', ['firebase']);
 
 app.config([
 	'$routeProvider',
 	function($routeProvider) {
-		$routeProvider
-			.when('/', {
+
+		$routeProvider.
+			when('/', {
+				//templateUrl: 'views/main.html',
+				controller: 'MainCtrl'
+			}).
+			when('/user/:userId', {
 				templateUrl: 'views/main.html',
-			})
-			.when('/user/:userId', {
+			}).
+			when('/user/:userId/note/:noteId', {
 				templateUrl: 'views/main.html',
-				controller: 'UserCtrl'
-			})
-			.otherwise({
+				controller: 'NoteCtrl'
+			}).
+			otherwise({
 				redirectTo: '/'
 			});
 	}

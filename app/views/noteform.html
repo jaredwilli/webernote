@@ -1,0 +1,30 @@
+<td valign="top" controller="NoteCtrl">
+	<div id="show-note">
+		<form ng-model="editedNote">
+			<div class="top">
+				<input type="hidden" name="modified" id="modified" />
+
+				<input type="text" class="title" name="title" placeholder="Click to set title..." value="{{ editedNote.title }}" ng-model="editedNote.title" blurnote />
+
+				<select name="notebook" class="notebook" ng-model="editedNote.notebook">
+					<option value="{{ editedNote.notebook }}" selected="selected" blurnote>{{ editedNote.notebook.name }}</option>
+					<option value="new-notebook" ng-click="newNotebook(note)">New Notebook</option>
+				</select>
+
+				<span class="new-notebook hidden">
+					<input type="text" name="new-notebook" class="notebook" placeholder="Notebook name..." blurnote />
+					<a href="#" id="cancel" ng-click="cancelNotebook()">x</a>
+				</span>
+			</div>
+
+			<div class="mid">
+				<input type="url" class="url" name="url" value="{{ editedNote.url }}" placeholder="http://" ng-model="editedNote.url" blurnote />
+
+				<!-- <ul class="tag" data-name="nameOfSelect" ng-model="editedNote.tags"  tagit></ul> -->
+				<input type="hidden" ng-model="editedNote.tags" class="tag input-large" ui-select2="{ tags: [{ id:5, text: 'tag1' }, { id: 8, text: 'tag2' }] }" />
+			</div>
+
+			<textarea class="description" ng-model="editedNote.description" blurnote>{{ editedNote.description }}</textarea>
+		</form>
+	</div>
+</td>

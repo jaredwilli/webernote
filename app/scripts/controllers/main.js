@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('angApp').
+app.
 
+// TODO: Should rename MainCtrl to AuthCtrl at some point
 controller('MainCtrl', [
 	'$scope',
 	'$location',
@@ -9,20 +10,27 @@ controller('MainCtrl', [
 	'fireFactory',
 
 	function MainCtrl($scope, $location, angularFire, fireFactory) {
-		var baseurl = 'https://webernote.firebaseio.com';
+		$scope.name = 'MainCtrl';
 
-		var usersurl = baseurl + '/users/',
+		var baseurl = 'https://webernote.firebaseio.com',
+			usersurl = baseurl + '/users/',
 			usersRef = angularFire(usersurl, $scope, 'users', {});
-
 
 		// FirebaseAuth callback
 		$scope.authCallback = function(error, user) {
 			if (error) {
-				console.log('error: ', error);
-			} else if (user) {
-				//console.log('Logged In');
+				console.log('error: ', error.code);
+
+				/*if (error.code === 'EXPIRED_TOKEN') {
+					$location.path('/');
+				}*/
+			}
+			else if (user) {
+				console.log('Logged In', $scope);
+
 				// Store the auth token
 				localStorage.setItem('token', user.firebaseAuthToken);
+				$scope.isLoggedIn = true;
 
 				$scope.userId = user.id;
 
@@ -45,84 +53,59 @@ controller('MainCtrl', [
 					$scope.userRef.set(info); // set user child data once
 				});
 
-				var promise = angularFire(usersurl + $scope.userRef.name(), $scope, $scope.userRef.name(), {});
-				console.log(promise);
-				promise.then(function(user) {
-					console.log(user);
-					$location.path('/user/' + $scope.userRef.name());
+				$scope.promise = angularFire(usersurl + $scope.userRef.name(), $scope, $scope.userRef.name(), {});
+				console.log('promise', $scope.promise, $scope.userRef.name());
+				$location.path('/user/' + $scope.userRef.name());
+
+				$scope.promise.then(function(user) {
+					console.log('user', user);
 					//$scope.startWatch($scope, filterFilter);
 				});
-
-			} else {
+			}
+			else {
 				// Logged out
-				console.log('Logged Out');
+				console.log('Logged Out', $scope);
+
+				localStorage.clear();
+				$scope.isLoggedIn = false;
+				$location.path('/');
 			}
 		};
 
 		var authClient = new FirebaseAuthClient(fireFactory.firebaseRef('users'), $scope.authCallback);
 
-		if ($location.path() === '') {
+		/*if ($location.path() === '') {
 			$location.path('/');
 		}
-		$scope.location = $location;
-
+		$scope.location = $location;*/
 
 		$scope.login = function() {
-			var token = localStorage.getItem('token'),
-				provider = 'twitter',
+			$scope.token = localStorage.getItem('token');
+
+			var	provider = 'twitter',
 				options = { 'rememberMe': true };
 
-			if (token) {
-				console.log('login with token');
-				fireFactory.firebaseRef('users').auth(token, $scope.authCallback);
+			console.log($scope.token);
+
+			if ($scope.token) {
+				console.log('login with token', $scope.token);
+
+				fireFactory.firebaseRef('users').auth($scope.token, $scope.authCallback);
+				//console.log(fireFactory.firebaseRef('users'), $scope.authCallback());
 			} else {
 				console.log('login with authClient');
 				authClient.login(provider, options);
 			}
+
 		};
 
 		$scope.logout = function() {
 			localStorage.clear();
-			fireFactory.firebaseRef('users/' + $scope.userId).unauth();
-		};
-	}
-]).
-
-controller('UserCtrl', [
-	'$scope',
-	'$location',
-	'noteFactory',
-
-	function UserCtrl($scope, $location, noteFactory) {
-
-		//console.log($scope.$parent.user);
-		$scope.$parent.$watch('userId', function(userId) {
-			//console.log('$watch.userId: ', userId);
-			$scope.userId = userId;
-			$scope.notes = noteFactory.getAllNotes($scope.userId + '/notes');
-		});
-
-		$scope.$watch('location.path()', function(path) {
-			//$scope.statusFilter = (path === '/') ? $location.path('/user/' + $scope.userRef.name()) : console.log(path);;
-			//console.log($scope, path);
-		});
-
-		$scope.editedNote = '';
-
-		$scope.addNote = function() {
-			var note = noteFactory.addNote($scope.userId + '/notes');
-			console.log('NOTE: ', note);
-			$scope.editNote(note);
-		};
-
-		$scope.editNote = function(note) {
-			$scope.editedNote = note;
-			//console.log('editedNote', $scope.editedNote);
-			noteFactory.editNote($scope.userId +'/notes', note);
-		};
-
-		$scope.deleteNote = function(note) {
-			noteFactory.deleteNote($scope.userId +'/notes', note);
+			//fireFactory.firebaseRef('users/' + $scope.userId).unauth();
+			authClient.logout();
+			$location.path('/');
+			console.log($scope.isLoggedIn);
+			// console.log(authClient);
 		};
 	}
 ]);

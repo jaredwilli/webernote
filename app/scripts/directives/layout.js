@@ -2,34 +2,11 @@
 
 angular.module('angApp').
 
-directive('logout', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<a id="logout" href="" ng-click="logout()" login>Logout</a>',
-        link: function(scope, element, attrs) {
-            console.log(scope.userId);
-        }
-    };
-}).
-
-directive('login', function() {
-    return {
-        restrict: 'A',
-        replace: true,
-        template: '<a id="login" href="" ng-click="login()" logout>Login</a>',
-        link: function(scope, element, attrs) {
-            console.log(scope.userId);
-        }
-    };
-}).
-
-
 directive('resizable', function() {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            $(element).colResizable({
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			$(element).colResizable({
 				minWidth: 60,
 				liveDrag: true,
 				draggingClass: 'dragging',
@@ -37,8 +14,8 @@ directive('resizable', function() {
 					var columns = $(e.currentTarget).find('th, td');
 				}
 			});
-        }
-    };
+		}
+	};
 }).
 
 directive('fullheight', function() {
@@ -80,7 +57,6 @@ directive('fullheight', function() {
 
 				// TODO: generate these nav sections from the given data of each note
 			});
-
 		}
 	};
 });

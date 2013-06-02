@@ -1,106 +1,94 @@
-<table id="resizable" resizable fullheight>
-	<tr>
-		<td valign="top">
-			<div id="note-nav">
+<is-logged-in >
+	<table id="resizable" resizable fullheight>
+		<tr>
+			<td valign="top" controller="SideNavCtrl">
+				<div id="note-nav">
 
-				<ul id="notebooks" togglenav>
-					<li class="expanded">
-						<a href="#">Notebooks</a>
+					<ul id="notebooks" showhide>
+						<li class="expanded">
+							<a href="#">Notebooks</a>
 
-						<ul class="notebooks">
-
-						</ul>
-					</li>
-				</ul>
-
-				<ul id="tags" togglenav>
-					<li>
-						<a href="#">Tags</a>
-
-						<ul class="tags">
-
-						</ul>
-					</li>
-				</ul>
-
-				<ul id="searches" togglenav>
-					<li><a href="#">Saved&nbsp;Searches</a>
-						<ul class="searches hidden">
-						</ul>
-					</li>
-				</ul>
-
-				<ul class="trash" togglenav>
-					<li
-						<a href="#/trash">Trash</a>
-					</li>
-				</ul>
-
-			</div> <!-- // note-nav -->
-		</td>
-
-		<td class="middle" valign="top">
-			<div id="note-list">
-				<div class="filter">
-					<a href="#">Notes created by</a>
-
-					<input type="text" name="search" placeholder="Search" ng-model="note.query" />
-				</div>
-
-				<div class="viewing">
-					<span class="viewtext">
-						Viewing <span class="count">{{ notes.length }}</span> notes from
-					</span>
-
-					<select name="notebook" class="notebook">
-						<option selected="selected">My Notebook</option>
-					</select>
-				</div>
-
-				<div id="notes">
-					<ul>
-						<li class="note" ng-repeat="note in notes | filter:note.query | orderBy:note.modified" ng-click="editNote(note)" selectnote>
-							<a class="delete" href="#" ng-click="deleteNote(note)">X</a>
-							<h2 class="title">{{ note.title }}</h2>
-							<p>
-								<span class="date">{{ note.modified | date }}</span>
-								<span class="tag-item">{{ note.tags }}</span>
-								<span class="description">{{ note.description }}</span>
-							</p>
+							<ul class="notebooks">
+								<li ng-repeat="notebook in notebooks" id="notebook-{{ notebook.name }}" class="notebook-link">
+	                                <a href="" ng-click="showNotesByNotebook(notebook.name)">
+	                                    <span class="name">{{ notebook.name }}</span>
+	                                </a>
+	                                <span class="count">{{ notebook.notes.length }}</span>
+	                            </li>
+							</ul>
 						</li>
 					</ul>
-				</div>
-			</div>
-		</td>
 
-		<td valign="top">
-			<div id="show-note">
-				<form ng-model="editedNote">
-					<div class="top">
-						<input type="hidden" name="modified" id="modified" />
+					<ul id="tags" showhide>
+						<li>
+							<a href="#">Tags</a>
 
-						<input type="text" class="title" name="title" placeholder="Click to set title..." value="{{ editedNote.title }}" ng-model="editedNote.title" blurnote />
+							<ul class="tags">
+								<li ng-repeat="tag in tags" id="tag-{{ tag.name }}" class="tag-link">
+	                                <a href="" ng-click="showNotesByTag(tag.name)">
+	                                    <span class="name">{{ tag.name }}</span>
+	                                </a>
+	                                <span class="count">{{ tag.notes.length }}</span>
+	                            </li>
+							</ul>
+						</li>
+					</ul>
 
-						<select name="notebook" class="notebook" ng-model="editedNote.notebook">
-							<option value="{{ editedNote.notebook }}" selected="selected" blurnote>{{ editedNote.notebook }}</option>
-							<option value="new-notebook" ng-click="newNotebook(note)">New Notebook</option>
-						</select>
+					<ul id="searches" showhide>
+						<li><a href="#">Saved&nbsp;Searches</a>
+							<ul class="searches hidden">
+							</ul>
+						</li>
+					</ul>
 
-						<span class="new-notebook hidden">
-							<input type="text" name="new-notebook" class="notebook" placeholder="Notebook name..." blurnote />
-							<a href="#" id="cancel">x</a>
-						</span>
+					<ul class="trash" showhide>
+						<li>
+							<a href="#/trash">Trash</a>
+						</li>
+					</ul>
+
+				</div> <!-- // note-nav -->
+			</td>
+
+			<td class="middle" valign="top" list-notes-by>
+				<div id="note-list">
+					<div class="filter">
+						<a href="#">Notes created by</a>
+
+						<input type="text" name="search" placeholder="Search" ng-model="note.query" />
 					</div>
 
-					<div class="mid">
-						<input type="url" class="url" name="url" value="{{ editedNote.url }}" placeholder="http://" ng-model="editedNote.url" blurnote />
-						<ul class="tag" data-name="nameOfSelect" tagit>
+					<div class="viewing">
+						<span class="viewtext">
+							Viewing <span class="count">{{ notes.length }}</span> notes from
+						</span>
 
+						<select name="notebook" class="notebook">
+							<option ng-repeat="notebook in notebooks">{{ notebook.name }}</option>
+						</select>
+					</div>
+
+					<div id="notes">
+						<ul>
+							<li class="note" ng-repeat="note in notes | filter:note.query | orderBy:note.modified:reverse" ng-click="selectNote(note)" note-selected>
+								<a class="delete" href="#" ng-click="deleteNote(note)">X</a>
+								<h2 class="title">{{ note.title }}</h2>
+								<p>
+									<span class="date">{{ note.modified | date }}</span>
+									<span class="tag-item">{{ note.tags }}</span>
+									<span class="description">{{ note.description }}</span>
+								</p>
+							</li>
 						</ul>
 					</div>
-					<textarea class="description" ng-model="editedNote.description" blurnote>{{ editedNote.description }}</textarea>
-				</form>
-			</div>
-		</td>
-	</tr>
-</table>
+				</div>
+
+			</td>
+
+			<td valign="top" controller="NoteCtrl" note-form="note">
+
+			</td>
+
+		</tr>
+	</table>
+</is-logged-in>

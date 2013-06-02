@@ -25,27 +25,25 @@
 <!-- Add your site or application content here -->
 <div class="container" ng-controller="MainCtrl">
 	<header>
-		<div id="loginout">
-			<a id="login" href="" ng-click="login()" logout>Login</a>
-		</div>
+		<div id="loginout" loginout></div>
 
-		<h1><a href="#/">Webernote</a></h1>
+		<h1><a href="/">Webernote</a></h1>
 	</header>
 
-	<div id="pagewrap">
+	<div id="pagewrap" ng-controller="UserCtrl">
 		<nav id="toolbar">
 			<ul>
-				<li><a href="#/">Home</a></li>
-				<li><a href="#">Edit</a></li>
-				<li><a href="#">View</a></li>
-				<li><a href="#">Note</a></li>
-				<li><a href="#">Format</a></li>
-				<li><a href="#">Tools</a></li>
-				<li><a href="#">Help</a></li>
-				<li><a href="#/users">Users</a></li>
+				<li><a href="/">Home</a></li>
+				<li><a href="">Edit</a></li>
+				<li><a href="">View</a></li>
+				<li><a href="">Note</a></li>
+				<li><a href="">Format</a></li>
+				<li><a href="">Tools</a></li>
+				<li><a href="">Help</a></li>
+				<li><a href="/users">Users</a></li>
 
-				<li class="new-note">
-					<a id="newNote" href="#" ng-controller="UserCtrl" ng-click="addNote()">
+				<li class="new-note" ng-show="isLoggedIn">
+					<a id="newNote" href="" ng-click="newNote()">
 						<span class="plus">+</span>
 						New Note
 					</a>
@@ -53,15 +51,15 @@
 			</ul>
 		</nav>
 
-		<nav id="note-types">
+		<nav id="note-types" ng-show="isLoggedIn">
 			<ul>
-			<li><a href="#">All Notes</a></li>
-			<li><a href="#">Notebooks</a></li>
-			<li><a href="#">Tags</a></li>
-			<li><a href="#">Web Clips</a></li>
-			<li><a href="#">Mobile</a></li>
-			<li><a href="#">Files</a></li>
-			<li><em>For quick access, drag notes, notebooks and tags here</em></li>
+				<li><a href="/notebook/all">All Notes</a></li>
+				<li><a href="">Notebooks</a></li>
+				<li><a href="">Tags</a></li>
+				<li><a href="">Web Clips</a></li>
+				<li><a href="">Mobile</a></li>
+				<li><a href="">Files</a></li>
+				<li><em>For quick access, drag notes, notebooks and tags here</em></li>
 			</ul>
 		</nav>
 
@@ -70,21 +68,30 @@
 </div>
 
 <script src="components/angular/angular.js"></script>
-<script src="components/angular-ui/build/angular-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="components/angular-ui/build/angular-ui.min.js"></script>
 
 <script src="//cdn.firebase.com/v0/firebase.js"></script>
 <script src="//cdn.firebase.com/v0/firebase-auth-client.js"></script>
-<script src="components/angularFire.js"></script>
+<script src="components/angular-fire/angularFire.js"></script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="components/plugins.js"></script>
+<script src="components/colResizable.js"></script>
 
 <!-- build:js scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/main.js"></script>
-<script src="scripts/services/noteFactory.js"></script>
+<script src="scripts/controllers/users.js"></script>
+<script src="scripts/controllers/notes.js"></script>
+
 <script src="scripts/directives/layout.js"></script>
+<script src="scripts/directives/loginout.js"></script>
+<script src="scripts/directives/new-note.js"></script>
 <script src="scripts/directives/noteBlur.js"></script>
+
+<script src="scripts/services/fireFactory.js"></script>
+<script src="scripts/services/noteFactory.js"></script>
+<script src="scripts/services/notebookFactory.js"></script>
+<script src="scripts/services/tagFactory.js"></script>
 <!-- endbuild -->
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
