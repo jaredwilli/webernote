@@ -9,7 +9,6 @@ Firebase also offers an authentication library for simplifying multiple options 
 
 
 ## Getting Setup
-## Getting Setup
 
 This app uses [Yeoman.io](http://yeoman.io), [Grunt.js](http://gruntjs.com) and [Bower](http://bower.com).
 Within Yeoman, the [angular-generator](https://github.com/yeoman/generator-angular) is also being used to automate the creation of new modules and the initial scaffolding of the folder structure.
