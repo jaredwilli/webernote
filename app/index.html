@@ -53,7 +53,7 @@
 
 		<nav id="note-types" ng-show="isLoggedIn">
 			<ul>
-				<li><a href="/notebook/all">All Notes</a></li>
+				<li><a href="/user/:userId">All Notes</a></li>
 				<li><a href="">Notebooks</a></li>
 				<li><a href="">Tags</a></li>
 				<li><a href="">Web Clips</a></li>
@@ -70,6 +70,7 @@
 <script src="components/angular/angular.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="components/angular-ui/build/angular-ui.min.js"></script>
+<script src="components/tagit.js"></script>
 
 <script src="//cdn.firebase.com/v0/firebase.js"></script>
 <script src="//cdn.firebase.com/v0/firebase-auth-client.js"></script>
@@ -81,12 +82,14 @@
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/users.js"></script>
+<script src="scripts/controllers/side-nav.js"></script>
 <script src="scripts/controllers/notes.js"></script>
 
 <script src="scripts/directives/layout.js"></script>
 <script src="scripts/directives/loginout.js"></script>
 <script src="scripts/directives/new-note.js"></script>
-<script src="scripts/directives/noteBlur.js"></script>
+<script src="scripts/directives/notes-list.js"></script>
+<script src="scripts/directives/note-form.js"></script>
 
 <script src="scripts/services/fireFactory.js"></script>
 <script src="scripts/services/noteFactory.js"></script>

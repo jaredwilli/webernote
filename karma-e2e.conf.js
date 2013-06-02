@@ -25,9 +25,7 @@ captureTimeout = 5000;
 
 // level of logging
 
-
 //shared = require('./karma.shared.conf').shared;
-
 
 // enable / disable colors in the output (reporters and logs)
 colors = true;

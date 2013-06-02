@@ -1,4 +1,4 @@
-<td valign="top" controller="NoteCtrl">
+<td valign="top">
 	<div id="show-note">
 		<form ng-model="editedNote">
 			<div class="top">
@@ -20,8 +20,8 @@
 			<div class="mid">
 				<input type="url" class="url" name="url" value="{{ editedNote.url }}" placeholder="http://" ng-model="editedNote.url" blurnote />
 
-				<!-- <ul class="tag" data-name="nameOfSelect" ng-model="editedNote.tags"  tagit></ul> -->
-				<input type="hidden" ng-model="editedNote.tags" class="tag input-large" ui-select2="{ tags: [{ id:5, text: 'tag1' }, { id: 8, text: 'tag2' }] }" />
+				<ul class="tag" data-name="nameOfSelect" ng-model="editedNote.tags"  tagit></ul>
+				<!-- <input type="hidden" ng-model="editedNote.tags" class="tag input-large" ui-select2> -->
 			</div>
 
 			<textarea class="description" ng-model="editedNote.description" blurnote>{{ editedNote.description }}</textarea>

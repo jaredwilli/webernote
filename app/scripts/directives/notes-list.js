@@ -5,22 +5,8 @@ app.
 directive('listNotesBy', function() {
 	return {
 		restrict: 'A',
-		scope: '@',
-		//templateUrl: 'views/note-list-td.html',
-		link: function(scope, elem, attrs) {
-			console.log(scope, elem);
-
-			var self = this;
-
-			scope.$watch('notes', function(notes) {
-				//console.log(notes);
-			});
-
-			$(elem).on('click', function(e) {
-				console.log('CLICK: ', e, $(this), scope.notes, attrs);
-				//attrs.set('showFormView');
-			});
-		}
+		scope: '=',
+		templateUrl: 'views/note-list-td.html'
 	};
 }).
 
@@ -43,6 +29,7 @@ directive('noteSelected', function() {
 	};
 });
 
+
 /*
 
 directive('noteform', function() {
@@ -57,32 +44,6 @@ directive('noteform', function() {
 			scope.$watch('editedNote', function(note) {
 				console.log(note);
 			});
-		}
-	};
-}).
-
-directive('tagit', function() {
-	return {
-		scope: '=',
-		link: function(scope, element, attrs) {
-			var tags = '';
-
-			scope.$watch('editedNote', function(note) {
-				console.log(note.tags);
-
-				scope.tags = (note.tags || '').replace(/\s+/, '').split(',');
-			});
-
-			scope.$watch('tags', function(tagArray) {
-				console.log(tagArray);
-				console.log('tagit Scope: ', scope);
-
-				$(element).tagit({
-					tags: tagArray
-				});
-			});
-
-			$(element).find('input').attr('blurnote', '');
 		}
 	};
 }).

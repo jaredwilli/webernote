@@ -3,13 +3,11 @@ describe("Unit: Testing Controllers", function() {
 		var scope, ctrl;
 
 		beforeEach(function() {
-			scope = {};
-			console.log(angular.mock());
-			ctrl = angular.mock('MainCtrl');
+			scope = {},
+			ctrl = new MainCtrl(scope);
 		});
 
 		it('Should create a notes model with at least 1 note', function() {
-			console.log(ctrl);
 			expect(scope.notes.length).toBe(5);
 		});
 

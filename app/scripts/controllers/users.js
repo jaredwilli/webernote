@@ -11,7 +11,7 @@ controller('UserCtrl', [
 
 	function UserCtrl($scope, $location, noteFactory, notebookFactory, tagFactory) {
 
-		$scope.editedNote = '';
+		$scope.editedNote = null;
 		$scope.editedNotebook = '';
 		$scope.editedTag = '';
 
@@ -43,7 +43,7 @@ controller('UserCtrl', [
 		};
 
 		$scope.editNote = function(note) {
-//			$location.path($location.path() + '/note/' + note.$id.replace('-', '_'));
+			//$location.path($location.path() + '/note/' + note.$id.replace('-', '_'));
 
 			$scope.editedNote = note;
 

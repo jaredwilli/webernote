@@ -51,37 +51,6 @@
 			</td>
 
 			<td class="middle" valign="top" list-notes-by>
-				<div id="note-list">
-					<div class="filter">
-						<a href="#">Notes created by</a>
-
-						<input type="text" name="search" placeholder="Search" ng-model="note.query" />
-					</div>
-
-					<div class="viewing">
-						<span class="viewtext">
-							Viewing <span class="count">{{ notes.length }}</span> notes from
-						</span>
-
-						<select name="notebook" class="notebook">
-							<option ng-repeat="notebook in notebooks">{{ notebook.name }}</option>
-						</select>
-					</div>
-
-					<div id="notes">
-						<ul>
-							<li class="note" ng-repeat="note in notes | filter:note.query | orderBy:note.modified:reverse" ng-click="selectNote(note)" note-selected>
-								<a class="delete" href="#" ng-click="deleteNote(note)">X</a>
-								<h2 class="title">{{ note.title }}</h2>
-								<p>
-									<span class="date">{{ note.modified | date }}</span>
-									<span class="tag-item">{{ note.tags }}</span>
-									<span class="description">{{ note.description }}</span>
-								</p>
-							</li>
-						</ul>
-					</div>
-				</div>
 
 			</td>
 

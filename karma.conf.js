@@ -10,18 +10,17 @@ files = [
 
 	// 3rd party code
 	'./app/components/angular/angular.js',
+	'./app/components/angular-mocks/angular-mocks.js',
 
 	// Firebase code
-	'./app/components/firebase.js',
-	'./app/components/firebase-auth-client.js',
-	'./app/components/angularFire.js',
+	'./app/components/firebase/firebase.js',
+	'./app/components/firebase/firebase-auth-client.js',
+	'./app/components/angular-fire/angularFire.js',
 
 	// App specific code
 	'./app/scripts/*.js',
 	'./app/scripts/**/*.js',
 
-	// App specific code
-	'./app/components/angular-mocks/angular-mocks.js',
 
 	// Test specs
 	'./test/spec/**/*.js'

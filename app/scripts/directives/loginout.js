@@ -42,9 +42,9 @@ directive('isLoggedIn', function() {
 
 			console.log(parent);
 
-			parent.$watch('isLoggedIn', function() {
+			/*parent.$watch('isLoggedIn', function() {
 
-			});
+			});*/
 		}
 	};
 });
