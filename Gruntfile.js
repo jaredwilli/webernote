@@ -100,9 +100,15 @@ module.exports = function(grunt) {
 			]
 		},
 		karma: {
-			unit: {
+			options: {
 				configFile: 'karma.conf.js',
+				runnerPort: 9999
+			},
+			continuous: {
 				singleRun: false
+			},
+			dev: {
+				reporters: 'dots'
 			}
 		},
 		coffee: {
@@ -268,7 +274,7 @@ module.exports = function(grunt) {
 		'compass:server',
 		'livereload-start',
 		'connect:livereload',
-		'open',
+		/*'open',*/
 		'watch'
 	]);
 
