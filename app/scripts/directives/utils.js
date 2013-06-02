@@ -8,7 +8,12 @@ config(function($httpProvider) {
         return function(promise) {
             numLoadings++;
             loadingScreen.show();
-            var hide = function(r) { if (!(--numLoadings)) loadingScreen.hide(); return r; };
+            var hide = function(r) {
+				if (!(--numLoadings)) {
+					loadingScreen.hide();
+				}
+				return r;
+            };
             return promise.then(hide, hide);
         };
     });
@@ -289,3 +294,63 @@ config(function($httpProvider) {
 		.filter('markdown', [markdown]);
 
 })(window.angular || {}, window.marked || {}, window._ || {}, window.CodeMirror || {}, window.$ || {});
+
+
+/*
+
+directive('noteListHelper', function() {
+	function link($scope, element, attrs) {
+		element.on('click', 'li', function(e) {
+			console.log(attrs);
+		});
+
+		function noteListItem($scope, element, attrs) {
+			console.log('linking delegated: ', element);
+
+			$scope.deleteNote = function(note) {
+				element.slideUp(100).fadeOut({
+					duration: 200,
+					queue: false,
+					always: function() {
+						$scope.$parent.deleteNote(note);
+						$scope.$apply();
+					}
+				});
+			};
+
+			element.hide().fadeIn(500);
+		}
+
+		// Return the config for directive and define the Controller
+		// this is the only way access to $scope pre-linking (no compile function)
+		return({
+			controller: function($scope) {
+				// a hook for the sub-directive that delegates its linking method to the helper
+				$scope.delegateDirectiveLinking = function(type, $scope, element, attrs) {
+					if (type === 'noteItem') {
+						noteListItem($scope, element, attrs);
+					}
+				};
+			},
+			link: link,
+			restrict: 'A'
+		});
+	}
+}).
+
+directive('noteDelegator', function() {
+	function link($scope, element, attrs) {
+		// check for a parent directive with exposed delegating link method
+		if (! $scope.delegateDirectiveLinking) {
+			return;
+		}
+
+		$scope.delegateDirectiveLinking(attrs.noteDelegator, $scope, element, attrs);
+	}
+
+	return({
+		link: link,
+		restrict: 'A'
+	});
+});
+*/
