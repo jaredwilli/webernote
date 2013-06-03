@@ -16,9 +16,5 @@ controller('NoteCtrl', [
 			//console.log('$watch.userId: ', userId);
 			$scope.userId = userId;
 		});
-
-		$scope.viewNote = function(noteId) {
-
-		};
 	}
 ]);

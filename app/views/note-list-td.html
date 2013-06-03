@@ -17,7 +17,7 @@
 
 					<div id="notes">
 						<ul>
-							<li class="note" ng-repeat="note in notes | filter:note.query | orderBy:note.modified:reverse" note-selected="note">
+							<li class="note" ng-repeat="note in notes | filter:note.query | reverse" note-selected="note">
 								<a class="delete" href="" ng-click="deleteNote(note)">X</a>
 								<h2 class="title">{{ note.title }}</h2>
 								<p>

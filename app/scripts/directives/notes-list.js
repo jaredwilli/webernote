@@ -27,4 +27,10 @@ directive('noteSelected', function() {
 			});
 		}
 	};
+}).
+
+filter('reverse', function() {
+	return function(notes) {
+		return notes.slice().reverse();
+	};
 });
