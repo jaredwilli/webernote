@@ -52,13 +52,15 @@ directive('noteUpdate', function() {
 		link: function(scope, element, attrs) {
 			//console.log('noteUpdate: ', scope);
 
-			$(element).on('change', function(e) {
+			$(element).on('blur change', function(e) {
 				//console.log('noteUpdate element: ', element);
 
 				// TODO: Fix this crap
 				var parent = scope.$parent.$parent.$parent.$parent;
 				//console.log('noteUpdate: ', parent);
 				parent.editNote(scope.editedNote);
+
+				//scope.$apply(scope.editedNote);
 			});
 
 		}

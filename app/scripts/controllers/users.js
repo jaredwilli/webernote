@@ -30,6 +30,7 @@ controller('UserCtrl', [
 
 		$scope.$watch('editedNote', function(editedNote) {
 			//console.log(editedNote);
+
 			$scope.editNote(editedNote);
 		});
 
@@ -48,6 +49,8 @@ controller('UserCtrl', [
 			noteFactory.editNote($scope.userId + '/notes', note);
 		};
 		$scope.deleteNote = function(note) {
+			// TODO: create a dialog to confirm deletion of note
+
 			noteFactory.deleteNote($scope.userId + '/notes', note);
 		};
 
