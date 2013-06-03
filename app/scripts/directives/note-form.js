@@ -6,9 +6,13 @@ directive('noteForm', function() {
 	return {
 		restrict: 'A',
 		scope: '=',
+		transclude: true,
 		templateUrl: 'views/note-form.html',
 		link: function(scope, elem, attrs) {
-			console.log('NOTEVIEW: ', scope, attrs);
+			//console.log('NoteForm Scope: ', scope);
+			//var parent = scope.$parent;
+			//console.log('NoteForm Parent: ', parent);
+
 		}
 	};
 }).
@@ -19,7 +23,7 @@ directive('tagit', function() {
 		link: function(scope, element, attrs) {
 			var tags = '';
 			var parent = scope.$parent;
-			console.log(parent);
+			console.log('tagit', parent);
 
 			/*parent.$watch('editedNote', function(note) {
 				console.log(note.tags);
@@ -38,5 +42,25 @@ directive('tagit', function() {
 
 		}
 	};
-});
+}).
 
+directive('noteUpdate', function() {
+	return {
+		restrict: 'A',
+		scope: '=',
+		transclude: true,
+		link: function(scope, element, attrs) {
+			//console.log('noteUpdate: ', scope);
+
+			$(element).on('change', function(e) {
+				//console.log('noteUpdate element: ', element);
+
+				// TODO: Fix this crap
+				var parent = scope.$parent.$parent.$parent.$parent;
+				//console.log('noteUpdate: ', parent);
+				parent.editNote(scope.editedNote);
+			});
+
+		}
+	};
+});

@@ -18,7 +18,7 @@ directive('noteSelected', function() {
 
 			$(element).on('click', function(e) {
 				var parent = scope.$parent;
-				console.log('noteDirective parentScope: ', parent);
+				//console.log('note List parentScope: ', parent);
 
 				$(element).siblings().removeClass('selected');
 				element.addClass('selected');

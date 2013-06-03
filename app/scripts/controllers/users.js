@@ -10,7 +10,7 @@ controller('UserCtrl', [
 	'tagFactory',
 
 	function UserCtrl($scope, $location, noteFactory, notebookFactory, tagFactory) {
-
+		$scope.name = 'users';
 		$scope.editedNote = null;
 		$scope.editedNotebook = '';
 		$scope.editedTag = '';
@@ -26,12 +26,11 @@ controller('UserCtrl', [
 
 			//console.log($scope.notes);
 			//console.log('TAGS: ', $scope.tags);
-
 		});
 
-		$scope.$watch('location.path()', function(path) {
-			//$scope.statusFilter = (path === '/') ? $location.path('/user/' + $scope.userRef.name()) : console.log(path);;
-			//console.log($scope, path);
+		$scope.$watch('editedNote', function(editedNote) {
+			//console.log(editedNote);
+			$scope.editNote(editedNote);
 		});
 
 		// Notes
@@ -43,11 +42,9 @@ controller('UserCtrl', [
 		};
 
 		$scope.editNote = function(note) {
-			//$location.path($location.path() + '/note/' + note.$id.replace('-', '_'));
-
 			$scope.editedNote = note;
 
-			//console.log('editedNote', $scope.editedNote);
+			console.log('editedNote', $scope.editedNote);
 			noteFactory.editNote($scope.userId + '/notes', note);
 		};
 		$scope.deleteNote = function(note) {

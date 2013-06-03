@@ -104,7 +104,7 @@ controller('MainCtrl', [
 			//fireFactory.firebaseRef('users/' + $scope.userId).unauth();
 			authClient.logout();
 			$location.path('/');
-			console.log($scope.isLoggedIn);
+			//console.log($scope.isLoggedIn);
 			// console.log(authClient);
 		};
 	}
