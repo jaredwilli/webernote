@@ -42,7 +42,8 @@ body {
 	width: 90%;
 }
 a {
-	color: hsl(199, 89%, 31%);
+	color: #0f8ef0;
+	text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.83);
 	text-decoration: none;
 }
 h1 {
@@ -148,8 +149,42 @@ STRUCTURE
 }
 
 #loginout {
-	float: right;
+	position: absolute;
+	right: 5%;
 }
+
+#loginout > a {
+	text-align: right;
+	display: block;
+}
+
+.login {
+	background: #0f8ef0;
+	border: 1px solid #1a76bf;
+	padding: 0;
+	cursor: pointer;
+	z-index: 10;
+	width: 115px;
+	position: relative;
+}
+.login li {
+	display: block;
+}
+.login a {
+	border: 0;
+	color: #fff;
+	text-shadow: none;
+	margin: 1px;
+	display: block;
+	padding: 10px 20px;
+}
+.login a:hover {
+	background: #fff;
+	border: 1px solid #1a76bf;
+	color: #0f8ef0;
+	margin: -1px;
+}
+
 
 /* TOOLBAR NAV */
 
@@ -160,6 +195,25 @@ STRUCTURE
 	display: block;
 	width: 100%;
 
+	border: 1px solid #1a76bf;
+	color: #fff;
+	text-shadow: 0 1px 0 #1a76bf;
+	box-shadow: inset 0 1px 0 #75c3ff, 0 1px 2px rgba(0, 0, 0, 0.05);
+
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+		 -o-box-sizing: border-box;
+			box-sizing: border-box;
+
+	background-color: #0f8ef0;
+	background-image: linear-gradient(bottom, #0f8ef0 0%, #3ba9ff 100%);
+	background-image: -o-linear-gradient(bottom, #0f8ef0 0, #3ba9ff 100%);
+	background-image: -moz-linear-gradient(bottom, #0f8ef0 0, #3ba9ff 100%);
+	background-image: -webkit-linear-gradient(bottom, #0f8ef0 0, #3ba9ff 100%);
+	background-image: -ms-linear-gradient(bottom, #0f8ef0 0, #3ba9ff 100%);
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #0f8ef0), color-stop(1, #3ba9ff));
+
+	/*
 	background: rgb(135,224,253);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(135,224,253,1)), color-stop(40%,rgba(83,203,241,1)), color-stop(100%,rgba(5,171,224,1)));
 	background: -webkit-linear-gradient(top, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
@@ -168,6 +222,7 @@ STRUCTURE
 	background: -o-linear-gradient(top, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
 	background: linear-gradient(to bottom, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=0 );
+	*/
 }
 
 #toolbar ul {
@@ -336,7 +391,7 @@ STRUCTURE
 #note-nav li > a:hover {
 	text-decoration: underline;
 }
-#note-nav li.tag-link > a {
+#note-nav li li > a {
 	background: none;
 }
 #note-nav li.expanded > a {

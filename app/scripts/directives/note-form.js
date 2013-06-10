@@ -6,7 +6,6 @@ directive('noteForm', function() {
 	return {
 		restrict: 'A',
 		scope: '=',
-		transclude: true,
 		templateUrl: 'views/note-form.html',
 		link: function(scope, elem, attrs) {
 			//console.log('NoteForm Scope: ', scope);

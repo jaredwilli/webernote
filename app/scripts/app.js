@@ -8,7 +8,7 @@ app.config([
 
 		$routeProvider.
 			when('/', {
-				//templateUrl: 'views/main.html',
+				/*templateUrl: 'views/login.html',*/
 				controller: 'MainCtrl'
 			}).
 			when('/user/:userId', {
@@ -21,16 +21,5 @@ app.config([
 			otherwise({
 				redirectTo: '/'
 			});
-	}
-]).
-
-run([
-	'$rootScope',
-	'$location',
-	'angularFire',
-
-	function($rootScope, $location, angularFire) {
-
-
 	}
 ]);

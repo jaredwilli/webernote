@@ -1,7 +1,12 @@
 {
-  "name": "ang",
-  "version": "0.0.0",
-  "dependencies": {},
+  "name": "Webernote",
+  "author": "Jared Williams",
+  "version": "0.0.1",
+
+  "dependencies": {
+
+  },
+
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.0",
@@ -26,6 +31,7 @@
     "grunt-google-cdn": "~0.1.1",
     "grunt-ngmin": "~0.0.2"
   },
+
   "engines": {
     "node": ">=0.8.0"
   }

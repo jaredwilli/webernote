@@ -21,7 +21,6 @@ files = [
 	'./app/scripts/*.js',
 	'./app/scripts/**/*.js',
 
-
 	// Test specs
 	'./test/spec/**/*.js'
 ];
@@ -40,10 +39,6 @@ logLevel = LOG_DEBUG; // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN |
 
 // If browser does not capture in given timeout [ms], kill it
 captureTimeout = 5000;
-
-
-//shared = require('./karma.shared.conf').shared;
-
 
 // enable / disable colors in the output (reporters and logs)
 colors = true;
@@ -65,4 +60,8 @@ reporters = ['progress']; // possible values: dots || progress || growl
 // - Safari (only Mac)
 // - PhantomJS
 // - IE (only Windows)
-browsers = ['ChromeCanary'];
+browsers = ['ChromeCanary, PhantomJS'];
+
+defaultProxies = {
+	'/': 'http://localhost:8000'
+};

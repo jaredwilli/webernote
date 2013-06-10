@@ -36,7 +36,9 @@ factory('noteFactory', [
 				});
 			},
 			editNote: function(path, note) {
-				//console.log(note);
+				console.log(note);
+				if (note === null) { return; }
+				
 				this.getAllNotes(path).update(note);
 			},
 			deleteNote: function(path, note) {

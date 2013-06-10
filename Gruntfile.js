@@ -275,6 +275,7 @@ module.exports = function(grunt) {
 		'livereload-start',
 		'connect:livereload',
 		/*'open',*/
+		/*'devtools',*/
 		'watch'
 	]);
 
@@ -283,6 +284,7 @@ module.exports = function(grunt) {
 		'coffee',
 		'compass',
 		'connect:test',
+		/*'devtools',*/
 		'karma'
 	]);
 

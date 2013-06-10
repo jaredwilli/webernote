@@ -54,16 +54,15 @@ controller('MainCtrl', [
 				});
 
 				$scope.promise = angularFire(usersurl + $scope.userRef.name(), $scope, $scope.userRef.name(), {});
-				console.log('promise', $scope.promise, $scope.userRef.name());
+				//console.log('promise', $scope.promise, $scope.userRef.name());
 				$location.path('/user/' + $scope.userRef.name());
 
-				$scope.promise.then(function(user) {
+				/*$scope.promise.then(function(user) {
 					console.log('user', user);
 					//$scope.startWatch($scope, filterFilter);
-				});
+				});*/
 			}
 			else {
-				// Logged out
 				console.log('Logged Out', $scope);
 
 				localStorage.clear();
@@ -79,19 +78,19 @@ controller('MainCtrl', [
 		}
 		$scope.location = $location;*/
 
-		$scope.login = function() {
+
+		$scope.login = function(provider) {
 			$scope.token = localStorage.getItem('token');
 
-			var	provider = 'twitter',
-				options = { 'rememberMe': true };
+			var options = { 'rememberMe': true };
+			provider = provider.toLowerCase() || 'twitter';
 
-			console.log($scope.token);
+			console.log('Provider:', provider);
+			//console.log($scope.token);
 
 			if ($scope.token) {
 				console.log('login with token', $scope.token);
-
 				fireFactory.firebaseRef('users').auth($scope.token, $scope.authCallback);
-				//console.log(fireFactory.firebaseRef('users'), $scope.authCallback());
 			} else {
 				console.log('login with authClient');
 				authClient.login(provider, options);
@@ -104,8 +103,6 @@ controller('MainCtrl', [
 			//fireFactory.firebaseRef('users/' + $scope.userId).unauth();
 			authClient.logout();
 			$location.path('/');
-			//console.log($scope.isLoggedIn);
-			// console.log(authClient);
 		};
 	}
 ]);

@@ -5,16 +5,16 @@
 root = true
 
 
+# For every file *.js for filetypes or lib/**.js for sub-dirs
 [*]
 
 # Change these settings to your own preference
-indent_style = tag
-indent_size = 4
+indent_style = tab
 
 # We recommend you to keep these unchanged
 end_of_line = lf
 charset = utf-8
-trim_trailing_whitespace = true
+trim_trailing_whitespace = false
 insert_final_newline = true
 
 [*.md]

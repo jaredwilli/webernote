@@ -6,25 +6,40 @@ directive('loginout', function() {
 	return {
 		restrict: 'A',
 		scope: '=',
-		template: '<a id="{{ loggText | lowercase }}" ng-click="loggAction()" href="">{{ loggText }}</a>',
+		transclude: true,
+		templateUrl: 'views/login.html',
 		link: function(scope, element, attrs) {
 			console.log('loginout args: ', scope, element, attrs);
+			scope.loginWith = true;
+
+			scope.clients = [
+				'Twitter',
+				'Github',
+				'Google',
+				'Facebook'
+			];
 
 			var parent = scope.$parent;
-			console.log('parent: ', parent);
-
-
 			parent.$watch('isLoggedIn', function(isLoggedIn) {
-				console.log(isLoggedIn);
-				//console.log(attrs.loginout = 'test');
-
 				scope.loggText = (parent.isLoggedIn) ? 'Logout' : 'Login';
-				scope.loggAction = (parent.isLoggedIn) ? scope.logout : scope.login;
+
+				if (parent.isLoggedIn) {
+					scope.loggAction = scope.logout;
+					scope.loginWith = true;
+				} else {
+					scope.loggAction = scope.showClients;
+				}
 
 			});
 
-			scope.login = function() {
-				parent.login();
+			scope.showClients = function() {
+				scope.loginWith = !scope.loginWith;
+				scope.loggAction = scope.login;
+
+			};
+
+			scope.login = function(client) {
+				parent.login(client);
 			};
 			scope.logout = function() {
 				parent.logout();

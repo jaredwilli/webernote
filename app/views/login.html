@@ -1,23 +1,9 @@
-<form>
-	<h2>Login</h2>
+<a href="" ng-click="loggAction()">{{ loggText }}</a>
 
-	<label for="email">Email:
-		<input type="text" name="email" placeholder="Email address..." ng-model="user.email" />
-	</label>
-	<br />
-
-	<label for="password">Password:
-		<input type="password" name="password" placeholder="Password..." ng-model="user.password">
-	</label>
-	<br />
-
-	<button type="button" ng-click="login(user)">Login</button>
-
-	<ul>
-		<li><a href="#/resetpassword">Forgot Password</a></li>
-		<li><a href="#/register">Register</a></li>
-	</ul>
-</form>
-
-{{user | json}}
-{{master | json}}
+<ul class="login" ng-hide="loginWith">
+	<li ng-repeat="client in clients" id="client-{{ client | lowercase }}" class="client-link">
+        <a href="" ng-click="login(client)">
+            {{ client }}
+        </a>
+    </li>
+</ul>
