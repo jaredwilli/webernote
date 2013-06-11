@@ -1,0 +1,9 @@
+<a href="" ng-click="loggAction()">{{ loggText }}</a>
+
+<ul class="login" ng-hide="loginWith">
+	<li ng-repeat="client in clients" id="client-{{ client | lowercase }}" class="client-link">
+        <a href="" ng-click="login(client)">
+            {{ client }}
+        </a>
+    </li>
+</ul>

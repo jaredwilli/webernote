@@ -1,0 +1,61 @@
+	<table id="resizable" resizable fullheight>
+		<tr>
+			<td valign="top" controller="SideNavCtrl">
+				<div id="note-nav">
+
+					<ul id="notebooks" showhide>
+						<li>
+							<a href="#">Notebooks</a>
+
+							<ul class="notebooks">
+								<li ng-repeat="notebook in notebooks" id="notebook-{{ notebook.name }}" class="notebook-link">
+	                                <a href="" ng-click="showNotesByNotebook(notebook.name)">
+	                                    <span class="name">{{ notebook.name }}</span>
+	                                </a>
+	                                <span class="count">{{ notebook.notes.length }}</span>
+	                            </li>
+							</ul>
+						</li>
+					</ul>
+
+					<ul id="tags" showhide>
+						<li>
+							<a href="#">Tags</a>
+
+							<ul class="tags">
+								<li ng-repeat="tag in tags" id="tag-{{ tag.name }}" class="tag-link">
+	                                <a href="" ng-click="showNotesByTag(tag.name)">
+	                                    <span class="name">{{ tag.name }}</span>
+	                                </a>
+	                                <span class="count">{{ tag.notes.length }}</span>
+	                            </li>
+							</ul>
+						</li>
+					</ul>
+
+					<ul id="searches" showhide>
+						<li><a href="#">Saved&nbsp;Searches</a>
+							<ul class="searches hidden">
+							</ul>
+						</li>
+					</ul>
+
+					<ul class="trash" showhide>
+						<li>
+							<a href="#/trash">Trash</a>
+						</li>
+					</ul>
+
+				</div> <!-- // note-nav -->
+			</td>
+
+			<td class="middle" valign="top" list-notes-by>
+
+			</td>
+
+			<td valign="top" controller="NoteCtrl" note-form="note">
+
+			</td>
+
+		</tr>
+	</table>
