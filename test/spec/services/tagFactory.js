@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: noteFactory', function() {
+describe('Service: tagFactory', function() {
 
 	// load the service's module
 	beforeEach(module('angApp'));
 
 	// instantiate service
-	var noteFactory;
-	beforeEach(inject(function(_noteFactory_) {
-		noteFactory = _noteFactory_;
+	var tagFactory;
+	beforeEach(inject(function(_tagFactory_) {
+		tagFactory = _tagFactory_;
 	}));
 
 	it('should do something', function() {
-		expect(!!noteFactory).toBe(true);
+		expect(!!tagFactory).toBe(true);
 	});
 
 });

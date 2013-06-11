@@ -8,6 +8,7 @@ directive('noteForm', function() {
 		scope: '=',
 		templateUrl: 'views/note-form.html',
 		link: function(scope, elem, attrs) {
+
 			//console.log('NoteForm Scope: ', scope);
 			//var parent = scope.$parent;
 			//console.log('NoteForm Parent: ', parent);
@@ -19,10 +20,13 @@ directive('noteForm', function() {
 directive('tagit', function() {
 	return {
 		scope: '=',
+		transclude: true,
 		link: function(scope, element, attrs) {
 			var tags = '';
 			var parent = scope.$parent;
 			console.log('tagit', parent);
+
+
 
 			/*parent.$watch('editedNote', function(note) {
 				console.log(note.tags);
@@ -46,17 +50,17 @@ directive('tagit', function() {
 directive('noteUpdate', function() {
 	return {
 		restrict: 'A',
-		scope: '=',
+		scope: '@',
 		transclude: true,
 		link: function(scope, element, attrs) {
 			//console.log('noteUpdate: ', scope);
 
-			$(element).on('blur change', function(e) {
+			$(element).on('blur change keyup', function(e) {
 				//console.log('noteUpdate element: ', element);
 
 				// TODO: Fix this crap
-				var parent = scope.$parent.$parent.$parent.$parent;
-				//console.log('noteUpdate: ', parent);
+				var parent = scope.$parent;
+				console.log('noteUpdate: ', parent);
 				parent.editNote(scope.editedNote);
 
 				//scope.$apply(scope.editedNote);

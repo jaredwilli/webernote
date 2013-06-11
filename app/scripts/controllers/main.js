@@ -2,15 +2,15 @@
 
 app.
 
-// TODO: Should rename MainCtrl to AuthCtrl at some point
-controller('MainCtrl', [
+// TODO: Should rename AuthCtrl to AuthCtrl at some point
+controller('AuthCtrl', [
 	'$scope',
 	'$location',
 	'angularFire',
 	'fireFactory',
 
-	function MainCtrl($scope, $location, angularFire, fireFactory) {
-		$scope.name = 'MainCtrl';
+	function AuthCtrl($scope, $location, angularFire, fireFactory) {
+		$scope.name = 'AuthCtrl';
 
 		var baseurl = 'https://webernote.firebaseio.com',
 			usersurl = baseurl + '/users/',
@@ -63,8 +63,6 @@ controller('MainCtrl', [
 				});*/
 			}
 			else {
-				console.log('Logged Out', $scope);
-
 				localStorage.clear();
 				$scope.isLoggedIn = false;
 				$location.path('/');

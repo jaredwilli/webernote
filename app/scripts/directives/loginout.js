@@ -7,9 +7,8 @@ directive('loginout', function() {
 		restrict: 'A',
 		scope: '=',
 		transclude: true,
-		templateUrl: 'views/login.html',
+		templateUrl: 'views/loginout.html',
 		link: function(scope, element, attrs) {
-			console.log('loginout args: ', scope, element, attrs);
 			scope.loginWith = true;
 
 			scope.clients = [

@@ -1,17 +1,30 @@
-describe("Unit: Testing Controllers", function() {
-	describe("MainCtrl", function() {
-		var scope, ctrl;
+'use strict';
 
-		beforeEach(function() {
-			scope = {};
-			console.log(angular.mock());
-			ctrl = angular.mock('MainCtrl');
+describe("Controller: AuthCtrl", function() {
+	var scope, ctrl;
+
+	beforeEach(function() {
+		module('angApp');
+
+	});
+
+	describe('AuthCtrl', function() {
+        beforeEach(inject(function($rootScope, $controller) {
+            scope = $rootScope.$new();
+            $controller("AuthCtrl", {
+                $scope: scope
+            });
+        }));
+
+		it('should create a name model', function() {
+			expect(scope.name).toBe('AuthCtrl');
 		});
 
-		it('Should create a notes model with at least 1 note', function() {
-			console.log(ctrl);
-			expect(scope.notes.length).toBe(5);
+
+		it('should ', function() {
+			expect(scope.name).toBe('AuthCtrl');
 		});
+
 
 	});
 });

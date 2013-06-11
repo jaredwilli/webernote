@@ -20,8 +20,8 @@
 			<div class="mid">
 				<input type="url" class="url" name="url" value="{{ editedNote.url }}" placeholder="http://" ng-model="editedNote.url" note-update />
 
-				<ul class="tag" data-name="nameOfSelect" ng-model="editedNote.tags" tagit></ul>
-				<!-- <input type="hidden" ng-model="editedNote.tags" class="tag input-large" ui-select2> -->
+				<!-- <ul class="tag" data-name="nameOfSelect" ng-model="editedNote.tags" tagit></ul> -->
+				<input type="text" ng-model="editedNote.tags" class="tag input-large" ui-select2="{ tags: editedNote.tags }">
 			</div>
 
 			<textarea class="description" ng-model="editedNote.description" note-update>{{ editedNote.description }}</textarea>

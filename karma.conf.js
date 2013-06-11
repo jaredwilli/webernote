@@ -13,8 +13,8 @@ files = [
 	'./app/components/angular-mocks/angular-mocks.js',
 
 	// Firebase code
-	'./app/components/firebase/firebase.js',
-	'./app/components/firebase/firebase-auth-client.js',
+	'./app/scripts/vendor/**/*.js',
+	'./app/scripts/vendor/*.js',
 	'./app/components/angular-fire/angularFire.js',
 
 	// App specific code
@@ -35,7 +35,7 @@ port = 8080;
 runnerPort = 9100;
 
 // level of logging
-logLevel = LOG_DEBUG; // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
+logLevel = LOG_ERROR; // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
 
 // If browser does not capture in given timeout [ms], kill it
 captureTimeout = 5000;
@@ -60,7 +60,7 @@ reporters = ['progress']; // possible values: dots || progress || growl
 // - Safari (only Mac)
 // - PhantomJS
 // - IE (only Windows)
-browsers = ['ChromeCanary, PhantomJS'];
+browsers = ['ChromeCanary'];
 
 defaultProxies = {
 	'/': 'http://localhost:8000'

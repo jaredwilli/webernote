@@ -1,15 +1,28 @@
+'use strict';
+
 describe("Unit: Testing Controllers", function() {
-	describe("MainCtrl", function() {
-		var scope, ctrl;
+	var scope, ctrl;
 
-		beforeEach(function() {
-			scope = {},
-			ctrl = new MainCtrl(scope);
-		});
+	beforeEach(function() {
+		module('angApp');
 
-		it('Should create a notes model with at least 1 note', function() {
-			expect(scope.notes.length).toBe(5);
-		});
 
+	});
+
+	describe('UsersCtrl', function() {
+		it('should create "user" model with 1 user', inject(function($rootScope, $controller, $location, angularFire, fireFactory) {
+			//var scope = $rootScope.$new();
+			var ctrl = $controller('UserCtrl', {
+				$scope: $rootScope.$new()
+			});
+
+			console.log(ctrl);
+			ctrl.name = 'UserCtrl'
+			ctrl.user = {
+
+			}
+
+			/*expect(ctrl.$scope.user.length).toBe(1);*/
+      }));
 	});
 });

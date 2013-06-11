@@ -1,15 +1,27 @@
+'use strict';
+
 describe("Unit: Testing Controllers", function() {
-	describe("MainCtrl", function() {
-		var scope, ctrl;
+	var scope, ctrl;
 
-		beforeEach(function() {
-			scope = {},
-			ctrl = new MainCtrl(scope);
-		});
+	beforeEach(function() {
+		module('angApp');
 
-		it('Should create a notes model with at least 1 note', function() {
-			expect(scope.notes.length).toBe(5);
-		});
+	});
 
+	describe('NoteCtrl', function() {
+		it('should create "note" model with 1 note', inject(function($rootScope, $controller, $location, angularFire, fireFactory) {
+			//var scope = $rootScope.$new();
+			var ctrl = $controller('NoteCtrl', {
+				$scope: $rootScope.$new()
+			});
+
+			console.log(ctrl);
+			ctrl.name = 'NoteCtrl'
+			ctrl.note = {
+
+			}
+
+			/*expect(ctrl.$scope.note.length).toBe(1);*/
+      }));
 	});
 });
