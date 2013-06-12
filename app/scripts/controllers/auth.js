@@ -15,7 +15,7 @@ controller('AuthCtrl', [
 		var baseurl = 'https://webernote.firebaseio.com',
 			usersurl = baseurl + '/users/',
 			usersRef = angularFire(usersurl, $scope, 'users', {});
-angular.noop
+
 		// FirebaseAuth callback
 		$scope.authCallback = function(error, user) {
 			if (error) {

@@ -14,7 +14,6 @@ directive('loginout', function() {
 			scope.clients = [
 				'Twitter',
 				'Github',
-				'Google',
 				'Facebook'
 			];
 
@@ -34,7 +33,6 @@ directive('loginout', function() {
 			scope.showClients = function() {
 				scope.loginWith = !scope.loginWith;
 				scope.loggAction = scope.login;
-
 			};
 
 			scope.login = function(client) {

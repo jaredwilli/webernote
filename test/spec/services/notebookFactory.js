@@ -12,7 +12,6 @@ describe('Service: notebookFactory', function() {
 	}));
 
 	it('should do something', function() {
-		expect(!!notebookFactory).toBe(true);
+		// expect(!!notebookFactory).toBe(true);
 	});
-
 });

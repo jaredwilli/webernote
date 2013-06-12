@@ -6,16 +6,18 @@ directive('noteForm', function() {
 	return {
 		restrict: 'A',
 		scope: '@',
+		transclude: true,
 		templateUrl: 'views/note-form.html',
 		link: function(scope, elem, attrs) {
-			console.log('NoteForm Scope: ', scope);
 			parent = scope.$parent.$parent;
 
+			console.log('NoteForm Scope: ', parent);
 
 			parent.$watch('editedNote', function(editedNote) {
-				scope.tags = editedNote.tags.replace(', ', ',').split(',');
-				console.log(scope.tags);
+				console.log(editedNote.$id);
 
+				scope.tags = editedNote.tags;
+				console.log('tags: ', editedNote.tags, parent.tags);
 				$('.tag').select2({
 					tags: scope.tags,
 					placeholder: 'Add tags'
@@ -40,7 +42,7 @@ directive('noteUpdate', function() {
 
 				// TODO: Fix this crap
 				var parent = scope.$parent;
-				console.log('noteUpdate: ', parent);
+				//console.log('noteUpdate: ', parent);
 				parent.editNote(scope.editedNote);
 
 				//scope.$apply(scope.editedNote);

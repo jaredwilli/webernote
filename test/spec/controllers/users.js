@@ -1,6 +1,6 @@
 'use strict';
 
-describe("Unit: Testing Controllers", function() {
+describe("Unit: UsersCtrl", function() {
 	var scope, ctrl;
 
 	beforeEach(function() {
@@ -9,7 +9,7 @@ describe("Unit: Testing Controllers", function() {
 
 	});
 
-	describe('UsersCtrl', function() {
+	describe('creating models', function() {
 		it('should create "user" model with 1 user', inject(function($rootScope, $controller, $location, angularFire, fireFactory) {
 			//var scope = $rootScope.$new();
 			var ctrl = $controller('UserCtrl', {
@@ -18,9 +18,6 @@ describe("Unit: Testing Controllers", function() {
 
 			console.log(ctrl);
 			ctrl.name = 'UserCtrl'
-			ctrl.user = {
-
-			}
 
 			/*expect(ctrl.$scope.user.length).toBe(1);*/
       }));

@@ -9,7 +9,6 @@ describe('Directive: loginout', function() {
 		element = angular.element('<div id="loginout"></div>');
 		element = $compile(element)($rootScope);
 
-		console.dir(element);
 		//expect(element.html()).toBe('');
 	}));
 });

@@ -1,43 +1,43 @@
 {
+  "userId" : "13538912",
   "name" : "jaredwilli",
   "status" : "online",
-  "notebooks" : {
-    "0": {
-      "name": "My Notebook",
-      "notes" : {
-        "-ItsOTwSR2Ihqp0qKQR5": "-ItsOTwSR2Ihqp0qKQR5",
-        "-ItsgCvRAP0pS4_4qDEZ": "-ItsgCvRAP0pS4_4qDEZ",
-        "-Its_XcGM9on3LliGPrK": "-Its_XcGM9on3LliGPrK"
-      }
-    },
-    "1": {
-      "name": "Dev Notes",
-      "notes" : {
-        "-Its_QdLof6mnxHKRyeq": "-Its_QdLof6mnxHKRyeq"
-      }
+  "notebooks" : [{
+    "id": "book0",
+    "text": "My Notebook",
+    "notes" : {
+      "0": "-ItsOTwSR2Ihqp0qKQR5",
+      "1": "-ItsgCvRAP0pS4_4qDEZ",
+      "2": "-Its_XcGM9on3LliGPrK"
     }
-  },
-  "tags" : {
-    "test" : {
-      "notes" : {
-        "-ItsOTwSR2Ihqp0qKQR5": "-ItsOTwSR2Ihqp0qKQR5",
-        "-ItsgCvRAP0pS4_4qDEZ": "-ItsgCvRAP0pS4_4qDEZ"
-      }
-    },
-    "html" : {
-      "notes" : {
-        "-ItsgCvRAP0pS4_4qDEZ": "-ItsgCvRAP0pS4_4qDEZ",
-        "-Its_XcGM9on3LliGPrK": "-Its_XcGM9on3LliGPrK"
-      }
-    },
-    "css" : {
-      "notes" : {
-        "-ItsOTwSR2Ihqp0qKQR5": "-ItsOTwSR2Ihqp0qKQR5",
-        "-Its_XcGM9on3LliGPrK": "-Its_XcGM9on3LliGPrK"
-      }
+  }, {
+    "id": "book1",
+    "text": "Dev Notes",
+    "notes" : {
+      "0": "-Its_QdLof6mnxHKRyeq"
     }
-  },
-  "userId" : "13538912",
+  }],
+  "tags" : [{
+    "id": "tag0",
+    "text": "test",
+    "notes" : {
+      "0": "-ItsOTwSR2Ihqp0qKQR5"
+    }
+  }, {
+    "id": "tag1",
+    "text": "html",
+    "notes" : {
+      "0": "-ItsgCvRAP0pS4_4qDEZ",
+      "1": "-Its_XcGM9on3LliGPrK"
+     }
+  }, {
+    "id": "tag2",
+    "text": "css",
+    "notes" : {
+      "0": "-ItsOTwSR2Ihqp0qKQR5",
+      "1": "-Its_XcGM9on3LliGPrK"
+    }
+  }],
   "notes" : {
     "-ItsOTwSR2Ihqp0qKQR5" : {
       "modified" : 1368835720293,
@@ -55,7 +55,7 @@
       "url" : "",
       "notebook" : "My Notebook",
       "title" : "Testing Tags and Notebooks",
-      "tags" : "test, html"
+      "tags" : "html"
     },
     "-Its_XcGM9on3LliGPrK" : {
       "modified" : 1368377527179,

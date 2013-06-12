@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"text",
+				"text-decoration"
+			],
+			[
+				"rel",
+				"relative"
+			],
+			[
 				"login",
 				"loginout"
 			],
@@ -506,24 +514,40 @@
 			[
 				"hasC",
 				"hasClass"
-			],
-			[
-				"mod",
-				"modified"
-			],
-			[
-				"Webernote",
-				"WebernoteUI"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "app/scripts/controllers/main.js",
+			"file": "/C/wamp/www/docs-boilerplate/settings.html",
 			"settings":
 			{
-				"buffer_size": 2839,
+				"buffer_size": 41729,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/controllers/auth.js",
+			"settings":
+			{
+				"buffer_size": 2716,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/app.js",
+			"settings":
+			{
+				"buffer_size": 477,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "component.json",
+			"settings":
+			{
+				"buffer_size": 298,
 				"line_ending": "Unix"
 			}
 		},
@@ -531,16 +555,40 @@
 			"file": "app/scripts/controllers/users.js",
 			"settings":
 			{
-				"buffer_size": 2396,
+				"buffer_size": 2394,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/scripts/controllers/notes.js",
+			"file": "app/views/note-form.html",
 			"settings":
 			{
-				"buffer_size": 402,
+				"buffer_size": 1378,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/scripts/directives/note-form.js",
+			"settings":
+			{
+				"buffer_size": 994,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/user/AppData/Roaming/Sublime Text 2/Packages/SublimeLinter/sublimelinter/loader.pyc",
+			"settings":
+			{
+				"buffer_size": 10017,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/note-list-td.html",
+			"settings":
+			{
+				"buffer_size": 993,
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -552,76 +600,48 @@
 			}
 		},
 		{
-			"file": "app/scripts/directives/note-form.js",
+			"file": "app/index.html",
 			"settings":
 			{
-				"buffer_size": 1361,
+				"buffer_size": 4201,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/views/main.html",
+			"file": "app/views/auth.html",
 			"settings":
 			{
-				"buffer_size": 1726,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/wamp/www/docs-boilerplate/settings.html",
-			"settings":
-			{
-				"buffer_size": 42544,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Gruntfile.js",
-			"settings":
-			{
-				"buffer_size": 5955,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/wamp/www/sublime-user-settings/.bashrc",
-			"settings":
-			{
-				"buffer_size": 2426,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/.buildignore",
-			"settings":
-			{
-				"buffer_size": 8,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/wamp/www/sublime-user-settings/.gitignore",
-			"settings":
-			{
-				"buffer_size": 877,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "package.json",
-			"settings":
-			{
-				"buffer_size": 973,
+				"buffer_size": 1683,
 				"line_ending": "Unix"
 			}
 		}
 	],
-	"build_system": "",
+	"build_system": "Packages/JSHint Inline/JSHint-Inline.sublime-build",
 	"command_palette":
 	{
 		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"jas",
+				"Set Syntax: Jasmine"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"re",
+				"Package Control: Remove Package"
+			],
+			[
+				"li",
+				"Package Control: List Packages"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
 			[
 				"l",
 				"Package Control: List Packages"
@@ -641,14 +661,6 @@
 			[
 				"Package Control: li",
 				"Package Control: List Packages"
-			],
-			[
-				"ins",
-				"Package Control: Install Package"
-			],
-			[
-				"jas",
-				"Set Syntax: Jasmine"
 			],
 			[
 				"form",
@@ -887,10 +899,6 @@
 				"Package Control: Remove Package"
 			],
 			[
-				"re",
-				"Package Control: Remove Package"
-			],
-			[
 				"ta",
 				"Indentation: Convert to Tabs"
 			],
@@ -917,13 +925,9 @@
 			[
 				"Package Control: remo",
 				"Package Control: Remove Package"
-			],
-			[
-				"Package Control: in",
-				"Package Control: Install Package"
 			]
 		],
-		"width": 400.0
+		"width": 416.0
 	},
 	"console":
 	{
@@ -940,6 +944,53 @@
 	},
 	"file_history":
 	[
+		"/C/Users/user/AppData/Roaming/Sublime Text 2/Packages/Package Control/Package Control.sublime-settings",
+		"/C/wamp/www/_yo/ang/app/components/angular-ui-select2/README.md",
+		"/C/wamp/www/_yo/ang/app/scripts/controllers/main.js",
+		"/C/wamp/www/_yo/ang/Gruntfile.js",
+		"/C/wamp/www/_yo/ang/app/scripts/directives/loginout.js",
+		"/C/wamp/www/_yo/ang/app/views/loginout.html",
+		"/C/wamp/www/_yo/ang/app/scripts/services/fireFactory.js",
+		"/C/wamp/www/_yo/ang/app/scripts/controllers/side-nav.js",
+		"/C/wamp/www/_yo/ang/app/scripts/app.js",
+		"/C/wamp/www/_yo/ang/test/spec/directives/loginout.js",
+		"/C/wamp/www/_yo/ang/app/views/auth.html",
+		"/C/wamp/www/_yo/ang/test/spec/controllers/auth.js",
+		"/C/wamp/www/_yo/ang/app/views/login.html",
+		"/C/wamp/www/_yo/ang/app/scripts/controllers/users.js",
+		"/C/wamp/www/_yo/ang/test/spec/controllers/notes.js",
+		"/C/wamp/www/_yo/ang/test/spec/controllers/users.js",
+		"/C/wamp/www/_yo/ang/karma.conf.js",
+		"/C/wamp/www/_yo/ang/app/views/note-list-td.html",
+		"/C/wamp/www/_yo/ang/app/scripts/directives/note-form.js",
+		"/C/wamp/www/_yo/ang/test/spec/services/noteFactory.js",
+		"/C/wamp/www/_yo/ang/app/scripts/controllers/notes.js",
+		"/C/wamp/www/_yo/ang/app/views/logout.html",
+		"/C/Users/user/AppData/Local/Temp/Rar$DRa0.934/docs-boilerplate/settings.html",
+		"/C/wamp/www/_yo/ang/test/spec/services/tagFactory.js",
+		"/C/wamp/www/_yo/ang/test/spec/services/notebookFactory.js",
+		"/C/wamp/www/_yo/ang/app/scripts/services/noteFactory.js",
+		"/C/wamp/www/_yo/ang/app/views/main.html",
+		"/C/wamp/www/_yo/ang/app/index.html",
+		"/C/wamp/www/_yo/ang/app/styles/main.css",
+		"/C/wamp/www/_yo/ang/app/scripts/directives/noteBlur.js",
+		"/C/wamp/www/_yo/ang/app/scripts/directives/layout.js",
+		"/C/wamp/www/_yo/ang/app/scripts/directives/notes-list.js",
+		"/C/wamp/www/_yo/ang/package.json",
+		"/C/wamp/www/_yo/ang/_SpecRunner.html",
+		"/C/wamp/www/_yo/ang/karma.shared.conf.js",
+		"/C/wamp/www/angular-apps/angular-seed/scripts/web-server.js",
+		"/C/wamp/www/angular-apps/angular-seed/scripts/test.sh",
+		"/C/Users/user/AppData/Roaming/Sublime Text 2/Packages/User/SublimeLinter.sublime-settings",
+		"/C/Users/user/AppData/Roaming/Sublime Text 2/Packages/AngularJS-sublime-package/AngularJS-sublime-package.sublime-settings",
+		"/C/wamp/www/docs-boilerplate/settings.html",
+		"/C/wamp/www/docs-boilerplate/boilerplate.html",
+		"/C/wamp/www/docs-boilerplate/boilerplate_files/local_extensions.css",
+		"/C/wamp/www/docs-boilerplate/boilerplate_files/screen.css",
+		"/C/wamp/www/docs-boilerplate/boilerplate_files/table.css",
+		"/C/wamp/www/sublime-user-settings/.bashrc",
+		"/C/wamp/www/sublime-user-settings/.gitignore",
+		"/C/wamp/www/_yo/ang/app/.buildignore",
 		"/C/wamp/www/sublime-user-settings/.bash_profile",
 		"/C/wamp/www/_yo/ang/.editorconfig",
 		"/C/wamp/www/_yo/ang/.gitattributes",
@@ -954,14 +1005,9 @@
 		"/C/Users/user/.mongorc.js",
 		"/C/Users/user/_viminfo",
 		"/C/wamp/www/sublime-user-settings/README.md",
-		"/C/wamp/www/_yo/ang/app/index.html",
-		"/C/wamp/www/_yo/ang/app/scripts/services/noteFactory.js",
 		"/C/wamp/www/_yo/ang/.bowerrc",
 		"/C/wamp/www/docs-boilerplate/shortcuts.html",
-		"/C/wamp/www/docs-boilerplate/boilerplate.html",
-		"/C/wamp/www/_yo/ang/app/views/note-list-td.html",
 		"/C/wamp/www/_yo/ang/app/views/note-form.html",
-		"/C/wamp/www/_yo/ang/package.json",
 		"/C/wamp/www/_yo/ang/component.json",
 		"/C/wamp/www/blink/blink/Source/devtools/front_end/SettingsScreen.js",
 		"/C/Users/user/AppData/Roaming/Microsoft/Windows/Recent/sawbuck.log.lnk",
@@ -970,39 +1016,26 @@
 		"/C/wamp/www/blink/blink/Source/devtools/front_end/inspector.html",
 		"/C/wamp/www/_yo/ang/app/scripts/vendor/jquery.tagit.js",
 		"/C/wamp/www/_yo/ang/app/scripts/vendor/tag-it.js",
-		"/C/wamp/www/_yo/ang/app/scripts/directives/notes-list.js",
 		"/C/wamp/www/_yo/ang/app/scripts/directives/utils.js",
 		"/C/wamp/www/_yo/ang/test/e2e/runner.html",
 		"/C/wamp/www/_yo/ang/test/e2e/scenarios.js",
-		"/C/wamp/www/_yo/ang/app/scripts/app.js",
 		"/C/wamp/www/_yo/ang/readme.md",
 		"/C/wamp/www/_yo/ang/node_modules/firebase/node_modules/faye-websocket/package.json",
 		"/C/wamp/www/devtools-cheatsheet/readme.md",
 		"/C/wamp/www/_yo/ang/test/unit/controllersSpec.js",
 		"/C/wamp/www/_yo/ang/app/scripts/services/tagFactory.js",
-		"/C/wamp/www/_yo/ang/app/scripts/controllers/side-nav.js",
-		"/C/wamp/www/_yo/ang/app/scripts/directives/loginout.js",
 		"/C/Users/user/AppData/Roaming/Sublime Text 2/Packages/User/AngularJS-sublime-package.sublime-settings",
-		"/C/Users/user/AppData/Roaming/Sublime Text 2/Packages/AngularJS-sublime-package/AngularJS-sublime-package.sublime-settings",
-		"/C/wamp/www/_yo/ang/Gruntfile.js",
-		"/C/wamp/www/_yo/ang/karma.conf.js",
 		"/C/wamp/www/_yo/ang/karma-e2e.conf.js",
-		"/C/wamp/www/_yo/ang/karma.shared.conf.js",
 		"/C/wamp/www/angular-apps/angular-seed/server.js",
-		"/C/wamp/www/angular-apps/angular-seed/scripts/web-server.js",
-		"/C/wamp/www/angular-apps/angular-seed/scripts/test.sh",
 		"/C/wamp/www/_yo/ang/test/spec/controllers/main.js",
-		"/C/wamp/www/_yo/ang/app/scripts/controllers/users.js",
 		"/C/wamp/www/_yo/ang/app/scripts/directives/new-note.js",
 		"/C/wamp/www/_yo/ang/test/runner.html",
 		"/C/wamp/www/_yo/ang/app/components/angular-fire/angularFire.js",
 		"/C/wamp/www/_yo/ang/app/components/angular/angular.js",
 		"/C/wamp/www/_yo/ang/app/scripts/services/notebookFactory.js",
-		"/C/wamp/www/_yo/ang/app/scripts/services/fireFactory.js",
 		"/C/wamp/www/_yo/ang/app/scripts/services/tagFactory,js",
 		"/C/wamp/www/_yo/ang/app/scripts/services/notebookFactory,js",
 		"/C/wamp/www/_yo/ang/app/scripts/services/auth.js",
-		"/C/wamp/www/_yo/ang/app/scripts/controllers/notes.js",
 		"/C/wamp/www/wp/wphonors/README.md",
 		"/C/wamp/www/_yo/ang/app/components/angular-firebase/ng-firebase.js",
 		"/C/wamp/www/_yo/ang/app/components/angularFire.js",
@@ -1015,7 +1048,6 @@
 		"/C/wamp/www/docs-boilerplate/boilerplate_files/cb=gapi.loaded_0",
 		"/C/wamp/www/_yo/ang/app/views/noteform.html",
 		"/C/wamp/www/devtools-cheatsheet/settings.html",
-		"/C/wamp/www/_yo/ang/app/styles/main.css",
 		"/C/wamp/www/_yo/ang/app/components/angular-ui/build/angular-ui.js",
 		"/C/wamp/www/_yo/ang/app/components/angular-ui/build/angular-ui1.js",
 		"/C/wamp/www/_yo/ang/app/webernote-13538912-export.json",
@@ -1025,17 +1057,11 @@
 		"/C/wamp/www/angular-apps/angular-seed/app/js/app.js",
 		"/C/wamp/www/angular-apps/angular-seed/app/js/controllers.js",
 		"/C/wamp/www/angular-apps/angular-seed/app/js/5-16",
-		"/C/wamp/www/_yo/ang/app/views/main.html",
 		"/C/wamp/www/angular-apps/angular-seed/app/partials/main.html",
-		"/C/wamp/www/_yo/ang/app/scripts/directives/layout.js",
-		"/C/wamp/www/_yo/ang/app/scripts/directives/noteBlur.js",
-		"/C/wamp/www/_yo/ang/app/scripts/controllers/main.js",
 		"/C/wamp/www/angular-apps/angular-seed/app/js/directives.js",
 		"/C/wamp/www/angular-apps/angular-seed/app/js/services.js",
-		"/C/wamp/www/_yo/ang/app/views/logout.html",
 		"/C/wamp/www/_yo/ang/app/views/users.html",
 		"/C/wamp/www/_yo/ang/app/views/add.html",
-		"/C/wamp/www/_yo/ang/app/views/login.html",
 		"/C/wamp/www/_yo/ang/app/components/plugins.js",
 		"/C/wamp/www/_yo/ang/app/components/colResizable.js",
 		"/C/wamp/www/_yo/ang/app/components/jqueryUI.tagit.js",
@@ -1045,29 +1071,7 @@
 		"/C/wamp/www/angular/app/scripts/controllers/main.js",
 		"/C/wamp/www/angular-apps/webernote/app/js/directives.js",
 		"/C/wamp/www/webernote/js/plugins.js",
-		"/C/wamp/www/_yo/ang/app/components/jquery.tagit.js",
-		"/C/wamp/www/devtools-cheatsheet/shortcuts_.html",
-		"/C/wamp/www/devtools-cheatsheet/shortcuts.html",
-		"/C/Users/user/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
-		"/C/wamp/www/_yo/ang/app/notes-export.json",
-		"/C/wamp/www/_yo/ang/.allow-devtools-edit",
-		"/C/Users/user/.bashrc",
-		"/C/Users/user/.bash_profile",
-		"/C/Users/user/.gitconfig",
-		"/C/Users/user/AppData/Local/Google/Chrome SxS/User Data/Default/User StyleSheets/Custom.css",
-		"/C/Users/user/AppData/Local/Google/Chrome SxS/User Data/Default/User StyleSheets/Custom-zero-dark.css",
-		"/C/Users/user/AppData/Local/Google/Chrome SxS/User Data/Default/User StyleSheets/Custom - Copy.css",
-		"/C/wamp/www/_yo/angularFire/examples/todomvc/index.html",
-		"/C/wamp/www/_yo/angularFire/examples/todomvc/test/unit/todoCtrlSpec.js",
-		"/C/wamp/www/_yo/angularFire/examples/todomvc/test/package.json",
-		"/C/wamp/www/_yo/angularFire/examples/todomvc/test/config/testacular.conf.js",
-		"/C/wamp/www/_yo/angularFire/examples/todomvc/js/controllers/otherCtrl.js",
-		"/C/wamp/www/_yo/angularFire/examples/todomvc/js/services/todoService.js",
-		"/C/wamp/www/_yo/angularFire/examples/todomvc/js/controllers/todoCtrl.js",
-		"/C/wamp/www/_yo/angularFire/examples/todomvc/js/directives/todoFocus.js",
-		"/C/wamp/www/_yo/angularFire/examples/todomvc/js/directives/todoBlur.js",
-		"/C/wamp/www/_yo/angularFire/examples/todomvc/js/app.js",
-		"/C/wamp/www/webernote/js/main.update.js"
+		"/C/wamp/www/_yo/ang/app/components/jquery.tagit.js"
 	],
 	"find":
 	{
@@ -1075,7 +1079,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 90.0,
 		"where_history":
 		[
 		]
@@ -1085,6 +1089,48 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"tags",
+			"notebook",
+			"\n<",
+			"main",
+			"client",
+			"AuthCtrl",
+			"Main",
+			"scope",
+			"Main",
+			"expect(ctrl.$scope.user.length).toBe(1);",
+			"\n",
+			"layout",
+			"inde",
+			"auto",
+			"rootScope",
+			"scope",
+			"note",
+			"}\n",
+			"log",
+			" [",
+			";\n",
+			"background: #0f8ef0;",
+			"\n	",
+			"10",
+			"tool",
+			"provider",
+			"kar",
+			"test",
+			"  ",
+			"lint",
+			"h1",
+			"&gt;",
+			"&lt;",
+			"cog",
+			"Exper",
+			">",
+			" .",
+			"api.js",
+			"canvas",
+			"dd",
+			"open",
+			";\n					border: 1px solid #DDD;\n					display: inline-block;\n					line-height: 1em;\n					padding: 1.5px 2px;",
 			"\n",
 			"jasmine",
 			"note",
@@ -1170,49 +1216,7 @@
 			"href=\"./",
 			"\n	<div>",
 			"	",
-			"\n	<div>\n",
-			"<div><a",
-			"</div>",
-			"\n	  ",
-			"hottness",
-			".</",
-			"\n		",
-			"</li><li",
-			"\n		",
-			"\n\n	  ",
-			"\n					",
-			"Русский",
-			"\n					",
-			"		<",
-			"\n",
-			"token",
-			"$scope.token",
-			" $scope.token",
-			"parent.$watch('isLoggedIn', function(val) {\n			// 	if (val === true) {\n			// 		scope.logg = {\n			// 			name: 'Logout',\n			// 			action: scope.logout()\n			// 		};\n			// 	} else {\n			// 		scope.logg = {\n			// 			name: 'Login',\n			// 			action: scope.login()\n			// 		};\n			// 	}\n			// });\n",
-			"select",
-			"{\n",
-			"				\n",
-			"scope",
-			"tagit",
-			"show",
-			"form",
-			"attrs",
-			"element",
-			"noteFactory",
-			"note",
-			"<",
-			"note",
-			"Note",
-			"edit",
-			"Note",
-			"note",
-			"Note",
-			"Tag",
-			"tag",
-			"Note",
-			"note",
-			"show",
-			"\">"
+			"\n	<div>\n"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1220,6 +1224,9 @@
 		"regex": false,
 		"replace_history":
 		[
+			"h2",
+			">",
+			"<",
 			" ",
 			"							</tr>\n							<tr>\n ",
 			"							</tr>\n							<tr>\n",
@@ -1344,12 +1351,9 @@
 			" </li>",
 			"<li> ",
 			"ctx.",
-			"size2",
-			"size1",
-			"\"http://",
-			"http://"
+			"size2"
 		],
-		"reverse": true,
+		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
 		"whole_word": false,
@@ -1358,23 +1362,23 @@
 	"groups":
 	[
 		{
-			"selected": 9,
+			"selected": 7,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/scripts/controllers/main.js",
+					"file": "/C/wamp/www/docs-boilerplate/settings.html",
 					"settings":
 					{
-						"buffer_size": 2839,
+						"buffer_size": 41729,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2041,
-								2041
+								25691,
+								25691
 							]
 						],
 						"settings":
@@ -1468,29 +1472,29 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 745.0,
+						"translation.y": 5989.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "app/scripts/controllers/users.js",
+					"file": "app/scripts/controllers/auth.js",
 					"settings":
 					{
-						"buffer_size": 2396,
+						"buffer_size": 2716,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								777,
-								777
+								2112,
+								2112
 							]
 						],
 						"settings":
@@ -1588,25 +1592,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 563.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "app/scripts/controllers/notes.js",
+					"file": "app/scripts/app.js",
 					"settings":
 					{
-						"buffer_size": 402,
+						"buffer_size": 477,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								296,
-								296
+								118,
+								118
 							]
 						],
 						"settings":
@@ -1711,18 +1715,18 @@
 				},
 				{
 					"buffer": 3,
-					"file": "app/scripts/directives/notes-list.js",
+					"file": "component.json",
 					"settings":
 					{
-						"buffer_size": 637,
+						"buffer_size": 298,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								312,
-								312
+								60,
+								60
 							]
 						],
 						"settings":
@@ -1816,8 +1820,9 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1827,18 +1832,18 @@
 				},
 				{
 					"buffer": 4,
-					"file": "app/scripts/directives/note-form.js",
+					"file": "app/scripts/controllers/users.js",
 					"settings":
 					{
-						"buffer_size": 1361,
+						"buffer_size": 2394,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								842,
-								842
+								122,
+								122
 							]
 						],
 						"settings":
@@ -1943,18 +1948,18 @@
 				},
 				{
 					"buffer": 5,
-					"file": "app/views/main.html",
+					"file": "app/views/note-form.html",
 					"settings":
 					{
-						"buffer_size": 1726,
+						"buffer_size": 1378,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1609,
-								1609
+								1049,
+								1054
 							]
 						],
 						"settings":
@@ -2059,135 +2064,18 @@
 				},
 				{
 					"buffer": 6,
-					"file": "/C/wamp/www/docs-boilerplate/settings.html",
+					"file": "app/scripts/directives/note-form.js",
 					"settings":
 					{
-						"buffer_size": 42544,
+						"buffer_size": 994,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								31105,
-								31105
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": false,
-								"box-model": false,
-								"box-sizing": false,
-								"compatible-vendor-prefixes": false,
-								"display-property-grouping": false,
-								"duplicate-background-images": false,
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": false,
-								"font-faces": false,
-								"font-sizes": false,
-								"gradients": "warning",
-								"ids": false,
-								"import": "warning",
-								"important": "warning",
-								"known-properties": false,
-								"outline-none": false,
-								"overqualified-elements": "warning",
-								"qualified-headings": false,
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": false,
-								"star-property-hack": false,
-								"text-indent": false,
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": false,
-								"vendor-prefix": false,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": true,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 8040.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "Gruntfile.js",
-					"settings":
-					{
-						"buffer_size": 5955,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1819,
-								1819
+								254,
+								254
 							]
 						],
 						"settings":
@@ -2285,132 +2173,17 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 882.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "/C/wamp/www/sublime-user-settings/.bashrc",
+					"buffer": 7,
+					"file": "/C/Users/user/AppData/Roaming/Sublime Text 2/Packages/SublimeLinter/sublimelinter/loader.pyc",
 					"settings":
 					{
-						"buffer_size": 2426,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2426,
-								2426
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": false,
-								"box-model": false,
-								"box-sizing": false,
-								"compatible-vendor-prefixes": false,
-								"display-property-grouping": false,
-								"duplicate-background-images": false,
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": false,
-								"font-faces": false,
-								"font-sizes": false,
-								"gradients": "warning",
-								"ids": false,
-								"import": "warning",
-								"important": "warning",
-								"known-properties": false,
-								"outline-none": false,
-								"overqualified-elements": "warning",
-								"qualified-headings": false,
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": false,
-								"star-property-hack": false,
-								"text-indent": false,
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": false,
-								"vendor-prefix": false,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": true,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 79.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "app/.buildignore",
-					"settings":
-					{
-						"buffer_size": 8,
+						"buffer_size": 10017,
 						"regions":
 						{
 						},
@@ -2521,19 +2294,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
-					"file": "/C/wamp/www/sublime-user-settings/.gitignore",
+					"buffer": 8,
+					"file": "app/views/note-list-td.html",
 					"settings":
 					{
-						"buffer_size": 877,
+						"buffer_size": 993,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								167,
-								167
+								486,
+								486
 							]
 						],
 						"settings":
@@ -2627,28 +2400,261 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 73.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "app/scripts/directives/notes-list.js",
+					"settings":
+					{
+						"buffer_size": 637,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								286,
+								286
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": false,
+								"box-model": false,
+								"box-sizing": false,
+								"compatible-vendor-prefixes": false,
+								"display-property-grouping": false,
+								"duplicate-background-images": false,
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": false,
+								"font-faces": false,
+								"font-sizes": false,
+								"gradients": "warning",
+								"ids": false,
+								"import": "warning",
+								"important": "warning",
+								"known-properties": false,
+								"outline-none": false,
+								"overqualified-elements": "warning",
+								"qualified-headings": false,
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": false,
+								"star-property-hack": false,
+								"text-indent": false,
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": false,
+								"vendor-prefix": false,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": true,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "app/index.html",
+					"settings":
+					{
+						"buffer_size": 4201,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2044,
+								2044
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": false,
+								"box-model": false,
+								"box-sizing": false,
+								"compatible-vendor-prefixes": false,
+								"display-property-grouping": false,
+								"duplicate-background-images": false,
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": false,
+								"font-faces": false,
+								"font-sizes": false,
+								"gradients": "warning",
+								"ids": false,
+								"import": "warning",
+								"important": "warning",
+								"known-properties": false,
+								"outline-none": false,
+								"overqualified-elements": "warning",
+								"qualified-headings": false,
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": false,
+								"star-property-hack": false,
+								"text-indent": false,
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": false,
+								"vendor-prefix": false,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": true,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 703.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 11,
-					"file": "package.json",
+					"file": "app/views/auth.html",
 					"settings":
 					{
-						"buffer_size": 973,
+						"buffer_size": 1683,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								923,
-								923
+								1677,
+								1677
 							]
 						],
 						"settings":
@@ -2742,12 +2748,11 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 632.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2788,7 +2793,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 315.0
+		"height": 24.0
 	},
 	"replace":
 	{
@@ -2800,6 +2805,14 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"login",
+				"app/scripts/directives/loginout.js"
+			],
+			[
+				"notef",
+				"test/spec/services/noteFactory.js"
+			],
 			[
 				"note",
 				"app/scripts/directives/notes-list.js"
@@ -2825,11 +2838,15 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"selected_items":
 		[
+			[
+				"pe	",
+				"/C/wamp/www/_yo/ang/webernote.sublime-project"
+			]
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"show_minimap": true,
 	"show_open_files": true,

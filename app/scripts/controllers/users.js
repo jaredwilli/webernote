@@ -29,7 +29,7 @@ controller('UserCtrl', [
 		});
 
 		$scope.$watch('editedNote', function(editedNote) {
-			console.log(editedNote);
+			//console.log(editedNote);
 
 			$scope.editNote(editedNote);
 		});
@@ -45,7 +45,7 @@ controller('UserCtrl', [
 		$scope.editNote = function(note) {
 			$scope.editedNote = note;
 
-			console.log('editedNote', $scope.editedNote);
+			//console.log('editedNote', $scope.editedNote);
 			noteFactory.editNote($scope.userId + '/notes', note);
 		};
 		$scope.deleteNote = function(note) {
@@ -58,7 +58,7 @@ controller('UserCtrl', [
 		// Notebooks
 		$scope.addNotebook = function() {
 			var notebook = notebookFactory.addNotebook($scope.userId + '/notebooks');
-			console.log('NOTEBOOK: ', notebook);
+			//console.log('NOTEBOOK: ', notebook);
 			$scope.editNotebook(notebook);
 		};
 		$scope.editNotebook = function(notebook) {
@@ -74,7 +74,7 @@ controller('UserCtrl', [
 		// Tags
 		$scope.addTag = function() {
 			var tag = tagFactory.addTag($scope.userId + '/tags');
-			console.log('TAG: ', tag);
+			//console.log('TAG: ', tag);
 			$scope.editTag(tag);
 		};
 		$scope.editTag = function(tag) {

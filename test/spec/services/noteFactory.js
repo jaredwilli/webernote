@@ -12,7 +12,6 @@ describe('Service: noteFactory', function() {
 	}));
 
 	it('should do something', function() {
-		expect(!!noteFactory).toBe(true);
+		// expect(!!noteFactory).toBe(true);
 	});
-
 });

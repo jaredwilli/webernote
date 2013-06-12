@@ -1,6 +1,6 @@
 'use strict';
 
-describe("Unit: Testing Controllers", function() {
+describe("Unit: NoteCtrl", function() {
 	var scope, ctrl;
 
 	beforeEach(function() {
@@ -8,7 +8,7 @@ describe("Unit: Testing Controllers", function() {
 
 	});
 
-	describe('NoteCtrl', function() {
+	describe('creating models', function() {
 		it('should create "note" model with 1 note', inject(function($rootScope, $controller, $location, angularFire, fireFactory) {
 			//var scope = $rootScope.$new();
 			var ctrl = $controller('NoteCtrl', {

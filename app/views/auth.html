@@ -1,16 +1,16 @@
 	<table id="resizable" resizable fullheight>
 		<tr>
-			<td valign="top" controller="SideNavCtrl">
+			<td valign="top">
 				<div id="note-nav">
 
-					<ul id="notebooks" showhide>
+					<ul id="notebooks">
 						<li>
-							<a href="#">Notebooks</a>
+							<a href="">Notebooks</a>
 
-							<ul class="notebooks">
-								<li ng-repeat="notebook in notebooks" id="notebook-{{ notebook.name }}" class="notebook-link">
-	                                <a href="" ng-click="showNotesByNotebook(notebook.name)">
-	                                    <span class="name">{{ notebook.name }}</span>
+							<ul class="notebooks" nav-toggler>
+								<li ng-repeat="notebook in notebooks" id="notebook-{{ notebook.text }}" class="notebook-link">
+	                                <a href="" ng-click="showNotesByNotebook(notebook.text)">
+	                                    <span class="name">{{ notebook.text }}</span>
 	                                </a>
 	                                <span class="count">{{ notebook.notes.length }}</span>
 	                            </li>
@@ -18,14 +18,14 @@
 						</li>
 					</ul>
 
-					<ul id="tags" showhide>
+					<ul id="tags">
 						<li>
-							<a href="#">Tags</a>
+							<a href="">Tags</a>
 
-							<ul class="tags">
-								<li ng-repeat="tag in tags" id="tag-{{ tag.name }}" class="tag-link">
-	                                <a href="" ng-click="showNotesByTag(tag.name)">
-	                                    <span class="name">{{ tag.name }}</span>
+							<ul class="tags" nav-toggler>
+								<li ng-repeat="tag in tags" id="tag-{{ tag.text | lowercase }}" class="tag-link">
+	                                <a href="" ng-click="showNotesByTag(tag.text)">
+	                                    <span class="name">{{ tag.text }}</span>
 	                                </a>
 	                                <span class="count">{{ tag.notes.length }}</span>
 	                            </li>
@@ -34,7 +34,7 @@
 					</ul>
 
 					<ul id="searches" showhide>
-						<li><a href="#">Saved&nbsp;Searches</a>
+						<li><a href="">Saved&nbsp;Searches</a>
 							<ul class="searches hidden">
 							</ul>
 						</li>
@@ -42,7 +42,7 @@
 
 					<ul class="trash" showhide>
 						<li>
-							<a href="#/trash">Trash</a>
+							<a href="/trash">Trash</a>
 						</li>
 					</ul>
 

@@ -32,18 +32,18 @@ factory('noteFactory', [
 				};
 
 				this.getAllNotes(path).add(note, function(snap) {
-					console.log('note added', snap);
+					//console.log('note added', snap);
 				});
 			},
 			editNote: function(path, note) {
-				console.log(note);
+				//console.log(note);
 				if (note === null) { return; }
-				
+
 				this.getAllNotes(path).update(note);
 			},
 			deleteNote: function(path, note) {
-				console.log(this.getAllNotes(path), path, note);
-				console.log(note);
+				//console.log(this.getAllNotes(path), path, note);
+				//console.log(note);
 				this.getAllNotes(path).remove(note);
 			}
 		};
