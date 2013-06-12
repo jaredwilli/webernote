@@ -5,43 +5,23 @@ app.
 directive('noteForm', function() {
 	return {
 		restrict: 'A',
-		scope: '=',
+		scope: '@',
 		templateUrl: 'views/note-form.html',
 		link: function(scope, elem, attrs) {
-
-			//console.log('NoteForm Scope: ', scope);
-			//var parent = scope.$parent;
-			//console.log('NoteForm Parent: ', parent);
-
-		}
-	};
-}).
-
-directive('tagit', function() {
-	return {
-		scope: '=',
-		transclude: true,
-		link: function(scope, element, attrs) {
-			var tags = '';
-			var parent = scope.$parent;
-			console.log('tagit', parent);
+			console.log('NoteForm Scope: ', scope);
+			parent = scope.$parent.$parent;
 
 
+			parent.$watch('editedNote', function(editedNote) {
+				scope.tags = editedNote.tags.replace(', ', ',').split(',');
+				console.log(scope.tags);
 
-			/*parent.$watch('editedNote', function(note) {
-				console.log(note.tags);
-
-				scope.tags = (note.tags || '').replace(/\s+/, '').split(',');
-			});
-
-			scope.$watch('tags', function(tagArray) {
-				console.log(tagArray);
-				console.log('tagit Scope: ', scope);
-
-				$(element).tagit({
-					tags: tagArray
+				$('.tag').select2({
+					tags: scope.tags,
+					placeholder: 'Add tags'
 				});
-			});*/
+
+			});
 
 		}
 	};

@@ -29,7 +29,7 @@ controller('UserCtrl', [
 		});
 
 		$scope.$watch('editedNote', function(editedNote) {
-			//console.log(editedNote);
+			console.log(editedNote);
 
 			$scope.editNote(editedNote);
 		});

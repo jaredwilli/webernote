@@ -1,14 +1,13 @@
-<td valign="top">
-	<div id="show-note">
+	<div id="show-note" ng-show="editedNote">
 		<form ng-model="editedNote">
 			<div class="top">
 				<input type="hidden" name="modified" id="modified" />
 
 				<input type="text" class="title" name="title" placeholder="Click to set title..." value="{{ editedNote.title }}" ng-model="editedNote.title" note-update />
 
-				<select name="notebook" class="notebook" ng-model="editedNote.notebook">
-					<option value="{{ editedNote.notebook }}" selected="selected" note-update>{{ editedNote.notebook.name }}</option>
-					<option value="new-notebook" ng-click="newNotebook(note)">New Notebook</option>
+				<select name="notebook" class="notebook" ui-select2 ng-model="editedNote.notebook">
+					<option ng-repeat="notebook in notebooks" ng-selected="editedNote.notebook">{{ notebook.name }}</option>
+					<option value="new-notebook" ng-click="newNotebook()">New Notebook</option>
 				</select>
 
 				<span class="new-notebook hidden">
@@ -20,11 +19,10 @@
 			<div class="mid">
 				<input type="url" class="url" name="url" value="{{ editedNote.url }}" placeholder="http://" ng-model="editedNote.url" note-update />
 
-				<!-- <ul class="tag" data-name="nameOfSelect" ng-model="editedNote.tags" tagit></ul> -->
-				<input type="text" ng-model="editedNote.tags" class="tag input-large" ui-select2="{ tags: editedNote.tags }">
+				<input type="hidden" ui-select2="" ng-model="scope.tags" class="tag input-large" value="{{ tags }}" />
+				<!-- <input type="text" ng-model="editedNote.tags" class="tag input-large" ui-select2="{ tags: editedNote.tags }"> -->
 			</div>
 
 			<textarea class="description" ng-model="editedNote.description" note-update>{{ editedNote.description }}</textarea>
 		</form>
 	</div>
-</td>
