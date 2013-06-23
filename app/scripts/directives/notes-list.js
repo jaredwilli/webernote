@@ -5,25 +5,36 @@ app.
 directive('listNotesBy', function() {
 	return {
 		restrict: 'A',
-		scope: '=',
-		templateUrl: 'views/note-list-td.html'
+		scope: false,
+		templateUrl: 'views/note-list-td.html',
+		link: function(scope, element, attrs) {
+			console.log('listNotesBy scope: ', scope);
+		}
 	};
 }).
 
 directive('noteSelected', function() {
 	return {
 		restrict: 'A',
-		scope: '@',
 		link: function(scope, element, attrs) {
+			var parent = scope.$parent;
+			/*console.log('noteList parent: ', parent);*/
 
 			$(element).on('click', function(e) {
-				var parent = scope.$parent;
-				//console.log('note List parentScope: ', parent);
+				//console.log(e.target, e.currentTarget);
 
-				$(element).siblings().removeClass('selected');
-				element.addClass('selected');
+				if ($(e.target).hasClass('delete')) {
+					console.log(scope);
+					parent.deleteNote(scope.note);
 
-				scope.editNote(parent.note);
+				} else {
+					$(element).siblings().removeClass('selected');
+					element.addClass('selected');
+
+					//scope.editedNote = scope.note;
+					console.log('noteSelected note: ', scope.note);
+					scope.editNote(scope.note);
+				}
 			});
 		}
 	};

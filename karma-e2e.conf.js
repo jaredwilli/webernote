@@ -8,6 +8,9 @@ files = [
 	ANGULAR_SCENARIO,
 	ANGULAR_SCENARIO_ADAPTER,
 
+	// Mocks
+	'./test/mock/**/*.js',
+
 	'test/e2e/**/*.js'
 ];
 
@@ -18,7 +21,7 @@ exclude = [];
 port = 8080;
 
 // cli runner port
-runnerPort = 9100;
+runnerPort = 9001;
 
 // If browser does not capture in given timeout [ms], kill it
 captureTimeout = 5000;
@@ -31,7 +34,7 @@ captureTimeout = 5000;
 colors = true;
 
 // Continuous Integration mode
-singleRun = false; // if true, it capture browsers, run tests and exit
+singleRun = true; // if true, it capture browsers, run tests and exit
 
 // enable / disable watching file and executing tests whenever any file changes
 autoWatch = true;
@@ -50,5 +53,5 @@ reporters = ['progress']; // possible values: dots || progress || growl
 browsers = ['ChromeCanary'];
 
 proxies = {
-	'/': 'http://localhost:8000'
+	'/': 'http://localhost:9001'
 };

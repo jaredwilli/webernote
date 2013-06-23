@@ -9,10 +9,10 @@ directive('resizable', function() {
 			$(element).colResizable({
 				minWidth: 60,
 				liveDrag: true,
-				draggingClass: 'dragging',
+				draggingClass: 'dragging'/*,
 				onResize: function(e) {
 					var columns = $(e.currentTarget).find('th, td');
-				}
+				}*/
 			});
 		}
 	};

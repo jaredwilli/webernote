@@ -5,11 +5,11 @@ angular.module('angApp').
 
 directive('tagit', function() {
     return {
-    	scope: '=',
-        link: function($scope, element, attrs) {
-        	console.log('tagitscope: ', $scope);
+    	// scope: '=',
+        link: function(scope, element, attrs) {
+        	console.log('tagitscope: ', scope);
 
-			$(element).tagit({
+			/*$(element).tagit({
 				tags: '',
 				placeholderText: '',
 				availableTags: [],
@@ -26,19 +26,19 @@ directive('tagit', function() {
 	            afterTagRemoved: null
 
 			});
-
+*/
 			$(element).find('input').attr('blurnote', '');
         }
     };
 }).
 
-directive('taglist', function() {
+directive('tagList', function() {
 	return {
+		restrict: 'A',
+		transclude: true,
+		template: '<li class="tag-item" ng-repeat="tag in note.tags" id="{{ tag.id }}">{{ tag.text }}</li>',
 		link: function(scope, element, attrs) {
-			//$(element).find('.select2-search-choice > div')
-
-
-			console.log(scope);
+			console.log('tag-list: ', scope);
 		}
 	};
 });

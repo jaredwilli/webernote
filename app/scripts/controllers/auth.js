@@ -10,11 +10,12 @@ controller('AuthCtrl', [
 	'fireFactory',
 
 	function AuthCtrl($scope, $location, angularFire, fireFactory) {
-		$scope.name = 'AuthCtrl'
+		$scope.name = 'AuthCtrl';
 
 		var baseurl = 'https://webernote.firebaseio.com',
-			usersurl = baseurl + '/users/',
-			usersRef = angularFire(usersurl, $scope, 'users', {});
+			usersurl = baseurl + '/users/';
+
+		$scope.usersRef = angularFire(usersurl, $scope, 'users', {});
 
 		// FirebaseAuth callback
 		$scope.authCallback = function(error, user) {
@@ -70,12 +71,6 @@ controller('AuthCtrl', [
 		};
 
 		var authClient = new FirebaseAuthClient(fireFactory.firebaseRef('users'), $scope.authCallback);
-
-		/*if ($location.path() === '') {
-			$location.path('/');
-		}
-		$scope.location = $location;*/
-
 
 		$scope.login = function(provider) {
 			$scope.token = localStorage.getItem('token');

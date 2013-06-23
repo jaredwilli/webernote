@@ -1,5 +1,22 @@
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
+'use strict';
+
+describe('angApp app', function() {
+
+    beforeEach(function() {
+        browser().navigateTo('/');
+    });
+
+    describe('Homepage', function() {
+        it('should display the correct route', function() {
+            expect(browser().location().path()).toBe('/#/');
+        });
+    });
+
+});
+
+/*
 describe('angApp', function () {
 	beforeEach(function () {
 		browser().navigateTo('/');
@@ -22,7 +39,6 @@ describe('angApp', function () {
 });
 
 
-/* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
 describe('angApp', function() {
 	it('should redirect index.html to index.html#/phones', function() {
@@ -86,3 +102,4 @@ describe('angApp', function() {
 		});
 	});
 });
+*/

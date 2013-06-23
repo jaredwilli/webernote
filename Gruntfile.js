@@ -46,6 +46,7 @@ module.exports = function(grunt) {
 		},
 		connect: {
 			options: {
+				port: 9001,
 				// Change this to '0.0.0.0' to access the server from outside.
 				hostname: 'localhost'
 			},
@@ -101,15 +102,15 @@ module.exports = function(grunt) {
 			]
 		},
 		karma: {
-			options: {
+			e2e: {
+				configFile: 'karma-e2e.conf.js',
+				singleRun: false,
+				runnerPort: 9001
+			},
+			unit: {
 				configFile: 'karma.conf.js',
-				runnerPort: 9999
-			},
-			continuous: {
-				singleRun: false
-			},
-			dev: {
-				reporters: 'dots'
+				singleRun: false,
+				runnerPort: 9002
 			}
 		},
 		coffee: {
@@ -276,7 +277,6 @@ module.exports = function(grunt) {
 		'livereload-start',
 		'connect:livereload',
 		/*'open',*/
-		/*'devtools',*/
 		'watch'
 	]);
 
@@ -285,8 +285,22 @@ module.exports = function(grunt) {
 		'coffee',
 		'compass',
 		'connect:test',
-		/*'devtools',*/
 		'karma'
+	]);
+	grunt.registerTask('test:unit', [
+		'clean:server',
+		'coffee',
+		'compass',
+		'connect:test',
+		'karma:unit'
+	]);
+	grunt.registerTask('test:e2e', [
+		'clean:server',
+		'coffee',
+		'compass',
+		'livereload-start',
+		'connect:test',
+		'karma:e2e'
 	]);
 
 	grunt.registerTask('build', [

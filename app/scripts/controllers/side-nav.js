@@ -17,7 +17,7 @@ controller('SideNavCtrl', [
 			usersurl = baseurl + '/users/',
 			usersRef = angularFire(usersurl, $scope, 'users', {});
 
-		console.log(noteFactory);
+		console.log('sidenavctrl: ', noteFactory);
 
 	}
 ]);

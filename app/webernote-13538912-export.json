@@ -3,7 +3,6 @@
   "name" : "jaredwilli",
   "status" : "online",
   "notebooks" : [{
-    "id": "book0",
     "text": "My Notebook",
     "notes" : {
       "0": "-ItsOTwSR2Ihqp0qKQR5",
@@ -11,27 +10,23 @@
       "2": "-Its_XcGM9on3LliGPrK"
     }
   }, {
-    "id": "book1",
     "text": "Dev Notes",
     "notes" : {
       "0": "-Its_QdLof6mnxHKRyeq"
     }
   }],
   "tags" : [{
-    "id": "tag0",
     "text": "test",
     "notes" : {
       "0": "-ItsOTwSR2Ihqp0qKQR5"
     }
   }, {
-    "id": "tag1",
     "text": "html",
     "notes" : {
       "0": "-ItsgCvRAP0pS4_4qDEZ",
       "1": "-Its_XcGM9on3LliGPrK"
      }
   }, {
-    "id": "tag2",
     "text": "css",
     "notes" : {
       "0": "-ItsOTwSR2Ihqp0qKQR5",
@@ -44,9 +39,15 @@
       "created" : 1367819358176,
       "description" : "Hopefully this will be easy to get working now blargh. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       "url" : "",
-      "notebook" : "new-notebook",
+      "notebook" : "My Notebook",
       "title" : "Tag tester 1",
-      "tags" : "test, css"
+      "tags" : [{
+        "id": 0,
+        "text": "test"
+      }, {
+        "id": 2,
+        "text": "css"
+      }]
     },
     "-ItsgCvRAP0pS4_4qDEZ" : {
       "modified" : 1368237130164,
@@ -55,7 +56,10 @@
       "url" : "",
       "notebook" : "My Notebook",
       "title" : "Testing Tags and Notebooks",
-      "tags" : "html"
+      "tags" : [{
+        "id": 1,
+        "text": "html"
+      }]
     },
     "-Its_XcGM9on3LliGPrK" : {
       "modified" : 1368377527179,
@@ -64,7 +68,13 @@
       "url" : "http://anti-code.com",
       "notebook" : "My Notebook",
       "title" : "Tags test 3",
-      "tags" : "css, html"
+      "tags" : [{
+        "id": 2,
+        "text": "css"
+      }, {
+        "id": 1,
+        "text": "html"
+      }]
     },
     "-Its_QdLof6mnxHKRyeq" : {
       "modified" : 1368792296845,

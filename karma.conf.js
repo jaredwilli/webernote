@@ -10,8 +10,11 @@ files = [
 
 	// 3rd party code
 	'./app/components/angular/angular.js',
-	'./app/components/angular-ul-select2/src/select2.js',
 	'./app/components/angular-mocks/angular-mocks.js',
+	'./app/components/angular-ui-select2/src/select2.js',
+
+	// Mocks
+	'./test/mocks/**/*.js',
 
 	// Firebase code
 	'./app/scripts/vendor/**/*.js',

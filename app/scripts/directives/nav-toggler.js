@@ -5,45 +5,40 @@ angular.module('angApp').
 directive('navToggler', function() {
 	return {
 		restrict: 'A',
+		// transclude: true,
+		// scope: '=',
 		link: function(scope, elem, attrs) {
 			var parent = scope.$parent,
-				el = $(elem),
-				noteNavLinks = el.find('#note-nav li a');
+				noteNavLinks = $('#note-nav li a');
 
-			/*parent.$watch('notebooks+tags', function(notebooks, tags) {
-				if (notebooks)
+			parent.$watch('tags', function(tags) {
 				if (tags) {
-					console.log($(elem).parent());
-					console.log(attrs);
+					//console.log('TAGS: ', parent, tags);
+					$('#tags li:first').addClass('expanded');
 				}
-			});*/
-
-			//Fix left nav arrows so they work right when empty
-			for (var i = 0; i < noteNavLinks.length; i++) {
-				var noteNavLink = $(noteNavLinks[i]);
-
-				if (noteNavLink.siblings('ul').length === 0) {
-					noteNavLink.css({
-						background: 'none',
-						padding: 0
-					});
-				}
-			}
-
-			// Expand / contract note nav
-			el.find('#note-nav a').on('click', function(e) {
-				e.preventDefault();
-
-				if ($(this).parent().hasClass('expanded')) {
-					$(this).parent().removeClass('expanded');
-					$(this).siblings('ul').addClass('hidden');
-				} else {
-					$(this).parent().addClass('expanded');
-					$(this).siblings('ul').removeClass('hidden');
-				}
-
-				// TODO: generate these nav sections from the given data of each note
 			});
+
+			scope.$watch('notebooks', function(notebooks) {
+				if (notebooks) {
+					//console.log('NOTEBOOKS: ', parent, notebooks);
+					$('#notebooks li:first').addClass('expanded');
+				}
+			});
+
+			// Expand / contract noteNav
+			// noteNavLinks.on('click', function(e) {
+			// 	e.preventDefault();
+
+			// 	if ($(this).parent().hasClass('expanded')) {
+			// 		$(this).parent().removeClass('expanded');
+			// 		$(this).siblings('ul').addClass('hidden');
+			// 	} else {
+			// 		$(this).parent().addClass('expanded');
+			// 		$(this).siblings('ul').removeClass('hidden');
+			// 	}
+
+			// 	// TODO: generate these nav sections from the given data of each note
+			// });
 		}
 	};
 });

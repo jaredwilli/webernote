@@ -2,7 +2,7 @@
 					<div class="filter">
 						<a href="#">Filter notes by</a>
 
-						<input type="text" name="search" placeholder="Search" ng-model="note.query" />
+						<input type="text" name="search" placeholder="Search" ng-model="notes.query" />
 					</div>
 
 					<div class="viewing">
@@ -17,14 +17,14 @@
 
 					<div id="notes">
 						<ul>
-							<li class="note" ng-repeat="note in notes | filter:note.query | reverse" note-selected="note">
-								<a class="delete" href="" ng-click="deleteNote(note)">X</a>
+							<li class="note" ng-repeat="note in notes | filter:notes.query | reverse" note-selected="editedNote">
+								<a class="delete" href="" delete-note="note">X</a>
 								<h2 class="title">{{ note.title }}</h2>
-								<p>
+								<div>
 									<span class="date">{{ note.modified | date }}</span>
-									<span class="tag-item">{{ note.tags }}</span>
-									<span class="description">{{ note.description }}</span>
-								</p>
+									<ul class="tag-list" tag-list></ul>
+									<p class="description">{{ note.description }}</p>
+								</div>
 							</li>
 						</ul>
 					</div>
