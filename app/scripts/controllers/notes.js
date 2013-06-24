@@ -1,3 +1,14 @@
+/*
+http://www.befundoo.com/university/tutorials/angularjs-directives-tutorial/
+https://gist.github.com/revolunet/4657146
+http://www.bennadel.com/blog/2472-HashKeyCopier-An-AngularJS-Utility-Class-For-Merging-Cached-And-Live-Data.htm
+https://github.com/dypsilon/frontend-dev-bookmarks
+http://binarymuse.github.io/ngInfiniteScroll/index.html
+http://blog.pluralsight.com/2013/06/11/video-testing-angularjs-services-with-dependencies/
+http://www.befundoo.com/university/tutorials/angularjs-directives-tutorial/
+
+*/
+
 'use strict';
 
 angular.module('angApp').

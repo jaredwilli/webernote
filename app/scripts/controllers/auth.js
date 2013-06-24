@@ -1,9 +1,6 @@
 'use strict';
 
-app.
-
-// TODO: Should rename AuthCtrl to AuthCtrl at some point
-controller('AuthCtrl', [
+app.controller('AuthCtrl', [
 	'$scope',
 	'$location',
 	'angularFire',
@@ -25,8 +22,7 @@ controller('AuthCtrl', [
 				/*if (error.code === 'EXPIRED_TOKEN') {
 					$location.path('/');
 				}*/
-			}
-			else if (user) {
+			} else if (user) {
 				console.log('Logged In', $scope);
 
 				// Store the auth token
@@ -62,8 +58,7 @@ controller('AuthCtrl', [
 					console.log('user', user);
 					//$scope.startWatch($scope, filterFilter);
 				});*/
-			}
-			else {
+			} else {
 				localStorage.clear();
 				$scope.isLoggedIn = false;
 				$location.path('/');
@@ -75,7 +70,9 @@ controller('AuthCtrl', [
 		$scope.login = function(provider) {
 			$scope.token = localStorage.getItem('token');
 
-			var options = { 'rememberMe': true };
+			var options = {
+				'rememberMe': true
+			};
 			provider = provider.toLowerCase() || 'twitter';
 
 			console.log('Provider:', provider);

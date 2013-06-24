@@ -26,14 +26,14 @@ module.exports = function(grunt) {
 				files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
 				tasks: ['coffee:dist']
 			},
-			coffeeTest: {
-				files: ['test/spec/{,*/}*.coffee'],
-				tasks: ['coffee:test']
-			},
-			compass: {
-				files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-				tasks: ['compass']
-			},
+			// coffeeTest: {
+			// 	files: ['test/spec/{,*/}*.coffee'],
+			// 	tasks: ['coffee:test']
+			// },
+			// compass: {
+			// 	files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+			// 	tasks: ['compass']
+			// },
 			livereload: {
 				files: [
 					'<%= yeoman.app %>/{,*/}*.html',
@@ -92,6 +92,29 @@ module.exports = function(grunt) {
 			},
 			server: '.tmp'
 		},
+		jsbeautifier: {
+			files: [
+				'Gruntfile.js',
+				'<%= yeoman.app %>/scripts/{,*/}*.js'
+			],
+			options: {
+				indent_size: 4,
+				indent_char: ' ',
+				indent_level: 0,
+				indent_with_tabs: true,
+				preserve_newlines: true,
+				max_preserve_newlines: 5,
+				jslint_happy: false,
+				brace_style: "collapse",
+				keep_array_indentation: false,
+				keep_function_indentation: false,
+				space_before_conditional: true,
+				break_chained_methods: false,
+				eval_code: false,
+				wrap_line_length: 0,
+				unescape_strings: false
+			}
+		},
 		jshint: {
 			options: {
 				jshintrc: '.jshintrc'
@@ -113,43 +136,43 @@ module.exports = function(grunt) {
 				runnerPort: 9002
 			}
 		},
-		coffee: {
-			dist: {
-				files: [{
-					expand: true,
-					cwd: '<%= yeoman.app %>/scripts',
-					src: '{,*/}*.coffee',
-					dest: '.tmp/scripts',
-					ext: '.js'
-				}]
-			},
-			test: {
-				files: [{
-					expand: true,
-					cwd: 'test/spec',
-					src: '{,*/}*.coffee',
-					dest: '.tmp/spec',
-					ext: '.js'
-				}]
-			}
-		},
-		compass: {
-			options: {
-				sassDir: '<%= yeoman.app %>/styles',
-				cssDir: '.tmp/styles',
-				imagesDir: '<%= yeoman.app %>/images',
-				javascriptsDir: '<%= yeoman.app %>/scripts',
-				fontsDir: '<%= yeoman.app %>/styles/fonts',
-				importPath: '<%= yeoman.app %>/components',
-				relativeAssets: true
-			},
-			dist: {},
-			server: {
-				options: {
-					debugInfo: true
-				}
-			}
-		},
+		// coffee: {
+		// 	dist: {
+		// 		files: [{
+		// 			expand: true,
+		// 			cwd: '<%= yeoman.app %>/scripts',
+		// 			src: '{,*/}*.coffee',
+		// 			dest: '.tmp/scripts',
+		// 			ext: '.js'
+		// 		}]
+		// 	},
+		// 	test: {
+		// 		files: [{
+		// 			expand: true,
+		// 			cwd: 'test/spec',
+		// 			src: '{,*/}*.coffee',
+		// 			dest: '.tmp/spec',
+		// 			ext: '.js'
+		// 		}]
+		// 	}
+		// },
+		// compass: {
+		// 	options: {
+		// 		sassDir: '<%= yeoman.app %>/styles',
+		// 		cssDir: '.tmp/styles',
+		// 		imagesDir: '<%= yeoman.app %>/images',
+		// 		javascriptsDir: '<%= yeoman.app %>/scripts',
+		// 		fontsDir: '<%= yeoman.app %>/styles/fonts',
+		// 		importPath: '<%= yeoman.app %>/components',
+		// 		relativeAssets: true
+		// 	},
+		// 	dist: {},
+		// 	server: {
+		// 		options: {
+		// 			debugInfo: true
+		// 		}
+		// 	}
+		// },
 		concat: {
 			dist: {
 				files: {
@@ -198,13 +221,13 @@ module.exports = function(grunt) {
 				options: {
 					/*removeCommentsFromCDATA: true,
 					// https://github.com/yeoman/grunt-usemin/issues/44
-					//collapseWhitespace: true,
 					collapseBooleanAttributes: true,
 					removeAttributeQuotes: true,
+					removeOptionalTags: true*/
+					collapseWhitespace: true,
 					removeRedundantAttributes: true,
 					useShortDoctype: true,
-					removeEmptyAttributes: true,
-					removeOptionalTags: true*/
+					removeEmptyAttributes: true
 				},
 				files: [{
 					expand: true,
@@ -272,43 +295,46 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('server', [
 		'clean:server',
-		'coffee:dist',
-		'compass:server',
+		// 'coffee:dist',
+		// 'compass:server',
 		'livereload-start',
 		'connect:livereload',
-		/*'open',*/
+		'open',
 		'watch'
 	]);
 
 	grunt.registerTask('test', [
 		'clean:server',
-		'coffee',
-		'compass',
+		// 'coffee',
+		// 'compass',
 		'connect:test',
 		'karma'
 	]);
 	grunt.registerTask('test:unit', [
 		'clean:server',
-		'coffee',
-		'compass',
+		'jsbeautifier',
+		// 'coffee',
+		// 'compass',
 		'connect:test',
 		'karma:unit'
 	]);
 	grunt.registerTask('test:e2e', [
 		'clean:server',
-		'coffee',
-		'compass',
+		'jsbeautifier',
+		// 'coffee',
+		// 'compass',
 		'livereload-start',
-		'connect:test',
+		'connect:livereload',
 		'karma:e2e'
 	]);
 
 	grunt.registerTask('build', [
 		'clean:dist',
+		'jsbeautifier',
 		'jshint',
 		'test',
-		'coffee',
-		'compass:dist',
+		// 'coffee',
+		// 'compass:dist',
 		'useminPrepare',
 		'imagemin',
 		'cssmin',

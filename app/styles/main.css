@@ -581,7 +581,8 @@ STRUCTURE
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 }
-#notes .tag-item:hover {
+#notes .tag-item:hover,
+#notes .selected .tag-item {
 	background: #0f8ef0;
 	border: 1px solid #1a76bf;
 	color: #fff;
