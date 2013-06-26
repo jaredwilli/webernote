@@ -19,44 +19,44 @@ angular.module('angApp').
  */
 
 factory('tagFactory', [
-	'angularFireCollection',
-	function tagFactory(angularFireCollection) {
-		var baseUrl = 'https://webernote.firebaseio.com/users/';
-		var tags = {};
-		var count = 0;
+    'angularFireCollection',
+    function tagFactory(angularFireCollection) {
+        var baseUrl = 'https://webernote.firebaseio.com/users/';
+        var tags = {};
+        var count = 0;
 
-		return {
-			get: function() {
-				return tags;
-			},
-			count: function() {
-				return count;
-			},
-			getAllTags: function(path) {
-				return angularFireCollection(baseUrl + '/' + path);
-			},
-			getTag: function(path, tag) {
-				return angularFireCollection(baseUrl + '/' + path + '/' + tag);
-			},
-			addTag: function(path, tag, note) {
-				//var tag = (tags || '').split();
-				console.log(this.getAllTags(path));
-				console.log(tag, note);
+        return {
+            get: function() {
+                return tags;
+            },
+            count: function() {
+                return count;
+            },
+            getAllTags: function(path) {
+                return angularFireCollection(baseUrl + '/' + path);
+            },
+            getTag: function(path, tag) {
+                return angularFireCollection(baseUrl + '/' + path + '/' + tag);
+            },
+            addTag: function(path, tag, note) {
+                //var tag = (tags || '').split();
+                console.log(this.getAllTags(path));
+                console.log(tag, note);
 
-				this.getAllTags(path).add(tag, function(snap) {
-					console.log('tag added:', snap);
-				});
+                this.getAllTags(path).add(tag, function(snap) {
+                    console.log('tag added:', snap);
+                });
 
-				count += 1;
-			},
-			editTag: function(path, tag) {
-				this.getAllTags(path).update(tag);
-			},
-			deleteTag: function(path, tag) {
-				console.log(this.getAllTags(path), path, tag);
-				count -= 1;
-				this.getAllTags(path).remove(tag);
-			}
-		};
-	}
+                count += 1;
+            },
+            editTag: function(path, tag) {
+                this.getAllTags(path).update(tag);
+            },
+            deleteTag: function(path, tag) {
+                console.log(this.getAllTags(path), path, tag);
+                count -= 1;
+                this.getAllTags(path).remove(tag);
+            }
+        };
+    }
 ]);

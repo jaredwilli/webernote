@@ -5,3 +5,5 @@ dist
 app/components
 
 *.sublime-workspace
+npm-debug.log
+*.js_

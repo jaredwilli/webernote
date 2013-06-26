@@ -3,44 +3,44 @@
 app.
 
 directive('listNotesBy', function() {
-	return {
-		restrict: 'A',
-		scope: '@',
-		//templateUrl: 'views/note-list-td.html',
-		link: function(scope, elem, attrs) {
-			console.log(scope, elem);
+    return {
+        restrict: 'A',
+        scope: '@',
+        //templateUrl: 'views/note-list-td.html',
+        link: function(scope, elem, attrs) {
+            console.log(scope, elem);
 
-			var self = this;
+            var self = this;
 
-			scope.$watch('notes', function(notes) {
-				//console.log(notes);
-			});
+            scope.$watch('notes', function(notes) {
+                //console.log(notes);
+            });
 
-			$(elem).on('click', function(e) {
-				console.log('CLICK: ', e, $(this), scope.notes, attrs);
-				//attrs.set('showFormView');
-			});
-		}
-	};
+            $(elem).on('click', function(e) {
+                console.log('CLICK: ', e, $(this), scope.notes, attrs);
+                //attrs.set('showFormView');
+            });
+        }
+    };
 }).
 
 directive('noteSelected', function() {
-	return {
-		restrict: 'A',
-		scope: '@',
-		link: function(scope, element, attrs) {
+    return {
+        restrict: 'A',
+        scope: '@',
+        link: function(scope, element, attrs) {
 
-			$(element).on('click', function(e) {
-				var parent = scope.$parent;
-				console.log('noteDirective parentScope: ', parent);
+            $(element).on('click', function(e) {
+                var parent = scope.$parent;
+                console.log('noteDirective parentScope: ', parent);
 
-				$(element).siblings().removeClass('selected');
-				element.addClass('selected');
+                $(element).siblings().removeClass('selected');
+                element.addClass('selected');
 
-				scope.editNote(parent.note);
-			});
-		}
-	};
+                scope.editNote(parent.note);
+            });
+        }
+    };
 });
 
 /*

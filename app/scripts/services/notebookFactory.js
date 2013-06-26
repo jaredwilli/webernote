@@ -7,31 +7,31 @@ angular.module('angApp').
  */
 
 factory('notebookFactory', [
-	'angularFireCollection',
-	function notebookFactory(angularFireCollection) {
-		var baseUrl = 'https://webernote.firebaseio.com/users/';
+    'angularFireCollection',
+    function notebookFactory(angularFireCollection) {
+        var baseUrl = 'https://webernote.firebaseio.com/users/';
 
-		return {
-			getAllNotebooks: function(path) {
-				return angularFireCollection(baseUrl + '/' + path);
-			},
-			getNotebook: function(path, notebook) {
-				return angularFireCollection(baseUrl + '/' + path + '/' + notebook);
-			},
-			addNotebook: function(path, notebook) {
-				console.log(this.getAllNotebooks(path));
+        return {
+            getAllNotebooks: function(path) {
+                return angularFireCollection(baseUrl + '/' + path);
+            },
+            getNotebook: function(path, notebook) {
+                return angularFireCollection(baseUrl + '/' + path + '/' + notebook);
+            },
+            addNotebook: function(path, notebook) {
+                console.log(this.getAllNotebooks(path));
 
-				this.getAllNotebooks(path).add(notebook, function(snap) {
-					console.log('notebook added:', snap);
-				});
-			},
-			editNotebook: function(path, notebook) {
-				this.getAllNotebooks(path).update(notebook);
-			},
-			deleteNotebook: function(path, notebook) {
-				console.log(this.getAllNotebooks(path), path, notebook);
-				this.getAllNotebooks(path).remove(notebook);
-			}
-		};
-	}
+                this.getAllNotebooks(path).add(notebook, function(snap) {
+                    console.log('notebook added:', snap);
+                });
+            },
+            editNotebook: function(path, notebook) {
+                this.getAllNotebooks(path).update(notebook);
+            },
+            deleteNotebook: function(path, notebook) {
+                console.log(this.getAllNotebooks(path), path, notebook);
+                this.getAllNotebooks(path).remove(notebook);
+            }
+        };
+    }
 ]);
