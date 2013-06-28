@@ -10,7 +10,6 @@ controller('UserCtrl', [
     'tagFactory',
 
     function UserCtrl($scope, $location, noteFactory, notebookFactory, tagFactory) {
-        $scope.name = 'users';
 
         //console.log($scope.$parent.user);
         $scope.$parent.$watch('userId', function(userId) {
@@ -26,13 +25,12 @@ controller('UserCtrl', [
         });
 
         // Notes
-
         $scope.addNote = function() {
             var note = noteFactory.addNote($scope.userId + '/notes');
             $scope.editNote(note);
         };
         $scope.editNote = function(note) {
-            $scope.editedNote = note;
+            $scope.editedNote = note || {};
             noteFactory.editNote($scope.userId + '/notes', note);
         };
         $scope.deleteNote = function(note) {

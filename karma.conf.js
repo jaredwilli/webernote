@@ -16,9 +16,9 @@ files = [
 	// Mocks
 	'./test/mocks/**/*.js',
 
-	// Firebase code
-	'./app/scripts/vendor/**/*.js',
+	// Firebase and plugins code
 	'./app/scripts/vendor/*.js',
+	'./app/scripts/vendor/**/*.js',
 	'./app/components/angular-fire/angularFire.js',
 
 	// App specific code

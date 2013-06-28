@@ -1,25 +1,27 @@
 'use strict';
 
-describe("Controller: AuthCtrl", function() {
+describe("Controller: UsersCtrl", function() {
 	beforeEach(angular.mock.module('angApp', 'mockedUsers'));
+	beforeEach(module('angApp', 'noteFactory'));
 
-	var AuthCtrl, scope, mockedUsers, httpBackend;
+	var UsersCtrl, scope, noteFactory, mockedUsers, httpBackend;
 
-	describe("has users", function() {
+	describe("user notes", function() {
 		beforeEach(angular.mock.inject(function($controller, $rootScope, $httpBackend, defaultJSON, angularFire) {
-			$httpBackend.whenJSONP('/users').respond(defaultJSON);
+			$httpBackend.whenJSONP('/').respond(defaultJSON);
 
 			scope = $rootScope.$new();
-			AuthCtrl = $controller("AuthCtrl", {
+			UsersCtrl = $controller("UsersCtrl", {
 				$scope: scope
 			});
 			scope = defaultJSON;
 
+			console.log('NOTEFactory: ', noteFactory)
 			console.log('USERS: ', defaultJSON)
 			console.log(scope.users[13538912].notes);
 		}));
 
-		it('should have 2 users', function() {
+		/*it('should have 2 users', function() {
 			//expect(scope.users.length).toBe(2);
 			expect(scope.users[13538912]).not.toBe(undefined);
 			expect(scope.users[218374]).not.toBe(undefined);
@@ -44,6 +46,6 @@ describe("Controller: AuthCtrl", function() {
 
 		it('should have a note titled Dev Notes', function() {
 			expect(scope.users[13538912].notes['-ItsOTwSR2Ihqp0qKQR5'].title).toBe('Testing note');
-		});
+		});*/
 	});
 });

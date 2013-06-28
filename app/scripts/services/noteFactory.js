@@ -30,7 +30,7 @@ factory('noteFactory', [
                 };
 
                 this.getAllNotes(path).add(note, function(snap) {
-                    //console.log('note added', snap);
+                    console.log('note added', snap);
                 });
             },
             editNote: function(path, note) {

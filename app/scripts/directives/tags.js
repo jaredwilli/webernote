@@ -1,19 +1,10 @@
 'use strict';
 
-angular.module('angApp').
-
-directive('tagList', function() {
-    return {
-        restrict: 'A',
-        //transclude: true,
-        template: '<li class="tag-item" ng-repeat="tag in note.tags" id="{{ tag.id }}">{{ tag.text }}</li>'
-    };
-}).
+app.
 
 directive('noteTags', function() {
     return {
         restrict: 'A',
-        scope: true,
         template: '<input type="hidden" ng-model="tags" class="tag input-large" ui-select2="{{ tags }}" />',
         link: function(scope, elem, attrs) {
             var selectTags = [];
@@ -28,8 +19,8 @@ directive('noteTags', function() {
                     console.log('allTags: ', allTags);
 
                     for (var i = 0; i < noteTags.length; i++) {
-                        var tag = noteTags[i].text.toLowerCase();
-                        console.log(tag);
+                        var noteTag = noteTags[i].text.toLowerCase();
+                        console.log(noteTag);
 
                         for (var j = 0; j < allTags.length; j++) {
                             var allTag = allTags[j].text.toLowerCase();
@@ -48,42 +39,16 @@ directive('noteTags', function() {
                         tags: selectTags
                     };
                     console.log(scope.tags);
-
-                    // $('.tag').select2({
-                    // 	tags: editedNote.tags,
-                    // 	placeholder: 'Add tags'
-                    // });
                 }
             });
         }
     };
-});
+}).
 
-/*directive('tagit', function() {
+directive('tagList', function() {
     return {
-    	// scope: '=',
-        link: function(scope, element, attrs) {
-        	console.log('tagitscope: ', scope);
-
-			$(element).tagit({
-				tags: '',
-				placeholderText: '',
-				availableTags: [],
-				tabIndex: null,
-
-	            beforeTagAdded: function() {
-	            	console.log('before tag added');
-	            },
-	            afterTagAdded: function() {
-	            	console.log('tag added');
-	            },
-
-	            beforeTagRemoved: null,
-	            afterTagRemoved: null
-
-			});
-
-			$(element).find('input').attr('blurnote', '');
-        }
+        restrict: 'A',
+        //transclude: true,
+        template: '<li class="tag-item" ng-repeat="tag in note.tags" id="{{ tag.id }}">{{ tag.text }}</li>'
     };
-}).*/
+});

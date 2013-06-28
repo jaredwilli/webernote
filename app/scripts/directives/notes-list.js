@@ -2,37 +2,18 @@
 
 app.
 
-directive('listNotesBy', function() {
-    return {
-        restrict: 'A',
-        scope: false,
-        templateUrl: 'views/note-list-td.html',
-        link: function(scope, element, attrs) {
-            console.log('listNotesBy scope: ', scope);
-        }
-    };
-}).
-
 directive('noteSelected', function() {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: function(scope, element) {
             var parent = scope.$parent;
-            /*console.log('noteList parent: ', parent);*/
 
             $(element).on('click', function(e) {
-                //console.log(e.target, e.currentTarget);
-
                 if ($(e.target).hasClass('delete')) {
-                    console.log(scope);
                     parent.deleteNote(scope.note);
-
                 } else {
                     $(element).siblings().removeClass('selected');
                     element.addClass('selected');
-
-                    //scope.editedNote = scope.note;
-                    console.log('noteSelected note: ', scope.note);
                     scope.editNote(scope.note);
                 }
             });
@@ -40,6 +21,23 @@ directive('noteSelected', function() {
     };
 }).
 
+/**
+ * Directive for listing notes in center column
+ *
+ * TODO: This will need to be augmented eventually to allow for listing
+ * notes by tags and notebooks via routes through sidenav
+ */
+directive('listNotesBy', function() {
+    return {
+        restrict: 'A',
+        scope: false,
+        templateUrl: 'views/note-list-td.html'
+    };
+}).
+
+/**
+ * Reverse filter to sort the notes by most recently created date
+ */
 filter('reverse', function() {
     return function(notes) {
         return notes.slice().reverse();

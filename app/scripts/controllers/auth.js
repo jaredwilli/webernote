@@ -21,8 +21,8 @@ controller('AuthCtrl', [
             if (error) {
                 console.log('error: ', error.code);
                 /*if (error.code === 'EXPIRED_TOKEN') {
-					$location.path('/');
-				}*/
+                    $location.path('/');
+                }*/
             } else if (user) {
                 console.log('Logged In', $scope);
 
@@ -56,9 +56,9 @@ controller('AuthCtrl', [
                 $location.path('/user/' + $scope.userRef.name());
 
                 /*$scope.promise.then(function(user) {
-					console.log('user', user);
-					//$scope.startWatch($scope, filterFilter);
-				});*/
+                    console.log('user', user);
+                    //$scope.startWatch($scope, filterFilter);
+                });*/
             } else {
                 localStorage.clear();
                 $scope.isLoggedIn = false;
