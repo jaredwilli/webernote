@@ -1,6 +1,6 @@
 'use strict';
 
-var app = window.app = angular.module('angApp', ['ui.select2', 'firebase']);
+var app = window.app = angular.module('angApp', ['firebase']);
 
 app.config([
     '$routeProvider',

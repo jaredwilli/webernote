@@ -3,12 +3,12 @@
 app.
 
 controller('AuthCtrl', [
- '$scope',
- '$location',
- 'angularFire',
- 'fireFactory',
+    '$scope',
+    '$location',
+    'angularFire',
+    'fireFactory',
 
- function AuthCtrl($scope, $location, angularFire, fireFactory) {
+    function AuthCtrl($scope, $location, angularFire, fireFactory) {
         $scope.name = 'AuthCtrl';
 
         var baseurl = 'https://webernote.firebaseio.com',
@@ -93,4 +93,5 @@ controller('AuthCtrl', [
             authClient.logout();
             $location.path('/');
         };
-}]);
+    }
+]);

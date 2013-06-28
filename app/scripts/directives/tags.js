@@ -5,11 +5,13 @@ app.
 directive('noteTags', function() {
     return {
         restrict: 'A',
-        template: '<input type="hidden" ng-model="tags" class="tag input-large" ui-select2="{{ tags }}" />',
+        // replace: true,
+        scope: true,
+        template: '<input type="hidden" class="tag input-large" ui-select2="{{ tags }}" />',
         link: function(scope, elem, attrs) {
-            var selectTags = [];
-
             scope.$watch('editedNote', function(editedNote) {
+                if (!editedNote) return;
+
                 var allTags = scope.$parent.tags,
                     noteTags = editedNote.tags,
                     tagObj;
@@ -17,18 +19,17 @@ directive('noteTags', function() {
                 if (noteTags.length > 0 && allTags.length > 0) {
                     console.log('noteTags: ', noteTags);
                     console.log('allTags: ', allTags);
+                    var selectTags = [];
 
                     for (var i = 0; i < noteTags.length; i++) {
                         var noteTag = noteTags[i].text.toLowerCase();
-                        console.log(noteTag);
 
                         for (var j = 0; j < allTags.length; j++) {
                             var allTag = allTags[j].text.toLowerCase();
-                            console.log(allTag);
 
                             if (noteTag === allTag) {
                                 tagObj = {
-                                    id: noteTags[i].$id,
+                                    id: noteTags[i].id,
                                     text: noteTags[i].text
                                 };
                                 selectTags.push(tagObj);
@@ -38,7 +39,7 @@ directive('noteTags', function() {
                     scope.tags = {
                         tags: selectTags
                     };
-                    console.log(scope.tags);
+                    console.log('scope.tags: ', scope, scope.tags);
                 }
             });
         }

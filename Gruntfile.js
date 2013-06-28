@@ -7,7 +7,7 @@ var mountFolder = function(connect, dir) {
 
 module.exports = function(grunt) {
     // load all grunt tasks
-    requi re('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     // configurable paths
     var yeomanConfig = {
