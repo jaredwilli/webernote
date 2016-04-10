@@ -1,0 +1,107 @@
+	<table id="resizable">
+		<tr>
+			<td valign="top">
+				<div id="note-nav">
+
+					<ul id="notebooks">
+						<li class="expanded">
+							<a href="#">Notebooks</a>
+
+							<ul class="notebooks">
+
+							</ul>
+						</li>
+					</ul>
+
+					<ul id="tags">
+						<li>
+							<a href="#">Tags</a>
+
+							<ul class="tags">
+
+							</ul>
+						</li>
+					</ul>
+
+					<ul id="searches">
+						<li><a href="#">Saved&nbsp;Searches</a>
+							<ul class="searches hidden">
+							</ul>
+						</li>
+					</ul>
+
+					<ul class="trash">
+						<li
+							<a href="#/trash">Trash</a>
+						</li>
+					</ul>
+
+				</div> <!-- // note-nav -->
+			</td>
+
+			<td class="middle" valign="top">
+				<div id="note-list">
+					<div class="filter">
+						<a href="#">Notes created by</a>
+
+						<input type="text" name="search" placeholder="Search" />
+					</div>
+
+					<div class="viewing">
+						<span class="viewtext">
+							Viewing <span class="count">0</span> notes from
+						</span>
+
+						<select name="notebook" class="notebook">
+							<option selected="selected">My Notebook</option>
+						</select>
+					</div>
+
+					<div id="notes">
+						<ul>
+							<li class="note">
+								<a class="delete" href="#">X</a>
+								<h2 class="title"></h2>
+
+								<p>
+									<span class="date"></span>
+									<span class="tag-item"></span>
+									<span class="description"></span>
+								</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</td>
+
+			<td valign="top">
+				<div id="show-note">
+					<form>
+						<div class="top">
+							<input type="hidden" name="modified" id="modified" />
+
+							<input type="text" class="title" name="title" value="" placeholder="Click to set title..." />
+
+							<select name="notebook" class="notebook">
+								<option value="My Notebook" selected="selected">My Notebook</option>
+								<option value="new-notebook">New Notebook</option>
+							</select>
+
+							<span class="new-notebook hidden">
+								<input type="text" name="new-notebook" class="notebook" placeholder="Notebook name..." />
+								<a href="#" id="cancel">x</a>
+							</span>
+						</div>
+
+						<div class="mid">
+							<input type="url" class="url" name="url" value="" placeholder="http://" />
+							<!--<input type="text" class="tag" name="tag" value="{{tags}}" placeholder="Click to add tag..." />-->
+							<ul class="tag" data-name="nameOfSelect"></ul>
+						</div>
+						<div class="description hidden"></div>
+						<textarea class="description"></textarea>
+					</form>
+				</div>
+			</td>
+		</tr>
+	</table>
